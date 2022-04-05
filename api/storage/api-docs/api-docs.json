@@ -1,0 +1,583 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "ToyStore API documentation",
+        "version": "0.2"
+    },
+    "produces": [
+        "application/json"
+    ],
+    "tags": [
+        {
+            "name": "User",
+            "description": "User related operations"
+        },
+        {
+            "name": "Product",
+            "description": "Products (goods) related operations"
+        },
+        {
+            "name": "General",
+            "description": "General operations unrelated to any other category"
+        },
+        {
+            "name": "Auth",
+            "description": "Login, register etc."
+        }
+    ],
+    "basePath": "/api/v1",
+    "securityDefinitions": {
+        "sanctum": {
+            "type": "apiKey",
+            "description": "Authorization token",
+            "name": "sanctum",
+            "in": "header"
+        }
+    },
+    "paths": {
+        "/": {
+            "get": {
+                "tags": [
+                    "General"
+                ],
+                "summary": "Get API info",
+                "description": "Get application name and version",
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/200"
+                    },
+                    "500": {
+                        "$ref": "#/responses/500"
+                    }
+                }
+            }
+        },
+        "/ping": {
+            "get": {
+                "tags": [
+                    "General"
+                ],
+                "summary": "Ping",
+                "description": "Ping server to test connection",
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/200"
+                    },
+                    "500": {
+                        "$ref": "#/responses/500"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login",
+                "description": "Attempt to login in",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "type": "string",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "type": "string",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/200"
+                    },
+                    "400": {
+                        "$ref": "#/responses/400"
+                    },
+                    "422": {
+                        "$ref": "#/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/responses/500"
+                    }
+                }
+            }
+        },
+        "/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register",
+                "description": "Attempt to register a new user",
+                "parameters": [
+                    {
+                        "name": "first_name",
+                        "type": "string",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "name": "middle_name",
+                        "type": "string",
+                        "in": "formData",
+                        "required": false
+                    },
+                    {
+                        "name": "last_name",
+                        "type": "string",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "name": "email",
+                        "type": "string",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "type": "string",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/200"
+                    },
+                    "400": {
+                        "$ref": "#/responses/400"
+                    },
+                    "422": {
+                        "$ref": "#/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/responses/500"
+                    }
+                }
+            }
+        },
+        "/forgot-password": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Forgot password",
+                "description": "Send a reset password link to the email",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "type": "string",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/200"
+                    },
+                    "400": {
+                        "$ref": "#/responses/400"
+                    },
+                    "419": {
+                        "$ref": "#/responses/419"
+                    },
+                    "422": {
+                        "$ref": "#/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/responses/500"
+                    }
+                }
+            }
+        },
+        "/reset-password": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Reset password",
+                "description": "Update password with the help of reset password token",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "type": "string",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "name": "token",
+                        "type": "string",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "type": "string",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/200"
+                    },
+                    "400": {
+                        "$ref": "#/responses/400"
+                    },
+                    "422": {
+                        "$ref": "#/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/responses/500"
+                    }
+                }
+            }
+        },
+        "/user/info": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Current user info",
+                "description": "Get currently logged-in user info",
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/200"
+                    },
+                    "401": {
+                        "$ref": "#/responses/401"
+                    },
+                    "500": {
+                        "$ref": "#/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/update-settings": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update settings",
+                "description": "Update current user settings",
+                "parameters": [
+                    {
+                        "name": "first_name",
+                        "type": "string",
+                        "in": "formData",
+                        "required": false
+                    },
+                    {
+                        "name": "middle_name",
+                        "type": "string",
+                        "in": "formData",
+                        "required": false
+                    },
+                    {
+                        "name": "last_name",
+                        "type": "string",
+                        "in": "formData",
+                        "required": false
+                    },
+                    {
+                        "name": "email",
+                        "type": "string",
+                        "in": "formData",
+                        "required": false
+                    },
+                    {
+                        "name": "password",
+                        "type": "string",
+                        "in": "formData",
+                        "required": false
+                    },
+                    {
+                        "name": "password_confirmation",
+                        "type": "string",
+                        "in": "formData",
+                        "required": false
+                    },
+                    {
+                        "name": "current_password",
+                        "type": "string",
+                        "in": "formData",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/200"
+                    },
+                    "401": {
+                        "$ref": "#/responses/401"
+                    },
+                    "422": {
+                        "$ref": "#/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/products": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get products",
+                "description": "Get products with optional paging",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "type": "integer",
+                        "required": false
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "type": "integer",
+                        "required": false,
+                        "default": 15
+                    },
+                    {
+                        "name": "category_ids[]",
+                        "in": "query",
+                        "type": "array",
+                        "required": false,
+                        "collectionFormat": "multi",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/200"
+                    },
+                    "422": {
+                        "$ref": "#/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/responses/500"
+                    }
+                }
+            }
+        },
+        "/products/{id}": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get product",
+                "description": "Get detailed information about the product with the specified id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/200"
+                    },
+                    "404": {
+                        "$ref": "#/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/responses/500"
+                    }
+                }
+            }
+        },
+        "/product-reviews": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Post a review",
+                "description": "Leave a product review",
+                "parameters": [
+                    {
+                        "name": "product_id",
+                        "in": "formData",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "rating",
+                        "in": "formData",
+                        "type": "number",
+                        "required": false
+                    },
+                    {
+                        "name": "text",
+                        "in": "formData",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/200"
+                    },
+                    "401": {
+                        "$ref": "#/responses/401"
+                    },
+                    "404": {
+                        "$ref": "#/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/product-reviews/{id}": {
+            "patch": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Update review",
+                "description": "Update a product review",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "rating",
+                        "in": "formData",
+                        "type": "number",
+                        "required": false
+                    },
+                    {
+                        "name": "text",
+                        "in": "formData",
+                        "type": "string",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/200"
+                    },
+                    "401": {
+                        "$ref": "#/responses/401"
+                    },
+                    "404": {
+                        "$ref": "#/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Delete review",
+                "description": "Delete a product review",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/200"
+                    },
+                    "401": {
+                        "$ref": "#/responses/401"
+                    },
+                    "403": {
+                        "$ref": "#/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/responses/422"
+                    },
+                    "500": {
+                        "$ref": "#/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "responses": {
+        "200": {
+            "description": "Success"
+        },
+        "400": {
+            "description": "Client error"
+        },
+        "401": {
+            "description": "Unauthorized request"
+        },
+        "403": {
+            "description": "Forbidden action"
+        },
+        "404": {
+            "description": "Resource not found"
+        },
+        "419": {
+            "description": "Your request has been throttled. Retry in a minute"
+        },
+        "422": {
+            "description": "Unprocessable entity. Some of the required fields are missing"
+        },
+        "500": {
+            "description": "Server error"
+        }
+    }
+}
