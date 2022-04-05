@@ -123,7 +123,9 @@ const Auth = () => {
                   )
                 }
               >
-                <Button variant={"outline-dark"}>Register</Button>
+                <Button variant={"outline-dark"}>
+                  <NavLink to="/login">Register</NavLink>
+                </Button>
               </div>
             )}
           </Row>

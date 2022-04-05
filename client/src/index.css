@@ -48,9 +48,12 @@ button{
 	cursor: pointer;
 }
 /*--- Header ----*/
-
+@import url("./components/header/header.css");
 /* ----Footer-------- */
 @import url('./components/footer/footer.css');
 
 /* -------Gallery------- */
 @import url('./components/gallery/gallery.css');
+
+/* -------ProductItem----- */
+@import url('./components/productItem/productItem.css');

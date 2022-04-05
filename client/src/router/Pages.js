@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Gallery from "../components/gallery/Gallery";
 import Dashboard from "./Dashboard";
 import AuthPage from "../pages/authPage/AuthPage";
+import ProductPage from "../pages/productPage.js/ProductPage";
 const Pages = () => {
 	 const isAuth = useSelector((state) => state.user.isAuth);
 	 const role = useSelector((state) => state.user.currentUser.role_id)
@@ -14,6 +15,7 @@ const Pages = () => {
            <Route index element={<Gallery />} />
            <Route exact path="/login" element={<AuthPage />} />
            <Route exact path="/registration" element={<AuthPage />} />
+           <Route exact path="/product-details/:name" element={<ProductPage />} />
          </Route>
        );
      } else if (isAuth && role == 200) {
