@@ -3,19 +3,28 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../reducers/userReducer";
-import logo from '../../img/logo.svg'
+import logo from "../../img/logo.svg";
 import search from "../../img/search.png";
 
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
-import { Form } from "react-bootstrap";
+import {
+  ButtonGroup,
+  Dropdown,
+  Form,
+  NavDropdown,
+  OverlayTrigger,
+  Tooltip,
+} from "react-bootstrap";
 const Header = () => {
   const isAuth = useSelector((state) => state.user.isAuth);
   const dispatch = useDispatch();
   const [toggleMenu, setToggleMenu] = useState(false);
   const role = useSelector((state) => state.user.currentUser.role_id);
+
+ 
   return (
     <>
       <Navbar variant="dark" style={{ backgroundColor: "rgb(121, 176, 238)" }}>
@@ -117,6 +126,53 @@ const Header = () => {
                   />
                 </Form>
               </div>
+            </div>
+          </div>
+          <div className="second-row" style={{}}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                margin: "0 0 5px 0",
+              }}
+            >
+             <Dropdown className="d-inline mx-2">
+                <Dropdown.Toggle id="dropdown-autoclose-true">
+                  Baby Room
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#">Travel Systems</Dropdown.Item>
+                  <Dropdown.Item href="#">Cot Beds</Dropdown.Item>
+                  <Dropdown.Item href="#">Baby Monitors</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+             
+              <Dropdown className="d-inline mx-2">
+                <Dropdown.Toggle id="dropdown-autoclose-true">
+                  Outdoor
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#">Bikes</Dropdown.Item>
+                  <Dropdown.Item href="#">Skooters</Dropdown.Item>
+                  <Dropdown.Item href="#">Trampolines</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+             
+              <Dropdown className="d-inline mx-2">
+                <Dropdown.Toggle id="dropdown-autoclose-true">
+                  Gaming
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#">XBox Gaming</Dropdown.Item>
+                  <Dropdown.Item href="#">Play Station Gaming</Dropdown.Item>
+                  <Dropdown.Item href="#">PC Gaming</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+
+						
             </div>
           </div>
         </Container>
