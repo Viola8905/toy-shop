@@ -1,22 +1,81 @@
-import React from 'react'
-import { Card } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react'
+import { Button, Card, Form, Modal } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom'
 import BackBtn from '../../components/backBtn/BackBtn';
 import poshta from'../../img/nova-poshta.png'
+import Rating from "@mui/material/Rating";
+import Typography from "@mui/material/Typography";
+import { postReview } from '../../api/productRequests';
+
+function MyVerticallyCenteredModal(props) {
+	let productId = props.product_id 
+
+
+		const [rating, setRating] = useState(1);
+    const [text, setText] = useState("");
+	 const dispatch = useDispatch()
+
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Додайте свій відгук!
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Typography component="legend">Оцініть продукт</Typography>
+        <Rating
+          name="simple-controlled"
+          value={rating}
+          onChange={(event, newValue) => {
+            setRating(newValue);
+          }}
+        />
+        <Form>
+          <Form.Control
+            placeholder="введіть текст відгука"
+            onChange={(e) => setText(e.target.value)}
+          />
+        </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button
+          onClick={() =>
+            dispatch(postReview(productId, rating, text))
+          }
+        >
+          Надіслати
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
+
+
 
 
 const ProductPage = () => {
 	const products = useSelector((state) => state.products.Products);
 	const location = useLocation();
 	let query = location.state;
-	console.log(query)
+	const [modalShow, setModalShow] = useState(false);
+
+	
+
+		
+
 	return (
 		<div>{products.filter(product => product.id == query).map((product) => {
 			return (
         <div>
           <BackBtn />
-          <Card>
+          <Card style={{ margin: "0 15px 0px 15px" }}>
             <div
               className="product-page"
               style={{ display: "flex", justifyContent: "center" }}
@@ -29,7 +88,10 @@ const ProductPage = () => {
                     style={{ maxWidth: "100%" }}
                   />
                 </div>
-                <div className="product-block" style={{padding:"10px 0 0 10px"}}>
+                <div
+                  className="product-block"
+                  style={{ padding: "10px 10px 0 10px" }}
+                >
                   <div
                     className="product-row"
                     style={{ display: "flex", justifyContent: "space-between" }}
@@ -37,7 +99,7 @@ const ProductPage = () => {
                     <div className="product-raiting">
                       {product.average_rating} 2.75
                     </div>
-                    <div className="product-id">Ref:{product.id}</div>
+                    <div className="product-id">#Ref:{product.id}</div>
                   </div>
                   <div className="product-name">{product.name}</div>
                   <div className="product-price">${product.price}</div>
@@ -110,9 +172,37 @@ const ProductPage = () => {
                     </div>
                   </div>
                   <hr />
-                  <div className="detali-dostavky">Деталі на сторінці</div>
+                  <div className="detali-dostavky">
+                    Деталі на сторінці :
+                    <span style={{ color: "blue", cursor: "pointer" }}>
+                      Правила доставки
+                    </span>
+                  </div>
                 </div>
               </div>
+            </div>
+          </Card>
+          <Card style={{ margin: "20px 15px 20px 15px" }}>
+            <div className="product-description" style={{ padding: "15px" }}>
+              <div
+                className="title"
+                style={{ fontSize: "20px", fontWeight: 700 }}
+              >
+                Опис
+              </div>
+              <div className="description-txt">{product.description}</div>
+            </div>
+          </Card>
+          <Card style={{ margin: "20px 15px 50px 15px" }}>
+            <div className="reviews-wrapper" style={{ padding: "15px" }}>
+              <div className="reviews-title">Відгуки(0)</div>
+              <Button onClick={() => setModalShow(true)}>Додати Відгук</Button>
+
+              <MyVerticallyCenteredModal
+                show={modalShow}
+								product_id={product.id}
+                onHide={() => setModalShow(false)}
+              />
             </div>
           </Card>
         </div>

@@ -31,9 +31,10 @@ export const login = (email, password) => {
           password,
         }
       );
+		
 
       localStorage.setItem("token", response.data.token);
-      console.log(response.data.user.role_id);
+      console.log(response.data.token);
       if (response.data.user.role.name == "user") {
 				dispatch(setUser(response.data.user));
       } else {
