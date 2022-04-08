@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card, Form, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom'
@@ -6,7 +6,7 @@ import BackBtn from '../../components/backBtn/BackBtn';
 import poshta from'../../img/nova-poshta.png'
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
-import { postReview } from '../../api/productRequests';
+import { getProductById, postReview } from '../../api/productRequests';
 
 function MyVerticallyCenteredModal(props) {
 	let productId = props.product_id 
@@ -15,6 +15,12 @@ function MyVerticallyCenteredModal(props) {
 		const [rating, setRating] = useState(1);
     const [text, setText] = useState("");
 	 const dispatch = useDispatch()
+
+	 function sendReview(productId){
+		 dispatch(postReview(productId, rating, text));
+		 props.onHide()
+	 }
+
 
   return (
     <Modal
@@ -47,8 +53,9 @@ function MyVerticallyCenteredModal(props) {
       <Modal.Footer>
         <Button
           onClick={() =>
-            dispatch(postReview(productId, rating, text))
+            sendReview(productId)
           }
+					
         >
           Надіслати
         </Button>
@@ -65,8 +72,12 @@ const ProductPage = () => {
 	const location = useLocation();
 	let query = location.state;
 	const [modalShow, setModalShow] = useState(false);
-
-	
+	const dispatch = useDispatch();
+  const product = useSelector((state) => state.products.Product);
+  let productReviews = product.reviews
+	useEffect(() => {
+		dispatch(getProductById(query))
+	},[])
 
 		
 
@@ -195,12 +206,55 @@ const ProductPage = () => {
           </Card>
           <Card style={{ margin: "20px 15px 50px 15px" }}>
             <div className="reviews-wrapper" style={{ padding: "15px" }}>
-              <div className="reviews-title">Відгуки(0)</div>
-              <Button onClick={() => setModalShow(true)}>Додати Відгук</Button>
+              <div className="reviews-title">
+                Відгуки({productReviews.length})
+              </div>
+              <Button
+                onClick={() => setModalShow(true)}
+                style={{ marginTop: "20px" }}
+              >
+                Додати Відгук
+              </Button>
+
+              {productReviews.map((review) => {
+                return (
+                  <div>
+                    <Card style={{ marginTop: "20px" }}>
+                      <div className="wrapper" style={{ padding: "20px" }}>
+                        <div style={{ display: "flex" }}>
+                          <div
+                            className="review-username"
+                            style={{ fontWeight: "700" }}
+                          >
+                            {review.user.first_name}
+                          </div>
+                          <div
+                            className="review-username"
+                            style={{
+                              marginLeft: "20px",
+                              fontSize: "12px",
+                              alignSelf: "center",
+                            }}
+                          >
+                            {new Date(review.user.created_at).toUTCString()}
+                          </div>
+                        </div>
+                        <Typography component="legend"></Typography>
+                        <Rating
+                          name="read-only"
+                          value={review.rating}
+                          readOnly
+                        />
+                        <div className="review-text">{review.text}</div>
+                      </div>
+                    </Card>
+                  </div>
+                );
+              })}
 
               <MyVerticallyCenteredModal
                 show={modalShow}
-								product_id={product.id}
+                product_id={product.id}
                 onHide={() => setModalShow(false)}
               />
             </div>

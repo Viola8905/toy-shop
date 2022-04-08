@@ -4,7 +4,7 @@ import {  setAdmin, setUser } from "../reducers/userReducer";
 export const registration = async (first_name,middle_name,last_name,email,password) => {
   try {
     const response = await axios.post(
-      `http://local.folkem.xyz/api/v1/register`,
+      `http://api.toy-store.dev-1.folkem.xyz/api/v1/register`,
       {
         first_name,
         middle_name,
@@ -25,7 +25,7 @@ export const login = (email, password) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        `http://local.folkem.xyz/api/v1/login`,
+        `http://api.toy-store.dev-1.folkem.xyz/api/v1/login`,
         {
           email,
           password,
