@@ -6,7 +6,13 @@ import BackBtn from "../../components/backBtn/BackBtn";
 import poshta from "../../img/nova-poshta.png";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
-import { getProductById, postReview } from "../../api/productRequests";
+import {
+  getProductById,
+  postReview,
+  removeReview,
+} from "../../api/productRequests";
+import Delete from "../../img/delete.png";
+import { setProduct } from "../../reducers/productsReducer";
 
 function MyVerticallyCenteredModal(props) {
   let productId = props.product_id;
@@ -72,7 +78,7 @@ function MyVerticallyCenteredModal(props) {
 
 const ProductPage = () => {
   const Products = useSelector((state) => state.products.Products);
-  //  const[products , setProducts] = useState(Products)
+  const currentUser = useSelector((state) => state.user.currentUser);
   const isAuth = useSelector((state) => state.user.isAuth);
 
   const location = useLocation();
@@ -81,17 +87,30 @@ const ProductPage = () => {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.products.Product);
 
-
   const [productReviews, setProductReviews] = useState([]);
 
+	const [state, setState] = useState([]);
 
   const [show, setShow] = useState(false);
   const target = useRef(null);
 
-  useEffect(() => {
-    dispatch(getProductById(query,() => setProductReviews(product.reviews)));
-		
-  }, [product]);
+  useEffect(  () => {
+  
+    dispatch(getProductById(query, () => setProductReviews(product.reviews)));
+
+   
+  }, [product, query]);
+
+  const deleteReview = (id) => {
+    dispatch(
+      removeReview(
+        id,
+        () =>
+          setProductReviews([...productReviews((review) => review.id !== id)]),
+        () => alert("Error")
+      )
+    );
+  };
 
   return (
     <div>
@@ -272,7 +291,7 @@ const ProductPage = () => {
                     <div key={review.id}>
                       <Card style={{ marginTop: "20px" }}>
                         <div className="wrapper" style={{ padding: "20px" }}>
-                          <div style={{ display: "flex" }}>
+                          <div style={{ display: "flex", minWidth: "100%" }}>
                             <div
                               className="review-username"
                               style={{ fontWeight: "700" }}
@@ -289,6 +308,24 @@ const ProductPage = () => {
                             >
                               {new Date(review.user.created_at).toUTCString()}
                             </div>
+                            {currentUser.role_id == 200 ? (
+                              <div
+                                className="delete-bin"
+                                style={{}}
+                                onClick={() => deleteReview(review.id)}
+                              >
+                                <img
+                                  src={Delete}
+                                  alt=""
+                                  style={{
+                                    alignSelf: "center",
+                                    maxWidth: "30px",
+                                  }}
+                                />
+                              </div>
+                            ) : (
+                              <div></div>
+                            )}
                           </div>
                           <Typography component="legend"></Typography>
                           <Rating

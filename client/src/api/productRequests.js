@@ -32,7 +32,7 @@ export const postReview = (product_id, rating, text) => {
           headers: { sanctum: `${localStorage.getItem("token")}` },
         }
       );
-      alert("Відгук надіслано");
+      
     } catch (e) {
       alert("Відгук не надіслано");
       alert(e.response.data.message);
@@ -53,3 +53,23 @@ export const getProductById = (id,reviews) => {
     }
   };
 };
+
+
+
+export const removeReview = (id,success,error) => {
+	return async () => {
+    try {
+      const response = await axios.delete(
+        `http://api.toy-store.dev-1.folkem.xyz/api/v1/product-reviews/${id}`,
+        {
+          headers: { sanctum: `${localStorage.getItem("token")}` },
+        }
+      );
+      success()
+      
+    } catch (e) {
+		
+      alert(e.response.data.message);
+    }
+  };
+}
