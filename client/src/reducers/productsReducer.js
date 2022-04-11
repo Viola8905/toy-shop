@@ -3,8 +3,7 @@ const SET_PRODUCT = "SET_PRODUCT";
 
 const defaultState = {
   Products: [],
-	Product:[],
-  
+  Product: [],
 };
 
 export default function userReducer(state = defaultState, action) {
@@ -25,7 +24,10 @@ export default function userReducer(state = defaultState, action) {
   }
 }
 
-export const setProducts = (products) => ({ type: SET_PRODUCTS, payload: products });
+export const setProducts = (products) => ({
+  type: SET_PRODUCTS,
+  payload: products,
+});
 export const setProduct = (product) => ({
   type: SET_PRODUCT,
   payload: product,

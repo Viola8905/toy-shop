@@ -1,7 +1,13 @@
 import axios from "axios";
-import {  setAdmin, setUser } from "../reducers/userReducer";
+import { setAdmin, setUser } from "../reducers/userReducer";
 
-export const registration = async (first_name,middle_name,last_name,email,password) => {
+export const registration = async (
+  first_name,
+  middle_name,
+  last_name,
+  email,
+  password
+) => {
   try {
     const response = await axios.post(
       `http://api.toy-store.dev-1.folkem.xyz/api/v1/register`,
@@ -31,12 +37,11 @@ export const login = (email, password) => {
           password,
         }
       );
-		
 
       localStorage.setItem("token", response.data.token);
       console.log(response.data.token);
       if (response.data.user.role.name == "user") {
-				dispatch(setUser(response.data.user));
+        dispatch(setUser(response.data.user));
       } else {
         dispatch(setAdmin(response.data.user));
       }

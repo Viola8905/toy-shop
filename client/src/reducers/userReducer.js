@@ -5,7 +5,6 @@ const LOGOUT = "LOGOUT";
 const defaultState = {
   currentUser: {},
   isAuth: false,
-  
 };
 
 export default function userReducer(state = defaultState, action) {
@@ -15,7 +14,6 @@ export default function userReducer(state = defaultState, action) {
         ...state,
         currentUser: action.payload,
         isAuth: true,
-        
       };
 
     case SET_ADMIN:
@@ -23,7 +21,6 @@ export default function userReducer(state = defaultState, action) {
         ...state,
         currentUser: action.payload,
         isAuth: true,
-        
       };
 
     case LOGOUT:
@@ -32,7 +29,6 @@ export default function userReducer(state = defaultState, action) {
         ...state,
         currentUser: {},
         isAuth: false,
-        
       };
     default:
       return state;
