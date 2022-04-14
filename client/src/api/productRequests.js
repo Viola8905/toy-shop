@@ -32,7 +32,6 @@ export const postReview = (product_id, rating, text) => {
           headers: { sanctum: `${localStorage.getItem("token")}` },
         }
       );
-      
     } catch (e) {
       alert("Відгук не надіслано");
       alert(e.response.data.message);
@@ -40,24 +39,22 @@ export const postReview = (product_id, rating, text) => {
   };
 };
 
-export const getProductById = (id,reviews) => {
+export const getProductById = (id, reviews) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(
         `http://api.toy-store.dev-1.folkem.xyz/api/v1/products/${id}`
       );
-      dispatch(setProduct(response.data.data));
-			reviews()
+      dispatch(setProducts(response.data.data));
+      reviews();
     } catch (e) {
       alert(e.response.data.message);
     }
   };
 };
 
-
-
-export const removeReview = (id,success,error) => {
-	return async () => {
+export const removeReview = (id, success) => {
+  return async () => {
     try {
       const response = await axios.delete(
         `http://api.toy-store.dev-1.folkem.xyz/api/v1/product-reviews/${id}`,
@@ -65,11 +62,11 @@ export const removeReview = (id,success,error) => {
           headers: { sanctum: `${localStorage.getItem("token")}` },
         }
       );
-      success()
-      
+       success();
+			
     } catch (e) {
-		
+			console.log("error");
       alert(e.response.data.message);
     }
   };
-}
+};
