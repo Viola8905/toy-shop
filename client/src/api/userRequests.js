@@ -37,7 +37,8 @@ export const login = (email, password) => {
           password,
         }
       );
-
+			
+			
       localStorage.setItem("token", response.data.token);
    
       if (response.data.user.role.name == "user") {

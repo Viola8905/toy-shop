@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import BackBtn from "../../components/backBtn/BackBtn";
 import poshta from "../../img/nova-poshta.png";
+import Edit from '../../img/edit.png';
+import Checked from '../../img/checked.png'
+
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
 import {
@@ -17,20 +20,21 @@ import axios from "axios";
 
 const ProductPage = () => {
   const Products = useSelector((state) => state.products.Products);
-
   const currentUser = useSelector((state) => state.user.currentUser);
   const isAuth = useSelector((state) => state.user.isAuth);
-
   const location = useLocation();
   let query = location.state;
   const [modalShow, setModalShow] = useState(false);
   const dispatch = useDispatch();
   const product = useSelector((state) => state.products.Product);
-
   const [productReviews, setProductReviews] = useState([]);
-
   const [show, setShow] = useState(false);
   const target = useRef(null);
+
+	const [edit, setEdit] = useState(false);
+	const [reviewEditing, setReviewEditing] = useState(null);
+	const [editingText, setEditingText] = useState("");
+	const [editingRating, setEditingRating] = useState(1);
 
   // useEffect(() => {
 
@@ -72,7 +76,39 @@ const ProductPage = () => {
     );
   };
 
-  // Products.filter((product) => product.id == query);
+	function submitEdits (reviewId) {
+		let rating = editingRating;
+		let text = editingText;
+		let id = reviewId;
+		 const product = {rating,text,id};
+     
+     fetch(`http://api.toy-store.dev-1.folkem.xyz/api/v1/product-reviews/${id}`, {
+       method: "PATCH",
+       headers: {
+         sanctum: `${localStorage.getItem("token")}`,
+         Accept: "application/json",
+         "Content-Type": "application/json",
+       },
+       body: JSON.stringify(product),
+     })
+       .then((result) => {})
+       .catch((error) => {
+         console.error("Error", error);
+       });
+
+
+		 const updatedReviews = [...productReviews].map((review) => {
+       if (review.id === id) {
+				 review.rating = editingRating;
+         review.text = editingText;
+       }
+       return review;
+     });
+     setProductReviews(updatedReviews);
+     setReviewEditing(null);
+	}
+
+ 
 
   return (
     <div>
@@ -235,6 +271,7 @@ const ProductPage = () => {
             )}
 
             {productReviews.map((review) => {
+							
               return (
                 <div key={review.id}>
                   <Card style={{ marginTop: "20px" }}>
@@ -256,28 +293,93 @@ const ProductPage = () => {
                         >
                           {new Date(review.user.created_at).toUTCString()}
                         </div>
+
                         {currentUser.role_id == 200 ? (
-                          <div
-                            className="delete-bin"
-                            style={{}}
-                            onClick={() => deleteReview(review.id)}
-                          >
-                            <img
-                              src={Delete}
-                              alt=""
-                              style={{
-                                alignSelf: "center",
-                                maxWidth: "30px",
-                              }}
-                            />
-                          </div>
+                          <>
+                            <div
+                              className="delete-bin"
+                              style={{ marginLeft: "70%" }}
+                              onClick={() => deleteReview(review.id)}
+                            >
+                              <img
+                                src={Delete}
+                                alt=""
+                                style={{
+                                  alignSelf: "center",
+                                  maxWidth: "30px",
+                                }}
+                              />
+                            </div>
+                            {review.user.id === currentUser.id &&
+                            review.id === reviewEditing ? (
+                              <>
+                                <div onClick={() => submitEdits(review.id)}>
+                                  <img
+                                    src={Checked}
+                                    alt=""
+                                    style={{
+                                      alignSelf: "center",
+                                      maxWidth: "30px",
+                                      marginLeft: "10px",
+                                    }}
+                                  />
+                                </div>
+                              </>
+                            ) : (
+                              <>
+                                {review.user.id === currentUser.id ? (
+                                  <div
+                                    className="edit"
+                                    style={{}}
+                                    onClick={() => setReviewEditing(review.id)}
+                                  >
+                                    <img
+                                      src={Edit}
+                                      alt=""
+                                      style={{
+                                        alignSelf: "center",
+                                        maxWidth: "30px",
+                                        marginLeft: "10px",
+                                      }}
+                                    />
+                                  </div>
+                                ) : (
+                                  <></>
+                                )}
+                              </>
+                            )}
+                          </>
                         ) : (
                           <div></div>
                         )}
                       </div>
-                      <Typography component="legend"></Typography>
-                      <Rating name="read-only" value={review.rating} readOnly />
-                      <div className="review-text">{review.text}</div>
+
+                      {review.id === reviewEditing ? (
+                        <>
+                          <Rating
+                            name="simple-controlled"
+                            value={editingRating}
+                            onChange={(event, newValue) => {
+                              setEditingRating(newValue);
+                            }}
+                          />
+                          <Form>
+                            <Form.Control
+                              defaultValue={review.text}
+                              onChange={(e) => setEditingText(e.target.value)}
+                            />
+                          </Form>
+                        </>
+                      ) : (
+                        <>
+                          <Rating
+                            name="read-only"
+                            value={review.rating}
+                            readOnly
+                          />
+                          <div className="review-text">{review.text}</div>
+                        </>
+                      )}
                     </div>
                   </Card>
                 </div>
