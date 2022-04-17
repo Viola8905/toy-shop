@@ -38,7 +38,7 @@ const Header = () => {
               }}
               to="/"
             >
-              Toy Store
+              Deploy is successful
             </NavLink>
           </div>
 
