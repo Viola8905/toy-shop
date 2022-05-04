@@ -40,7 +40,7 @@ export const login = (email, password) => {
 			
 			
       localStorage.setItem("token", response.data.token);
-   
+			console.log(response.data.token);
       if (response.data.user.role.name == "user") {
         dispatch(setUser(response.data.user));
       } else {

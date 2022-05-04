@@ -24,7 +24,8 @@ const Header = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const role = useSelector((state) => state.user.currentUser.role_id);
 
- 
+
+
   return (
     <>
       <Navbar variant="dark" style={{ backgroundColor: "rgb(121, 176, 238)" }}>
@@ -136,7 +137,7 @@ const Header = () => {
                 margin: "0 0 5px 0",
               }}
             >
-             <Dropdown className="d-inline mx-2">
+              <Dropdown className="d-inline mx-2">
                 <Dropdown.Toggle id="dropdown-autoclose-true">
                   Baby Room
                 </Dropdown.Toggle>
@@ -147,7 +148,7 @@ const Header = () => {
                   <Dropdown.Item href="#">Baby Monitors</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-             
+
               <Dropdown className="d-inline mx-2">
                 <Dropdown.Toggle id="dropdown-autoclose-true">
                   Outdoor
@@ -159,7 +160,7 @@ const Header = () => {
                   <Dropdown.Item href="#">Trampolines</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-             
+
               <Dropdown className="d-inline mx-2">
                 <Dropdown.Toggle id="dropdown-autoclose-true">
                   Gaming
@@ -171,11 +172,51 @@ const Header = () => {
                   <Dropdown.Item href="#">PC Gaming</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-
-						
             </div>
           </div>
         </Container>
+      </div>
+      <div>
+        {role === 200 ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              padding: "20px 0",
+              backgroundColor: "#ebebf0",
+              cursor: "pointer",
+            }}
+          >
+            <div>
+              <NavLink
+                to="/admin-create-category"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                Create Category
+              </NavLink>
+            </div>
+            <div className="admin-navbar">
+              <NavLink
+                to="/admin-create-brands"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                Create Brands
+              </NavLink>
+            </div>
+            <div className="admin-navbar">
+              <NavLink
+                to="/admin-create-age-categ"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                Create Age-Categories
+              </NavLink>
+            </div>
+          </div>
+        ) : (
+          <div>
+            
+          </div>
+        )}
       </div>
     </>
   );
