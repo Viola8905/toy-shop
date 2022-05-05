@@ -34,19 +34,32 @@ const Pages = () => {
            <Route index element={<Gallery />} />
            <Route
              exact
-             path="/admin-create-category"
-             element={<AdminCategories/>}
+             path="/product-details/:name"
+             element={<ProductPage />}
            />
-           <Route exact path="/admin-create-brands" element={<AdminBrands/>} />
-           <Route exact path="/admin-create-age-categ" element={<AdminAges/>} />
+           <Route
+             exact
+             path="/admin-create-category"
+             element={<AdminCategories />}
+           />
+           <Route exact path="/admin-create-brands" element={<AdminBrands />} />
+           <Route
+             exact
+             path="/admin-create-age-categ"
+             element={<AdminAges />}
+           />
          </Route>
        );
      } else if (isAuth && role == 100) {
        return (
-          <Route exact path="/" element={<Dashboard />}>
-             <Route index element={<Gallery />} />
-					</Route>
-           
+         <Route exact path="/" element={<Dashboard />}>
+           <Route
+             exact
+             path="/product-details/:name"
+             element={<ProductPage />}
+           />
+           <Route index element={<Gallery />} />
+         </Route>
        );
      }
 	 }

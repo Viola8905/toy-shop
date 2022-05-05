@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import BackBtn from "../../components/backBtn/BackBtn";
 import poshta from "../../img/nova-poshta.png";
-import Edit from '../../img/edit.png';
-import Checked from '../../img/checked.png'
+import Edit from "../../img/edit.png";
+import Checked from "../../img/checked.png";
 
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
@@ -31,10 +31,12 @@ const ProductPage = () => {
   const [show, setShow] = useState(false);
   const target = useRef(null);
 
-	const [edit, setEdit] = useState(false);
-	const [reviewEditing, setReviewEditing] = useState(null);
-	const [editingText, setEditingText] = useState("");
-	const [editingRating, setEditingRating] = useState(1);
+  const [edit, setEdit] = useState(false);
+  const [reviewEditing, setReviewEditing] = useState(null);
+  const [editingText, setEditingText] = useState("");
+  const [editingRating, setEditingRating] = useState(1);
+
+  const [callback, setCallback] = useState(false);
 
   // useEffect(() => {
 
@@ -49,8 +51,9 @@ const ProductPage = () => {
           `http://api.toy-store.dev-1.folkem.xyz/api/v1/products/${query}`
         );
 
-      	 dispatch(setProduct(response.data.data));
+        dispatch(setProduct(response.data.data));
         setProductReviews(response.data.data.reviews);
+        setCallback(!callback);
       } catch (e) {
         console.log(`Error from useEffect: ${e}`);
       }
@@ -61,54 +64,52 @@ const ProductPage = () => {
     return function cleanup() {
       isApiSubscribed = false;
     };
-  }, [query]);
+  }, [query, callback]);
 
-  const deleteReview = (id) => {
-    dispatch(
-      removeReview(
-        id,
-        () =>
-          setProductReviews([
-            ...productReviews.filter((review) => review.id !== id),
-          ]),
-        () => alert("Error")
-      )
-    );
+  
+  const deleteReview = async (id) => {
+    try {
+      const res = await axios.delete(
+        `http://api.toy-store.dev-1.folkem.xyz/api/v1/product-reviews/${id}`,
+        {
+          headers: { sanctum: `${localStorage.getItem("token")}` },
+        }
+      );
+      // alert(res.data.msg);
+      setCallback(!callback);
+    } catch (err) {
+      alert(err.response.data.msg);
+    }
   };
-
-	function submitEdits (reviewId) {
-		let rating = editingRating;
-		let text = editingText;
-		let id = reviewId;
-		 const product = {rating,text,id};
-     
-     fetch(`http://api.toy-store.dev-1.folkem.xyz/api/v1/product-reviews/${id}`, {
-       method: "PATCH",
-       headers: {
-         sanctum: `${localStorage.getItem("token")}`,
-         Accept: "application/json",
-         "Content-Type": "application/json",
-       },
-       body: JSON.stringify(product),
-     })
-       .then((result) => {})
-       .catch((error) => {
-         console.error("Error", error);
-       });
-
-
-		 const updatedReviews = [...productReviews].map((review) => {
-       if (review.id === id) {
-				 review.rating = editingRating;
-         review.text = editingText;
-       }
-       return review;
-     });
-     setProductReviews(updatedReviews);
-     setReviewEditing(null);
-	}
-
  
+
+  function submitEdits(reviewId) {
+    let rating = editingRating;
+    let text = editingText;
+    let id = reviewId;
+    const product = { rating, text, id };
+
+    fetch(
+      `http://api.toy-store.dev-1.folkem.xyz/api/v1/product-reviews/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          sanctum: `${localStorage.getItem("token")}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(product),
+      }
+    )
+      .then((result) => {
+        setCallback(!callback);
+      })
+      .catch((error) => {
+        console.error("Error", error);
+      });
+
+    setReviewEditing(null);
+  }
 
   return (
     <div>
@@ -271,7 +272,6 @@ const ProductPage = () => {
             )}
 
             {productReviews.map((review) => {
-							
               return (
                 <div key={review.id}>
                   <Card style={{ marginTop: "20px" }}>
@@ -331,7 +331,11 @@ const ProductPage = () => {
                                   <div
                                     className="edit"
                                     style={{}}
-                                    onClick={() => setReviewEditing(review.id)}
+                                    onClick={() => {
+                                      setReviewEditing(review.id);
+                                      setEditingText(review.text);
+                                      setEditingRating(review.rating);
+                                    }}
                                   >
                                     <img
                                       src={Edit}
@@ -366,7 +370,9 @@ const ProductPage = () => {
                           <Form>
                             <Form.Control
                               defaultValue={review.text}
-                              onChange={(e) => setEditingText(e.target.value)}
+                              onChange={(e) => {
+                                setEditingText(e.target.value);
+                              }}
                             />
                           </Form>
                         </>
