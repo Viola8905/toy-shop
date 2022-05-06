@@ -16,7 +16,7 @@
     text-transform: uppercase;
     margin-bottom: 10px;
 }
-.categories input, button{
+.categories input{
     height: 35px;
     border: none;
     outline: none;

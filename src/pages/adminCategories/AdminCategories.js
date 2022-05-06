@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import BackBtn from "../../components/backBtn/BackBtn";
+import Pagination from "../../components/pagination/Pagination";
 import "./adminCategories.css";
 const AdminCategories = () => {
   const [categories, setCategories] = useState([]);
@@ -80,9 +81,18 @@ const AdminCategories = () => {
     };
  
 
+ const [currentPage, setCurrentPage] = useState(1);
+ const [categoriesPerPage] = useState(2);
+ const lastPostIndex = currentPage * categoriesPerPage;
+ const firstPostIndex = lastPostIndex - categoriesPerPage;
+ const currentCategories = categories.slice(firstPostIndex, lastPostIndex);
+
+ const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+
   return (
     <div>
-      {/* <BackBtn /> */}
+      <BackBtn />
 
       <div className="categories">
         <form onSubmit={createCategory}>
@@ -99,23 +109,26 @@ const AdminCategories = () => {
         </form>
 
         <div className="col">
-          {categories.map((category) => (
+          {currentCategories.map((category) => (
             <div className="row" key={category.id}>
               <p>{category.name}</p>
               <div>
                 <button
-                onClick={() => editCategory(category.id, category.name)}
+                  onClick={() => editCategory(category.id, category.name)}
                 >
                   Edit
                 </button>
-                <button
-                 onClick={() => deleteCategory(category.id)}
-                >
+                <button onClick={() => deleteCategory(category.id)}>
                   Delete
                 </button>
               </div>
             </div>
           ))}
+          <Pagination
+            postsPerPage={categoriesPerPage}
+            totalPosts={categories.length}
+            paginate={paginate}
+          />
         </div>
       </div>
     </div>
