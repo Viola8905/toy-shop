@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import BackBtn from "../../components/backBtn/BackBtn";
-import Pagination from "../../components/pagination/Pagination";
+import BackBtn from "../../../components/backBtn/BackBtn";
+import Pagination from "../../../components/pagination/Pagination";
 import "./adminAges.css";
 const AdminAges = () => {
   const [ages, setAges] = useState([]);
@@ -95,11 +95,13 @@ const AdminAges = () => {
   return (
     <div>
       <BackBtn />
-     
+
       <div className="categories">
         <form onSubmit={createAge}>
           {/* ------------------------ */}
-          <label htmlFor="age" style={{marginTop:"0"}}>Age CAtegories Name</label>
+          <label htmlFor="age" style={{ marginTop: "0" }}>
+            Age CAtegories Name
+          </label>
           <input
             type="text"
             name="age"
@@ -109,7 +111,7 @@ const AdminAges = () => {
           />
 
           {/* ------------------------ */}
-          <label htmlFor="age">From</label>
+          <label htmlFor="age">months From</label>
           <input
             type="text"
             name="age"
@@ -119,7 +121,7 @@ const AdminAges = () => {
           />
 
           {/* ---------------------------- */}
-          <label htmlFor="age">To</label>
+          <label htmlFor="age">months To</label>
           <input
             type="text"
             name="age"
@@ -128,13 +130,15 @@ const AdminAges = () => {
             onChange={(e) => setAgeTo(e.target.value)}
           />
           {/* ------------------------ */}
-					<br />
-          <button type="submit" style={{margin:"30px auto"}}>{onEdit ? "Update" : "Create"}</button>
+          <br />
+          <button type="submit" style={{ margin: "30px auto" }}>
+            {onEdit ? "Update" : "Create"}
+          </button>
         </form>
 
         <div className="col">
           {currentAges.map((currAge) => (
-            <>
+            <div key={currAge.id}>
               {id === currAge.id ? (
                 <div
                   className="row"
@@ -171,7 +175,7 @@ const AdminAges = () => {
                   </div>
                 </div>
               )}
-            </>
+            </div>
           ))}
           <Pagination
             postsPerPage={agesPerPage}

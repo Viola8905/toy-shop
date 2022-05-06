@@ -103,7 +103,6 @@ const Auth = () => {
             )}
             {isLogin ? (
               <div style={{ width: "100%" }}>
-                <span>Hello</span>
                 <Button
                   variant={"outline-dark"}
                   onClick={() => dispatch(login(email, password))}

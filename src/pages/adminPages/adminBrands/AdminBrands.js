@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import BackBtn from '../../components/backBtn/BackBtn'
+import React, { useEffect, useState } from "react";
+import BackBtn from "../../../components/backBtn/BackBtn";
 import axios from "axios";
 
 import { useDispatch } from "react-redux";
-import Pagination from "../../components/pagination/Pagination";
+import Pagination from "../../../components/pagination/Pagination";
 import "./adminBrands.css";
 const AdminBrands = () => {
-	const [brands, setBrands] = useState([]);
+  const [brands, setBrands] = useState([]);
   const [onEdit, setOnEdit] = useState(false);
   const [brand, setBrand] = useState("");
   const [id, setID] = useState("");
   const [callback, setCallback] = useState(false);
 
-	useEffect(() => {
+  useEffect(() => {
     const getBrands = async () => {
       try {
         const { data: response } = await axios.get(
@@ -27,8 +27,7 @@ const AdminBrands = () => {
     getBrands();
   }, [callback]);
 
-
-	const createBrand = async (e) => {
+  const createBrand = async (e) => {
     e.preventDefault();
     try {
       if (onEdit) {
@@ -80,8 +79,7 @@ const AdminBrands = () => {
     }
   };
 
-
-	const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [brandsPerPage] = useState(3);
   const lastPostIndex = currentPage * brandsPerPage;
   const firstPostIndex = lastPostIndex - brandsPerPage;
@@ -89,11 +87,10 @@ const AdminBrands = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-
-	return (
+  return (
     <div>
       <BackBtn />
-      
+
       <div className="categories">
         <form onSubmit={createBrand}>
           <label htmlFor="category">Brand</label>
@@ -130,9 +127,7 @@ const AdminBrands = () => {
                   <p>{currBrand.name}</p>
                   <div>
                     <button
-                      onClick={() =>
-                        editBrand(currBrand.id, currBrand.name)
-                      }
+                      onClick={() => editBrand(currBrand.id, currBrand.name)}
                     >
                       Edit
                     </button>
@@ -153,6 +148,6 @@ const AdminBrands = () => {
       </div>
     </div>
   );
-}
+};
 
-export default AdminBrands
+export default AdminBrands;

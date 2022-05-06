@@ -5,9 +5,10 @@ import Gallery from "../components/gallery/Gallery";
 import Dashboard from "./Dashboard";
 import AuthPage from "../pages/authPage/AuthPage";
 import ProductPage from "../pages/productPage.js/ProductPage";
-import AdminCategories from "../pages/adminCategories/AdminCategories";
-import AdminBrands from "../pages/adminBrands/AdminBrands";
-import AdminAges from "../pages/adminAges/AdminAges";
+import AdminCategories from "../pages/adminPages/adminCategories/AdminCategories";
+import AdminBrands from "../pages/adminPages/adminBrands/AdminBrands";
+import AdminAges from "../pages/adminPages/adminAges/AdminAges";
+import AdminProduct from "../pages/adminPages/adminProduct/AdminProduct";
 const Pages = () => {
 	 const isAuth = useSelector((state) => state.user.isAuth);
 	 const role = useSelector((state) => state.user.currentUser.role_id)
@@ -47,6 +48,11 @@ const Pages = () => {
              exact
              path="/admin-create-age-categ"
              element={<AdminAges />}
+           />
+           <Route
+             exact
+             path="/admin-create-product"
+             element={<AdminProduct />}
            />
          </Route>
        );

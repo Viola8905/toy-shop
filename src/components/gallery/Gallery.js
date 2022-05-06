@@ -10,27 +10,21 @@ import { setProduct, setProducts } from "../../reducers/productsReducer";
 // import { useDispatch, useSelector } from "react-redux";
 
 const Gallery = () => {
-  const [filter, setFilter] = useState("");
-  // const products = useSelector((state) => state.products.Products);
+  
   const [products, setProducts1] = useState([]);
-
+	const [callback, setCallback] = useState(false);
   const dispatch = useDispatch();
-  const params = window.location.search ? window.location.search : null;
+  
 
   useEffect(() => {
     const Posts = async () => {
       try {
-        let query;
-
-        if (params && !filter) query = params;
-        else query = filter;
-
         const response = await axios.get(
           "http://api.toy-store.dev-1.folkem.xyz/api/v1/products"
         );
         dispatch(setProducts(response.data.data));
         setProducts1(response.data.data);
-        // console.log(JSON.stringify(response.data.data) + "result");
+				
       } catch (e) {
         console.log(`Error from useEffect: ${e}`);
       }
@@ -38,19 +32,11 @@ const Gallery = () => {
 
     Posts();
 
-    return () => {
-      Posts();
-    };
-  }, [filter, params]);
+   
+  }, [callback]);
 
-  // useEffect(() => {
-  // 	dispatch(getProducts());
-  // 	return () => {
-  //    dispatch(getProducts());
-  //   };
 
-  // }, []);
-
+//-------- pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(9);
   const lastPostIndex = currentPage * postsPerPage;
@@ -58,7 +44,7 @@ const Gallery = () => {
   const currentPost = products.slice(firstPostIndex, lastPostIndex);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
+//--------------------
   return (
     <>
       <div className="gallery-wrapper">
