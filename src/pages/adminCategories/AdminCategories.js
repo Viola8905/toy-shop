@@ -11,7 +11,7 @@ const AdminCategories = () => {
   const [id, setID] = useState("");
 	const [callback, setCallback] = useState(false);
 
-  const dispatch = useDispatch();
+  
   useEffect(() => {
     const getCategories = async () => {
       try {
