@@ -19,7 +19,7 @@ const AdminCategories = () => {
           "http://api.toy-store.dev-1.folkem.xyz/api/v1/categories"
         );
         setCategories(response.data);
-         console.log(response.data)
+        
       } catch (error) {
         console.error(error.message);
       }
@@ -52,6 +52,7 @@ const AdminCategories = () => {
       }
       setOnEdit(false);
       setCategory("");
+			setID("")
       setCallback(!callback);
     } catch (err) {
       alert(err.response.data.msg);
@@ -109,20 +110,34 @@ const AdminCategories = () => {
         </form>
 
         <div className="col">
-          {currentCategories.map((category) => (
-            <div className="row" key={category.id}>
-              <p>{category.name}</p>
-              <div>
-                <button
-                  onClick={() => editCategory(category.id, category.name)}
+          {currentCategories.map((currCategory) => (
+            <>
+              {id === currCategory.id ? (
+                <div
+                  className="row"
+                  key={currCategory.id}
+                  style={{ border: "2px solid green",textAlign:"center", fontWeight:"500"}}
                 >
-                  Edit
-                </button>
-                <button onClick={() => deleteCategory(category.id)}>
-                  Delete
-                </button>
-              </div>
-            </div>
+                  <div style={{ color: "green",alignSelf:"center" }}>{currCategory.name}</div>
+                </div>
+              ) : (
+                <div className="row" key={currCategory.id}>
+                  <p>{currCategory.name}</p>
+                  <div>
+                    <button
+                      onClick={() =>
+                        editCategory(currCategory.id, currCategory.name)
+                      }
+                    >
+                      Edit
+                    </button>
+                    <button onClick={() => deleteCategory(currCategory.id)}>
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
           ))}
           <Pagination
             postsPerPage={categoriesPerPage}
