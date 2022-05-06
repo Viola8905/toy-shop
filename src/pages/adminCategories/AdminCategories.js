@@ -83,7 +83,7 @@ const AdminCategories = () => {
  
 
  const [currentPage, setCurrentPage] = useState(1);
- const [categoriesPerPage] = useState(2);
+ const [categoriesPerPage] = useState(3);
  const lastPostIndex = currentPage * categoriesPerPage;
  const firstPostIndex = lastPostIndex - categoriesPerPage;
  const currentCategories = categories.slice(firstPostIndex, lastPostIndex);

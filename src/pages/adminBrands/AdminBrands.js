@@ -82,7 +82,7 @@ const AdminBrands = () => {
 
 
 	const [currentPage, setCurrentPage] = useState(1);
-  const [brandsPerPage] = useState(2);
+  const [brandsPerPage] = useState(3);
   const lastPostIndex = currentPage * brandsPerPage;
   const firstPostIndex = lastPostIndex - brandsPerPage;
   const currentBrands = brands.slice(firstPostIndex, lastPostIndex);
