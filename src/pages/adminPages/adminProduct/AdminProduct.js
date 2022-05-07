@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import BackBtn from "../../../components/backBtn/BackBtn";
 import "./adminProduct.css";
 
-
-
 // -------------------start---------------------------------------------------------
 import PropTypes from "prop-types";
 import { useAutocomplete } from "@mui/base/AutocompleteUnstyled";
@@ -172,15 +170,25 @@ const Listbox = styled("ul")(
 
 // -------------------------end------------------------------------------------------------
 
+// const initialState = {
+//   name: "frttttt",
+//   description: "test tttt",
+//   price: 30,
+//   amount: 10,
+//   is_best_deal: true,
+//   age_category_id: 2,
+//   brand_id: 2,
+//   "category_ids[]": [4],
+// };
 const initialState = {
-  name: "front testtt",
-  description: "test t",
-  price: 30,
-  amount: 10,
+  name: "",
+  description: "",
+  price: 0,
+  amount: 0,
   is_best_deal: true,
-  age_category_id: 2,
-  brand_id: 2,
-  "category_ids[]": [4],
+  age_category_id: 0,
+  brand_id: 0,
+  "category_ids[]": [],
 };
 const AdminProduct = () => {
   const [product, setProduct] = useState(initialState);
@@ -189,29 +197,29 @@ const AdminProduct = () => {
   const [ages, setAges] = useState([]);
   const [callback, setCallback] = useState(false);
 
-	const categories1 = useSelector((state) => state.categories.Categories)
+  const categories1 = useSelector((state) => state.categories.Categories);
 
   useEffect(() => {
-    const getCategories = async () => {
+    // const getCategories = async () => {
+    //   try {
+    //     const { data: response } = await axios.get(
+    //       "http://api.toy-store.dev-1.folkem.xyz/api/v1/categories"
+    //     );
+    //     setCategories(response.data);
+    //   } catch (error) {
+    //     console.error(error.message);
+    //   }
+    // };
+    const getBrands = async () => {
       try {
         const { data: response } = await axios.get(
-          "http://api.toy-store.dev-1.folkem.xyz/api/v1/categories"
+          "http://api.toy-store.dev-1.folkem.xyz/api/v1/brands"
         );
-        setCategories(response.data);
+        setBrands(response.data);
       } catch (error) {
         console.error(error.message);
       }
     };
-   const getBrands = async () => {
-     try {
-       const { data: response } = await axios.get(
-         "http://api.toy-store.dev-1.folkem.xyz/api/v1/brands"
-       );
-       setBrands(response.data);
-     } catch (error) {
-       console.error(error.message);
-     }
-   };
     const getAges = async () => {
       try {
         const { data: response } = await axios.get(
@@ -222,8 +230,8 @@ const AdminProduct = () => {
         console.error(error.message);
       }
     };
-		getAges();
-    getCategories();
+    getAges();
+    // getCategories();
     getBrands();
   }, [callback]);
 
@@ -232,12 +240,20 @@ const AdminProduct = () => {
     setProduct({ ...product, [name]: value });
   };
 
-  const handleSubmit = async () => {
-    // e.preventDefault();
+  const handleCategories = () => {
+    // console.log(value);
+    setProduct((prevProduct) => ({ ...prevProduct, "category_ids[]": value }));
+		console.log(product);
+		// console.log("---")
+  };
+  const handleSubmit = async (e) => {
     try {
       // if (!isAdmin) return alert("You are not an admin");
       // if (!images) return alert("no image upload");
-
+      // setProduct({ ...product, "category_ids[]": value });
+      // console.log(product);
+			 handleCategories();
+			 console.log(product)
       const res = await axios.post(
         "http://api.toy-store.dev-1.folkem.xyz/api/v1/admin/products",
         {
@@ -247,20 +263,15 @@ const AdminProduct = () => {
           headers: { sanctum: `${localStorage.getItem("token")}` },
         }
       );
-
       setCallback(!callback);
       // navigate("/");
     } catch (err) {
+      console.log(product);
       alert(err.response.data.msg);
     }
   };
 
-
-	
-
-
-
-// ----------start-----------
+  // ----------start-----------
   const {
     getRootProps,
     getInputLabelProps,
@@ -274,25 +285,22 @@ const AdminProduct = () => {
     setAnchorEl,
   } = useAutocomplete({
     id: "customized-hook-demo",
-    defaultValue: [categories1[1]],
+    defaultValue: [categories1[0]],
     multiple: true,
     options: categories1,
     getOptionLabel: (option) => option.name,
   });
 
-// --------end-----------------
+  // --------end-----------------
 
-
-
-
-
-
-
-
+  // product["category_ids[]"] = value;
+  // setProduct({...product,category_ids[]:value })
+	console.log(product)
   return (
     <div>
       <BackBtn />
       AdminProduct
+      {/* <button onClick={()=>handleSubmit()}>Add product</button> */}
       <div className="create_product">
         {/* <div className="upload">
           <input type="file" name="file" id="file_up" onChange={handleUpload} />
@@ -308,40 +316,17 @@ const AdminProduct = () => {
           )}
         </div> */}
 
-        <form action="" onSubmit={handleSubmit}>
+        <form
+        // action="" onSubmit={handleSubmit}
+        >
           <div className="row">
-            <label htmlFor="product_id">Product Id</label>
+            <label htmlFor="name">Name</label>
             <input
               type="text"
-              name="product_id"
-              id="product_id"
+              name="name"
+              id="name"
               required
-              value={product.product_id}
-              onChange={handleChangeInput}
-              // disabled={onEdit}
-            />
-          </div>
-
-          <div className="row">
-            <label htmlFor="title">Title</label>
-            <input
-              type="text"
-              name="title"
-              id="title"
-              required
-              value={product.title}
-              onChange={handleChangeInput}
-            />
-          </div>
-
-          <div className="row">
-            <label htmlFor="price">price</label>
-            <input
-              type="number"
-              name="price"
-              id="price"
-              required
-              value={product.price}
+              value={product.name}
               onChange={handleChangeInput}
             />
           </div>
@@ -359,40 +344,47 @@ const AdminProduct = () => {
               placeholder="Please provide description"
             />
           </div>
+
           <div className="row">
-            <label htmlFor="content">content</label>
-            <textarea
-              type="text"
-              name="content"
-              id="content"
+            <label htmlFor="price">price</label>
+            <input
+              type="number"
+              name="price"
+              id="price"
               required
-              value={product.content}
-              rows="7"
+              value={product.price}
               onChange={handleChangeInput}
-              placeholder="Please provide content"
+            />
+          </div>
+          <div className="row">
+            <label htmlFor="amount">amount</label>
+            <input
+              type="number"
+              name="amount"
+              id="amount"
+              required
+              value={product.amount}
+              onChange={handleChangeInput}
             />
           </div>
 
           <div className="row">
-            <label htmlFor="categories">categories:</label>
-            <select
-              name="category"
-              // value={product["category_ids[]"]}
+            <label htmlFor="is_best_deal">Is best deal</label>
+            <input
+              type="text"
+              name="is_best_deal"
+              id="is_best_deal"
+              required
+              value={product.is_best_deal}
               onChange={handleChangeInput}
-            >
-              <option value="">Please select a category</option>
-              {categories.map((category) => (
-                <option value={category.id} key={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
+            />
           </div>
+
           <div className="row">
-            <label htmlFor="brands">brands:</label>
+            <label htmlFor="brand_id">brands:</label>
             <select
-              name="brand"
-              // value={product.brand_id}
+              name="brand_id"
+              value={product.brand_id}
               onChange={handleChangeInput}
             >
               <option value="">Please select a brand</option>
@@ -404,10 +396,10 @@ const AdminProduct = () => {
             </select>
           </div>
           <div className="row">
-            <label htmlFor="ages">Вікова категорія:</label>
+            <label htmlFor="age_category_id">Вікова категорія:</label>
             <select
-              name="age-category"
-              // value={product.brand_id}
+              name="age_category_id"
+              value={product.age_category_id}
               onChange={handleChangeInput}
             >
               <option value="">Please select an age category</option>
@@ -425,6 +417,12 @@ const AdminProduct = () => {
               <InputWrapper
                 ref={setAnchorEl}
                 className={focused ? "focused" : ""}
+                // name="category_ids[]"
+                // value={product["category_ids[]"]}
+                onChange={(e) => setProduct((prevProduct) => ({
+                  ...prevProduct,
+                  "category_ids[]": e.target.value,
+                }))}
               >
                 {value.map((option, index) => (
                   <StyledTag label={option.name} {...getTagProps({ index })} />
@@ -445,8 +443,20 @@ const AdminProduct = () => {
             ) : null}
           </Root>
           {/* -------------------- */}
-          {/* <button type="submit">{onEdit ? "Update" : "Create"}</button> */}
+          <button onClick={() => handleSubmit()}>Add product</button>
+          {/* <button type="submit">Create</button> */}
         </form>
+        {/* <button
+          onClick={() =>
+            setProduct((prevProduct) => ({
+              ...prevProduct,
+              "category_ids[]": value,
+            }))
+          }
+        >
+          Add
+        </button> */}
+        <button onClick={() => handleCategories()}>Add</button>
       </div>
     </div>
   );
