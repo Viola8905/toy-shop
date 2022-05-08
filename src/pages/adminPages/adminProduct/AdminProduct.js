@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import BackBtn from "../../../components/backBtn/BackBtn";
 import "./adminProduct.css";
 
@@ -181,13 +181,13 @@ const Listbox = styled("ul")(
 //   "category_ids[]": [4],
 // };
 const initialState = {
-  name: "",
-  description: "",
-  price: 0,
-  amount: 0,
+  name: "tst",
+  description: "tst",
+  price: 29,
+  amount: 29,
   is_best_deal: true,
-  age_category_id: 0,
-  brand_id: 0,
+  age_category_id: 2,
+  brand_id: 2,
   "category_ids[]": [],
 };
 const AdminProduct = () => {
@@ -196,20 +196,16 @@ const AdminProduct = () => {
   const [brands, setBrands] = useState([]);
   const [ages, setAges] = useState([]);
   const [callback, setCallback] = useState(false);
-
+	
   const categories1 = useSelector((state) => state.categories.Categories);
 
+
+	let arr = [];
+
+
+  
   useEffect(() => {
-    // const getCategories = async () => {
-    //   try {
-    //     const { data: response } = await axios.get(
-    //       "http://api.toy-store.dev-1.folkem.xyz/api/v1/categories"
-    //     );
-    //     setCategories(response.data);
-    //   } catch (error) {
-    //     console.error(error.message);
-    //   }
-    // };
+   
     const getBrands = async () => {
       try {
         const { data: response } = await axios.get(
@@ -240,20 +236,14 @@ const AdminProduct = () => {
     setProduct({ ...product, [name]: value });
   };
 
-  const handleCategories = () => {
-    // console.log(value);
-    setProduct((prevProduct) => ({ ...prevProduct, "category_ids[]": value }));
-		console.log(product);
-		// console.log("---")
-  };
+  
   const handleSubmit = async (e) => {
     try {
       // if (!isAdmin) return alert("You are not an admin");
       // if (!images) return alert("no image upload");
-      // setProduct({ ...product, "category_ids[]": value });
-      // console.log(product);
-			 handleCategories();
-			 console.log(product)
+      // setProduct({ ...product, "category_ids[]": [4,17,19] });
+     
+       console.log(product)
       const res = await axios.post(
         "http://api.toy-store.dev-1.folkem.xyz/api/v1/admin/products",
         {
@@ -272,6 +262,8 @@ const AdminProduct = () => {
   };
 
   // ----------start-----------
+	// let value1 = value
+	
   const {
     getRootProps,
     getInputLabelProps,
@@ -285,40 +277,45 @@ const AdminProduct = () => {
     setAnchorEl,
   } = useAutocomplete({
     id: "customized-hook-demo",
-    defaultValue: [categories1[0]],
+    // defaultValue: [categories1[0]],
     multiple: true,
     options: categories1,
     getOptionLabel: (option) => option.name,
+    onChange: Console
   });
 
+	useEffect (()=>{
+		setProduct({ ...product, "category_ids[]": value.map((el)=>(el.id)) });
+	},[value])
+	console.log(product)
+	// console.log(() => value1)
+	//  value.forEach((object) => {
+	//    arr.push(object.id);
+	// 	 setProduct({ ...product, "category_ids[]": arr})
+	//  });
+	// console.log(product["category_ids[]"]);
+
+// value:product["category_ids[]"],
+// onInputChange:()=> setProduct({ ...product, "category_ids[]": [1,2,3]})
   // --------end-----------------
 
-  // product["category_ids[]"] = value;
-  // setProduct({...product,category_ids[]:value })
-	console.log(product)
+    // value.forEach((object) => {
+    //   arr.push(object.id);
+    // });
+// // console.log(product)
+// 	// console.log(value)
+let value1 = value
+// 	console.log(value)
+function Console (value){
+	console.log(value)
+}
   return (
     <div>
       <BackBtn />
       AdminProduct
-      {/* <button onClick={()=>handleSubmit()}>Add product</button> */}
+      <button onClick={() => handleSubmit()}>Add product</button>
       <div className="create_product">
-        {/* <div className="upload">
-          <input type="file" name="file" id="file_up" onChange={handleUpload} />
-          {loading ? (
-            <div id="file_img">
-              <Loading />
-            </div>
-          ) : (
-            <div id="file_img" style={styleUpload}>
-              <img src={images ? images.url : ""} alt="" />
-              <span onClick={handleDestroy}>X</span>
-            </div>
-          )}
-        </div> */}
-
-        <form
-        // action="" onSubmit={handleSubmit}
-        >
+        <form action="" onSubmit={handleSubmit}>
           <div className="row">
             <label htmlFor="name">Name</label>
             <input
@@ -330,7 +327,6 @@ const AdminProduct = () => {
               onChange={handleChangeInput}
             />
           </div>
-
           <div className="row">
             <label htmlFor="description">description</label>
             <textarea
@@ -344,7 +340,6 @@ const AdminProduct = () => {
               placeholder="Please provide description"
             />
           </div>
-
           <div className="row">
             <label htmlFor="price">price</label>
             <input
@@ -367,7 +362,6 @@ const AdminProduct = () => {
               onChange={handleChangeInput}
             />
           </div>
-
           <div className="row">
             <label htmlFor="is_best_deal">Is best deal</label>
             <input
@@ -379,7 +373,6 @@ const AdminProduct = () => {
               onChange={handleChangeInput}
             />
           </div>
-
           <div className="row">
             <label htmlFor="brand_id">brands:</label>
             <select
@@ -418,11 +411,8 @@ const AdminProduct = () => {
                 ref={setAnchorEl}
                 className={focused ? "focused" : ""}
                 // name="category_ids[]"
-                // value={product["category_ids[]"]}
-                onChange={(e) => setProduct((prevProduct) => ({
-                  ...prevProduct,
-                  "category_ids[]": e.target.value,
-                }))}
+								// value={product["category_ids[]"]}
+                // onChange={handleChangeInput}
               >
                 {value.map((option, index) => (
                   <StyledTag label={option.name} {...getTagProps({ index })} />
@@ -442,10 +432,27 @@ const AdminProduct = () => {
               </Listbox>
             ) : null}
           </Root>
+
           {/* -------------------- */}
-          <button onClick={() => handleSubmit()}>Add product</button>
-          {/* <button type="submit">Create</button> */}
+
+          <button
+            type="submit"
+            // onClick={()=>handleSubmit()}
+          >
+            Create
+          </button>
         </form>
+        <button
+          onClick={() =>
+            setProduct((prevProduct) => ({
+              ...prevProduct,
+              "category_ids[]": arr,
+            }))
+          }
+        >
+          Підтвердити категорії
+        </button>
+        <button >Check</button>
         {/* <button
           onClick={() =>
             setProduct((prevProduct) => ({
@@ -456,7 +463,7 @@ const AdminProduct = () => {
         >
           Add
         </button> */}
-        <button onClick={() => handleCategories()}>Add</button>
+        {/* <button onClick={() => handleCategories()}>Add</button> */}
       </div>
     </div>
   );
