@@ -8,7 +8,7 @@ export const getProducts = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get(
-        `http://api.toy-store.dev-1.folkem.xyz/api/v1/products`
+        `${process.env.BASE_URL} products`
       );
 
       dispatch(setProducts(response.data.data));
@@ -22,7 +22,7 @@ export const postReview = (product_id, rating, text) => {
   return async () => {
     try {
       const response = await axios.post(
-        `http://api.toy-store.dev-1.folkem.xyz/api/v1/product-reviews`,
+        `${process.env.REACT_APP_BASE_URL}product-reviews`,
         {
           product_id,
           rating,
@@ -43,7 +43,7 @@ export const getProductById = (id, reviews) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(
-        `http://api.toy-store.dev-1.folkem.xyz/api/v1/products/${id}`
+        `${process.env.REACT_APP_BASE_URL}products/${id}`
       );
       dispatch(setProducts(response.data.data));
       reviews();
@@ -57,15 +57,14 @@ export const removeReview = (id, success) => {
   return async () => {
     try {
       const response = await axios.delete(
-        `http://api.toy-store.dev-1.folkem.xyz/api/v1/product-reviews/${id}`,
+        `${process.env.REACT_APP_BASE_URL}product-reviews/${id}`,
         {
           headers: { sanctum: `${localStorage.getItem("token")}` },
         }
       );
-       success();
-			
+      success();
     } catch (e) {
-			console.log("error");
+      console.log("error");
       alert(e.response.data.message);
     }
   };

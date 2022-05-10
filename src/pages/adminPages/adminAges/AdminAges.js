@@ -17,7 +17,7 @@ const AdminAges = () => {
     const getAges = async () => {
       try {
         const { data: response } = await axios.get(
-          "http://api.toy-store.dev-1.folkem.xyz/api/v1/age-categories"
+          `${process.env.REACT_APP_BASE_URL}age-categories`
         );
         setAges(response.data);
       } catch (error) {
@@ -33,7 +33,7 @@ const AdminAges = () => {
     try {
       if (onEdit) {
         const res = await axios.post(
-          `http://api.toy-store.dev-1.folkem.xyz/api/v1/admin/age-categories/${id}`,
+          `${process.env.REACT_APP_BASE_URL}admin/age-categories/${id}`,
           { name: ageName, from: ageFrom, to: ageTo },
           {
             headers: { sanctum: `${localStorage.getItem("token")}` },
@@ -42,7 +42,7 @@ const AdminAges = () => {
         // alert(res.data.msg);
       } else {
         const res = await axios.post(
-          "http://api.toy-store.dev-1.folkem.xyz/api/v1/admin/age-categories",
+          `${process.env.REACT_APP_BASE_URL}admin/age-categories`,
           { name: ageName, from: ageFrom, to: ageTo },
           {
             headers: { sanctum: `${localStorage.getItem("token")}` },
@@ -72,7 +72,7 @@ const AdminAges = () => {
   const deleteAge = async (id) => {
     try {
       const res = await axios.delete(
-        `http://api.toy-store.dev-1.folkem.xyz/api/v1/admin/age-categories/${id}`,
+        `${process.env.REACT_APP_BASE_URL}admin/age-categories/${id}`,
         {
           headers: { sanctum: `${localStorage.getItem("token")}` },
         }

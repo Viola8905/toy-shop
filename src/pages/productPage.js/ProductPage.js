@@ -38,17 +38,14 @@ const ProductPage = () => {
 
   const [callback, setCallback] = useState(false);
 
-  // useEffect(() => {
-
-  //   dispatch(getProductById(query, () => setProductReviews(product.reviews)));
-  // }, [product, query]);
+  
 
   useEffect(() => {
     let isApiSubscribed = true;
     const Posts = async () => {
       try {
         const response = await axios.get(
-          `http://api.toy-store.dev-1.folkem.xyz/api/v1/products/${query}`
+          `${process.env.REACT_APP_BASE_URL}products/${query}`
         );
 
         dispatch(setProduct(response.data.data));
@@ -70,7 +67,7 @@ const ProductPage = () => {
   const deleteReview = async (id) => {
     try {
       const res = await axios.delete(
-        `http://api.toy-store.dev-1.folkem.xyz/api/v1/product-reviews/${id}`,
+        `${process.env.REACT_APP_BASE_URL}product-reviews/${id}`,
         {
           headers: { sanctum: `${localStorage.getItem("token")}` },
         }
@@ -89,18 +86,15 @@ const ProductPage = () => {
     let id = reviewId;
     const product = { rating, text, id };
 
-    fetch(
-      `http://api.toy-store.dev-1.folkem.xyz/api/v1/product-reviews/${id}`,
-      {
-        method: "PATCH",
-        headers: {
-          sanctum: `${localStorage.getItem("token")}`,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(product),
-      }
-    )
+    fetch(`${process.env.REACT_APP_BASE_URL}product-reviews/${id}`, {
+      method: "PATCH",
+      headers: {
+        sanctum: `${localStorage.getItem("token")}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(product),
+    })
       .then((result) => {
         setCallback(!callback);
       })

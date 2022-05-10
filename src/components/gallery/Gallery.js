@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ProductItem from "../productItem/ProductItem";
 import Pagination from "../pagination/Pagination";
 import { setProduct, setProducts } from "../../reducers/productsReducer";
+
 // import { useDispatch, useSelector } from "react-redux";
 
 const Gallery = () => {
@@ -20,7 +21,7 @@ const Gallery = () => {
     const Posts = async () => {
       try {
         const response = await axios.get(
-          "http://api.toy-store.dev-1.folkem.xyz/api/v1/products"
+          `${process.env.REACT_APP_BASE_URL}products`
         );
         dispatch(setProducts(response.data.data));
         setProducts1(response.data.data);
@@ -34,6 +35,7 @@ const Gallery = () => {
 
    
   }, [callback]);
+	// console.log(process.env.REACT_APP_BASE_URL);
 
 
 //-------- pagination
@@ -48,6 +50,7 @@ const Gallery = () => {
   return (
     <>
       <div className="gallery-wrapper">
+      
         {currentPost.map((product) => (
           <div key={product.id}>
             <ProductItem toy={product} />

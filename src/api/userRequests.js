@@ -10,7 +10,7 @@ export const registration = async (
 ) => {
   try {
     const response = await axios.post(
-      `http://api.toy-store.dev-1.folkem.xyz/api/v1/register`,
+      `${process.env.REACT_APP_BASE_URL}register`,
       {
         first_name,
         middle_name,
@@ -31,7 +31,7 @@ export const login = (email, password) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        `http://api.toy-store.dev-1.folkem.xyz/api/v1/login`,
+        `${process.env.REACT_APP_BASE_URL}login`,
         {
           email,
           password,

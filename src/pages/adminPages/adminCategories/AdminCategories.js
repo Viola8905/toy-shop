@@ -17,7 +17,7 @@ const AdminCategories = () => {
     const getCategories = async () => {
       try {
         const { data: response } = await axios.get(
-          "http://api.toy-store.dev-1.folkem.xyz/api/v1/categories"
+          `${process.env.REACT_APP_BASE_URL}categories`
         );
         setCategories(response.data);
 				dispatch(setCategoriesRedux(response.data));
@@ -34,7 +34,7 @@ const AdminCategories = () => {
     try {
       if (onEdit) {
         const res = await axios.post(
-          `http://api.toy-store.dev-1.folkem.xyz/api/v1/admin/categories/${id}`,
+          `${process.env.REACT_APP_BASE_URL}admin/categories/${id}`,
           { name: category },
           {
             headers: { sanctum: `${localStorage.getItem("token")}` },
@@ -43,7 +43,7 @@ const AdminCategories = () => {
         // alert(res.data.msg);
       } else {
         const res = await axios.post(
-          "http://api.toy-store.dev-1.folkem.xyz/api/v1/admin/categories",
+          `${process.env.REACT_APP_BASE_URL}admin/categories`,
           { name: category },
           {
             headers: { sanctum: `${localStorage.getItem("token")}` },
@@ -69,7 +69,7 @@ const AdminCategories = () => {
   const deleteCategory = async (id) => {
     try {
       const res = await axios.delete(
-        `http://api.toy-store.dev-1.folkem.xyz/api/v1/admin/categories/${id}`,
+        `${process.env.REACT_APP_BASE_URL}admin/categories/${id}`,
         {
           headers: { sanctum: `${localStorage.getItem("token")}` },
         }

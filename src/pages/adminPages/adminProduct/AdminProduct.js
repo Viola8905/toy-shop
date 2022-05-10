@@ -170,24 +170,14 @@ const Listbox = styled("ul")(
 
 // -------------------------end------------------------------------------------------------
 
-// const initialState = {
-//   name: "frttttt",
-//   description: "test tttt",
-//   price: 30,
-//   amount: 10,
-//   is_best_deal: true,
-//   age_category_id: 2,
-//   brand_id: 2,
-//   "category_ids[]": [4],
-// };
 const initialState = {
-  name: "tst",
-  description: "tst",
-  price: 29,
-  amount: 29,
+  name: "",
+  description: "",
+  price: 0,
+  amount: 0,
   is_best_deal: true,
-  age_category_id: 2,
-  brand_id: 2,
+  age_category_id: 0,
+  brand_id: 0,
   "category_ids[]": [],
 };
 const AdminProduct = () => {
@@ -196,20 +186,16 @@ const AdminProduct = () => {
   const [brands, setBrands] = useState([]);
   const [ages, setAges] = useState([]);
   const [callback, setCallback] = useState(false);
-	
+
   const categories1 = useSelector((state) => state.categories.Categories);
 
+  let arr = [];
 
-	let arr = [];
-
-
-  
   useEffect(() => {
-   
     const getBrands = async () => {
       try {
         const { data: response } = await axios.get(
-          "http://api.toy-store.dev-1.folkem.xyz/api/v1/brands"
+          `${process.env.REACT_APP_BASE_URL}brands`
         );
         setBrands(response.data);
       } catch (error) {
@@ -219,7 +205,7 @@ const AdminProduct = () => {
     const getAges = async () => {
       try {
         const { data: response } = await axios.get(
-          "http://api.toy-store.dev-1.folkem.xyz/api/v1/age-categories"
+          `${process.env.REACT_APP_BASE_URL}age-categories`
         );
         setAges(response.data);
       } catch (error) {
@@ -236,16 +222,15 @@ const AdminProduct = () => {
     setProduct({ ...product, [name]: value });
   };
 
-  
   const handleSubmit = async (e) => {
     try {
       // if (!isAdmin) return alert("You are not an admin");
       // if (!images) return alert("no image upload");
       // setProduct({ ...product, "category_ids[]": [4,17,19] });
-     
-       console.log(product)
+
+      console.log(product);
       const res = await axios.post(
-        "http://api.toy-store.dev-1.folkem.xyz/api/v1/admin/products",
+        `${process.env.REACT_APP_BASE_URL}admin/products`,
         {
           ...product,
         },
@@ -262,8 +247,8 @@ const AdminProduct = () => {
   };
 
   // ----------start-----------
-	// let value1 = value
-	
+  // let value1 = value
+
   const {
     getRootProps,
     getInputLabelProps,
@@ -277,38 +262,18 @@ const AdminProduct = () => {
     setAnchorEl,
   } = useAutocomplete({
     id: "customized-hook-demo",
-    // defaultValue: [categories1[0]],
+    defaultValue: [categories1[0]],
     multiple: true,
     options: categories1,
     getOptionLabel: (option) => option.name,
-    onChange: Console
   });
 
-	useEffect (()=>{
-		setProduct({ ...product, "category_ids[]": value.map((el)=>(el.id)) });
-	},[value])
-	console.log(product)
-	// console.log(() => value1)
-	//  value.forEach((object) => {
-	//    arr.push(object.id);
-	// 	 setProduct({ ...product, "category_ids[]": arr})
-	//  });
-	// console.log(product["category_ids[]"]);
+  useEffect(() => {
+    setProduct({ ...product, "category_ids[]": value.map((el) => el.id) });
+  }, [value]);
 
-// value:product["category_ids[]"],
-// onInputChange:()=> setProduct({ ...product, "category_ids[]": [1,2,3]})
   // --------end-----------------
 
-    // value.forEach((object) => {
-    //   arr.push(object.id);
-    // });
-// // console.log(product)
-// 	// console.log(value)
-let value1 = value
-// 	console.log(value)
-function Console (value){
-	console.log(value)
-}
   return (
     <div>
       <BackBtn />
@@ -410,9 +375,6 @@ function Console (value){
               <InputWrapper
                 ref={setAnchorEl}
                 className={focused ? "focused" : ""}
-                // name="category_ids[]"
-								// value={product["category_ids[]"]}
-                // onChange={handleChangeInput}
               >
                 {value.map((option, index) => (
                   <StyledTag label={option.name} {...getTagProps({ index })} />
@@ -435,35 +397,8 @@ function Console (value){
 
           {/* -------------------- */}
 
-          <button
-            type="submit"
-            // onClick={()=>handleSubmit()}
-          >
-            Create
-          </button>
+          <button type="submit" style={{marginTop:"20px"}}>Create</button>
         </form>
-        <button
-          onClick={() =>
-            setProduct((prevProduct) => ({
-              ...prevProduct,
-              "category_ids[]": arr,
-            }))
-          }
-        >
-          Підтвердити категорії
-        </button>
-        <button >Check</button>
-        {/* <button
-          onClick={() =>
-            setProduct((prevProduct) => ({
-              ...prevProduct,
-              "category_ids[]": value,
-            }))
-          }
-        >
-          Add
-        </button> */}
-        {/* <button onClick={() => handleCategories()}>Add</button> */}
       </div>
     </div>
   );

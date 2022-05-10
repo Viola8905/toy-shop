@@ -16,7 +16,7 @@ const AdminBrands = () => {
     const getBrands = async () => {
       try {
         const { data: response } = await axios.get(
-          "http://api.toy-store.dev-1.folkem.xyz/api/v1/brands"
+          `${process.env.REACT_APP_BASE_URL}brands`
         );
         setBrands(response.data);
       } catch (error) {
@@ -32,7 +32,7 @@ const AdminBrands = () => {
     try {
       if (onEdit) {
         const res = await axios.post(
-          `http://api.toy-store.dev-1.folkem.xyz/api/v1/admin/brands/${id}`,
+          `${process.env.REACT_APP_BASE_URL}admin/brands/${id}`,
           { name: brand },
           {
             headers: { sanctum: `${localStorage.getItem("token")}` },
@@ -41,7 +41,7 @@ const AdminBrands = () => {
         // alert(res.data.msg);
       } else {
         const res = await axios.post(
-          "http://api.toy-store.dev-1.folkem.xyz/api/v1/admin/brands",
+          `${process.env.REACT_APP_BASE_URL}admin/brands`,
           { name: brand },
           {
             headers: { sanctum: `${localStorage.getItem("token")}` },
@@ -67,7 +67,7 @@ const AdminBrands = () => {
   const deleteBrand = async (id) => {
     try {
       const res = await axios.delete(
-        `http://api.toy-store.dev-1.folkem.xyz/api/v1/admin/brands/${id}`,
+        `${process.env.REACT_APP_BASE_URL}admin/brands/${id}`,
         {
           headers: { sanctum: `${localStorage.getItem("token")}` },
         }
