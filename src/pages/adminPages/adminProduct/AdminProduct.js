@@ -175,7 +175,7 @@ const initialState = {
   description: "",
   price: 0,
   amount: 0,
-  is_best_deal: true,
+  is_best_deal: false,
   age_category_id: 0,
   brand_id: 0,
   "category_ids[]": [],
@@ -277,7 +277,7 @@ const AdminProduct = () => {
   return (
     <div>
       <BackBtn />
-      AdminProduct
+
       <button onClick={() => handleSubmit()}>Add product</button>
       <div className="create_product">
         <form action="" onSubmit={handleSubmit}>
@@ -327,16 +327,20 @@ const AdminProduct = () => {
               onChange={handleChangeInput}
             />
           </div>
+          
           <div className="row">
-            <label htmlFor="is_best_deal">Is best deal</label>
+            <label htmlFor="is_best_deal">Найкраща угода:</label>
             <input
-              type="text"
-              name="is_best_deal"
+              type="checkbox"
               id="is_best_deal"
-              required
+              name="is_best_deal"
               value={product.is_best_deal}
-              onChange={handleChangeInput}
+              style={{width:"20px"}}
+              onChange={() =>
+                setProduct({ ...product, is_best_deal: !product.is_best_deal })
+              }
             />
+          
           </div>
           <div className="row">
             <label htmlFor="brand_id">brands:</label>
@@ -397,7 +401,9 @@ const AdminProduct = () => {
 
           {/* -------------------- */}
 
-          <button type="submit" style={{marginTop:"20px"}}>Create</button>
+          <button type="submit" style={{ marginTop: "20px" }}>
+            Create
+          </button>
         </form>
       </div>
     </div>
