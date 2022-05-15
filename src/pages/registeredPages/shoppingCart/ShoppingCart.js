@@ -1,0 +1,150 @@
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./shoppingCart.css";
+const ShoppingCart = () => {
+  const [callback, setCallback] = useState(false);
+  const [cart, setCart] = useState([]);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    const getCart = async () => {
+      try {
+        const { data: response } = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}shopping-cart`,
+          {
+            headers: { sanctum: `${localStorage.getItem("token")}` },
+          }
+        );
+        setCart(response.data);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    getCart();
+  }, [callback]);
+
+  useEffect(() => {
+    const getTotal = () => {
+      const total = cart.reduce((prev, item) => {
+        return prev + item.product.price * item.count;
+      }, 0);
+
+      setTotal(total);
+    };
+
+    getTotal();
+  }, [cart]);
+
+  const navigate = useNavigate();
+  const Details = (name, id) => {
+    navigate(`/product-details/${name}`, { state: id });
+  };
+
+  const addToCart = async (product_id, count) => {
+    await axios.patch(
+      `${process.env.REACT_APP_BASE_URL}shopping-cart`,
+      { product_id, count },
+      {
+        headers: { sanctum: `${localStorage.getItem("token")}` },
+      }
+    );
+    setCallback(!callback);
+  };
+
+  function F(id, count) {
+    addToCart(id, count);
+  }
+
+  const increment = (id, count) => {
+    // cart.forEach((item) => {
+    //   if (item.product.id === id) {
+    //     item.count += 1;
+    //   }
+    // });
+
+    // setCart([...cart]);
+    addToCart(id, count + 1);
+  };
+
+  const decrement = (id, count) => {
+    cart.forEach((item) => {
+      if (item.product.id === id) {
+        item.count === 1 ? (item.count = 1) : addToCart(id, count - 1);
+      }
+    });
+  };
+
+  const removeProduct = async (product_id) => {
+		console.log(product_id);
+    if (window.confirm("Do you want to delete this product?")) {
+      await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}shopping-cart`,
+        {product_id},
+        {
+          headers: { sanctum: `${localStorage.getItem("token")}` },
+        }
+      );
+      setCallback(!callback);
+    }
+  };
+
+  // console.log(cart);
+  if (cart.length === 0)
+    return (
+      <h2 style={{ textAlign: "center", fontSize: "5rem" }}>Cart is empty</h2>
+    );
+  return (
+    <div>
+      {cart.map((product) => (
+        <div className="detail cart" key={product.product.id}>
+          <img
+            src={
+              "https://media.istockphoto.com/photos/brown-teddy-bear-isolated-in-front-of-a-white-background-picture-id909772478?k=20&m=909772478&s=612x612&w=0&h=mzLuJ7ywrSDHmpchf9spOeNF2Ovr2aQBw1z57Szx17g="
+            }
+            style={{ width: "400px" }}
+          />
+          <div className="box-detail">
+            <h6>#id:{product.product.id}</h6>
+
+            <h3>${product.product.price * product.count}</h3>
+            <a
+              style={{ fontWeight: "600", cursor: "pointer" }}
+              onClick={() => Details(product.product.name, product.product.id)}
+            >
+              {product.product.name}
+            </a>
+            {/* <p>{product.product.description}</p> */}
+
+            <div className="amount">
+              <button
+                onClick={() => decrement(product.product.id, product.count)}
+              >
+                -
+              </button>
+              <span>{product.count}</span>
+              <button
+                onClick={() => increment(product.product.id, product.count)}
+              >
+                +
+              </button>
+            </div>
+
+            <div
+              className="delete"
+              onClick={() => removeProduct(product.product.id)}
+            >
+              X
+            </div>
+          </div>
+        </div>
+      ))}
+      <div className="total">
+        <h3>Total: ${total}</h3>
+      </div>
+    </div>
+  );
+};
+
+export default ShoppingCart;

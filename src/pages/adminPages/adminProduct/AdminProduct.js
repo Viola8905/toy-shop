@@ -349,7 +349,7 @@ const AdminProduct = () => {
               value={product.brand_id}
               onChange={handleChangeInput}
             >
-              <option value="">Please select a brand</option>
+              <option value="">Оберіть бренд</option>
               {brands.map((brand) => (
                 <option value={brand.id} key={brand.id}>
                   {brand.name}
@@ -358,7 +358,7 @@ const AdminProduct = () => {
             </select>
           </div>
           <div className="row">
-            <label htmlFor="age_category_id">Вікова категорія:</label>
+            <label htmlFor="age_category_id">Оберіть вікову категорію:</label>
             <select
               name="age_category_id"
               value={product.age_category_id}

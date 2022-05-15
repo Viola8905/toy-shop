@@ -24,8 +24,6 @@ const Header = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const role = useSelector((state) => state.user.currentUser.role_id);
 
-
-
   return (
     <>
       <Navbar variant="dark" style={{ backgroundColor: "rgb(121, 176, 238)" }}>
@@ -139,89 +137,101 @@ const Header = () => {
           </div>
         </div>
       ) : (
-        <div
-          className="header"
-          style={{ backgroundColor: "rgb(17, 119, 235)" }}
-        >
-          <Container>
-            <div className="first-row">
-              <div
-                className="first-row-flex"
-                style={{ display: "flex", padding: " 20px 0 20px 0" }}
-              >
-                <img
-                  src={logo}
-                  alt=""
-                  style={{ maxWidth: "150px", marginLeft: "2.5%" }}
-                />
+        <>
+          <div
+            className="header"
+            style={{ backgroundColor: "rgb(17, 119, 235)" }}
+          >
+            <Container>
+              <div className="first-row">
                 <div
-                  style={{
-                    flex: " 0 0 65%",
-                    marginLeft: "5%",
-                    alignSelf: "center",
-                  }}
+                  className="first-row-flex"
+                  style={{ display: "flex", padding: " 20px 0 20px 0" }}
                 >
-                  <Form style={{ display: "flex" }}>
-                    <Form.Control
-                      placeholder="I am looking for"
-                      style={{ borderRadius: "22px" }}
-                    />
-                    <img
-                      src={search}
-                      alt=""
-                      style={{ maxWidth: "40px", marginLeft: "2%" }}
-                    />
-                  </Form>
+                  <img
+                    src={logo}
+                    alt=""
+                    style={{ maxWidth: "150px", marginLeft: "2.5%" }}
+                  />
+                  <div
+                    style={{
+                      flex: " 0 0 65%",
+                      marginLeft: "5%",
+                      alignSelf: "center",
+                    }}
+                  >
+                    <Form style={{ display: "flex" }}>
+                      <Form.Control
+                        placeholder="I am looking for"
+                        style={{ borderRadius: "22px" }}
+                      />
+                      <img
+                        src={search}
+                        alt=""
+                        style={{ maxWidth: "40px", marginLeft: "2%" }}
+                      />
+                    </Form>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="second-row" style={{}}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  margin: "0 0 5px 0",
-                }}
-              >
-                <Dropdown className="d-inline mx-2">
-                  <Dropdown.Toggle id="dropdown-autoclose-true">
-                    Baby Room
-                  </Dropdown.Toggle>
+              <div className="second-row" style={{}}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    margin: "0 0 5px 0",
+                  }}
+                >
+                  <Dropdown className="d-inline mx-2">
+                    <Dropdown.Toggle id="dropdown-autoclose-true">
+                      Baby Room
+                    </Dropdown.Toggle>
 
-                  <Dropdown.Menu>
-                    <Dropdown.Item href="#">Travel Systems</Dropdown.Item>
-                    <Dropdown.Item href="#">Cot Beds</Dropdown.Item>
-                    <Dropdown.Item href="#">Baby Monitors</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                    <Dropdown.Menu>
+                      <Dropdown.Item href="#">Travel Systems</Dropdown.Item>
+                      <Dropdown.Item href="#">Cot Beds</Dropdown.Item>
+                      <Dropdown.Item href="#">Baby Monitors</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
 
-                <Dropdown className="d-inline mx-2">
-                  <Dropdown.Toggle id="dropdown-autoclose-true">
-                    Outdoor
-                  </Dropdown.Toggle>
+                  <Dropdown className="d-inline mx-2">
+                    <Dropdown.Toggle id="dropdown-autoclose-true">
+                      Outdoor
+                    </Dropdown.Toggle>
 
-                  <Dropdown.Menu>
-                    <Dropdown.Item href="#">Bikes</Dropdown.Item>
-                    <Dropdown.Item href="#">Skooters</Dropdown.Item>
-                    <Dropdown.Item href="#">Trampolines</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                    <Dropdown.Menu>
+                      <Dropdown.Item href="#">Bikes</Dropdown.Item>
+                      <Dropdown.Item href="#">Skooters</Dropdown.Item>
+                      <Dropdown.Item href="#">Trampolines</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
 
-                <Dropdown className="d-inline mx-2">
-                  <Dropdown.Toggle id="dropdown-autoclose-true">
-                    Gaming
-                  </Dropdown.Toggle>
+                  <Dropdown className="d-inline mx-2">
+                    <Dropdown.Toggle id="dropdown-autoclose-true">
+                      Gaming
+                    </Dropdown.Toggle>
 
-                  <Dropdown.Menu>
-                    <Dropdown.Item href="#">XBox Gaming</Dropdown.Item>
-                    <Dropdown.Item href="#">Play Station Gaming</Dropdown.Item>
-                    <Dropdown.Item href="#">PC Gaming</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                    <Dropdown.Menu>
+                      <Dropdown.Item href="#">XBox Gaming</Dropdown.Item>
+                      <Dropdown.Item href="#">
+                        Play Station Gaming
+                      </Dropdown.Item>
+                      <Dropdown.Item href="#">PC Gaming</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
               </div>
-            </div>
-          </Container>
-        </div>
+            </Container>
+          </div>
+          <div className="" style={{ textAlign: "center" }}>
+            <NavLink
+              to="/shopping-cart"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              Shopping Cart
+            </NavLink>{" "}
+          </div>
+        </>
       )}
     </>
   );

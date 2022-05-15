@@ -9,6 +9,7 @@ import AdminCategories from "../pages/adminPages/adminCategories/AdminCategories
 import AdminBrands from "../pages/adminPages/adminBrands/AdminBrands";
 import AdminAges from "../pages/adminPages/adminAges/AdminAges";
 import AdminProduct from "../pages/adminPages/adminProduct/AdminProduct";
+import ShoppingCart from "../pages/registeredPages/shoppingCart/ShoppingCart";
 const Pages = () => {
 	 const isAuth = useSelector((state) => state.user.isAuth);
 	 const role = useSelector((state) => state.user.currentUser.role_id)
@@ -64,6 +65,7 @@ const Pages = () => {
              path="/product-details/:name"
              element={<ProductPage />}
            />
+           <Route exact path="/shopping-cart" element={<ShoppingCart/>} />
            <Route index element={<Gallery />} />
          </Route>
        );
