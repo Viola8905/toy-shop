@@ -51,11 +51,11 @@ const Gallery = () => {
     <>
       <div className="gallery-wrapper">
       
-        {currentPost.map((product) => (
+        {/* {currentPost.map((product) => (
           <div key={product.id}>
             <ProductItem toy={product} />
           </div>
-        ))}
+        ))} */}
       </div>
       <div className="" style={{ marginTop: "10px" }}>
         <Pagination
