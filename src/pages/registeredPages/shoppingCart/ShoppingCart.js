@@ -76,20 +76,42 @@ const ShoppingCart = () => {
     });
   };
 
-  const removeProduct = async (product_id) => {
-		console.log(product_id);
-    if (window.confirm("Do you want to delete this product?")) {
-      await axios.delete(
-        `${process.env.REACT_APP_BASE_URL}shopping-cart`,
-        {product_id},
-        {
-          headers: { sanctum: `${localStorage.getItem("token")}` },
-        }
-      );
-      setCallback(!callback);
-    }
-  };
+  // const removeProduct = async (product_id) => {
+  // 	console.log(product_id);
+  //   if (window.confirm("Do you want to delete this product?")) {
+  //     await axios.delete(
+  //       `${process.env.REACT_APP_BASE_URL}shopping-cart`,
+  //       { product_id },
+  //       {
+  //         headers: { sanctum: `${localStorage.getItem("token")}` },
+  //       }
+  //     );
+  //     setCallback(!callback);
+  //   }
+  // };
 
+  const removeProduct = async (id) => {
+    console.log(id);
+    
+      try {
+				
+        const response = await axios.delete(
+          `${process.env.REACT_APP_BASE_URL}shopping-cart`,
+          // { product_id: id },
+          {
+						data:{ product_id: id },
+            headers: { sanctum: `${localStorage.getItem("token")}` },
+          }
+        );
+        setCallback(!callback);
+        console.log(`${localStorage.getItem("token")}`);
+      } catch (e) {
+        console.log("error");
+        alert(e.response.data.message);
+      }
+    
+  };
+  // ${localStorage.getItem("token")}
   // console.log(cart);
   if (cart.length === 0)
     return (
@@ -131,12 +153,12 @@ const ShoppingCart = () => {
               </button>
             </div>
 
-            <div
-              className="delete"
+            <button
+              // className="delete"
               onClick={() => removeProduct(product.product.id)}
             >
-              X
-            </div>
+              Закрити
+            </button>
           </div>
         </div>
       ))}

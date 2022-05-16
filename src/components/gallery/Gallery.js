@@ -23,7 +23,7 @@ const Gallery = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_BASE_URL}products`
         );
-        dispatch(setProducts(response.data.data));
+        // dispatch(setProducts(response.data.data));
         setProducts1(response.data.data);
 				
       } catch (e) {
