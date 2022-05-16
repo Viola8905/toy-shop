@@ -28,7 +28,7 @@ jobs:
     
     - run: touch .env
     
-    - run: echo "REACT_APP_BASE_URL=${{secets.REACT_APP_BASE_URL}}" > .env
+    - run: echo "REACT_APP_BASE_URL=${{secrets.REACT_APP_BASE_URL}}" > .env
 
     - run: npm run build --if-present
 
