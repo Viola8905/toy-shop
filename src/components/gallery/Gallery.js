@@ -43,7 +43,7 @@ const Gallery = () => {
   const [postsPerPage] = useState(9);
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
-  const currentPost = products.slice(firstPostIndex, lastPostIndex);
+  // const currentPost = products.slice(firstPostIndex, lastPostIndex);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 //--------------------
