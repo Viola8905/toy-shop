@@ -58,11 +58,11 @@ const Gallery = () => {
         ))} */}
       </div>
       <div className="" style={{ marginTop: "10px" }}>
-        <Pagination
+        {/* <Pagination
           postsPerPage={postsPerPage}
           totalPosts={products.length}
           paginate={paginate}
-        />
+        /> */}
       </div>
     </>
   );
