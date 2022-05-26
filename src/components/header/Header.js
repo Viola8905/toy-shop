@@ -37,7 +37,7 @@ const Header = () => {
               }}
               to="/"
             >
-              Deploy is successful
+              Магазин Іграшок
             </NavLink>
           </div>
 
@@ -108,7 +108,7 @@ const Header = () => {
               to="/admin-create-category"
               style={{ textDecoration: "none", color: "black" }}
             >
-              Create Category
+              Категорії
             </NavLink>
           </div>
           <div className="admin-navbar">
@@ -116,7 +116,7 @@ const Header = () => {
               to="/admin-create-brands"
               style={{ textDecoration: "none", color: "black" }}
             >
-              Create Brands
+              Бренди
             </NavLink>
           </div>
           <div className="admin-navbar">
@@ -124,7 +124,7 @@ const Header = () => {
               to="/admin-create-age-categ"
               style={{ textDecoration: "none", color: "black" }}
             >
-              Create Age-Categories
+              Вікові категорії
             </NavLink>
           </div>
           <div className="admin-navbar">
@@ -132,7 +132,7 @@ const Header = () => {
               to="/admin-create-product"
               style={{ textDecoration: "none", color: "black" }}
             >
-              Create Product
+              Створити продукт
             </NavLink>
           </div>
         </div>
@@ -162,7 +162,7 @@ const Header = () => {
                   >
                     <Form style={{ display: "flex" }}>
                       <Form.Control
-                        placeholder="I am looking for"
+                        placeholder="Щось шукаєте?"
                         style={{ borderRadius: "22px" }}
                       />
                       <img
@@ -181,45 +181,7 @@ const Header = () => {
                     justifyContent: "center",
                     margin: "0 0 5px 0",
                   }}
-                >
-                  <Dropdown className="d-inline mx-2">
-                    <Dropdown.Toggle id="dropdown-autoclose-true">
-                      Baby Room
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#">Travel Systems</Dropdown.Item>
-                      <Dropdown.Item href="#">Cot Beds</Dropdown.Item>
-                      <Dropdown.Item href="#">Baby Monitors</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-
-                  <Dropdown className="d-inline mx-2">
-                    <Dropdown.Toggle id="dropdown-autoclose-true">
-                      Outdoor
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#">Bikes</Dropdown.Item>
-                      <Dropdown.Item href="#">Skooters</Dropdown.Item>
-                      <Dropdown.Item href="#">Trampolines</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-
-                  <Dropdown className="d-inline mx-2">
-                    <Dropdown.Toggle id="dropdown-autoclose-true">
-                      Gaming
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#">XBox Gaming</Dropdown.Item>
-                      <Dropdown.Item href="#">
-                        Play Station Gaming
-                      </Dropdown.Item>
-                      <Dropdown.Item href="#">PC Gaming</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </div>
+                ></div>
               </div>
             </Container>
           </div>
@@ -228,7 +190,7 @@ const Header = () => {
               to="/shopping-cart"
               style={{ textDecoration: "none", color: "black" }}
             >
-              Shopping Cart
+              Корзина
             </NavLink>{" "}
           </div>
         </>

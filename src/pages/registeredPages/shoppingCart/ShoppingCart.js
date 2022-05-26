@@ -114,7 +114,7 @@ const ShoppingCart = () => {
   // console.log(cart);
   if (cart.length === 0)
     return (
-      <h2 style={{ textAlign: "center", fontSize: "5rem" }}>Cart is empty</h2>
+      <h2 style={{ textAlign: "center", fontSize: "5rem" }}>Корзина пуста</h2>
     );
   return (
     <div>
@@ -163,7 +163,7 @@ const ShoppingCart = () => {
         </div>
       ))}
       <div className="total">
-        <h3>Total: ${total}</h3>
+        <h3>Загальна сума: ${total}</h3>
       </div>
     </div>
   );

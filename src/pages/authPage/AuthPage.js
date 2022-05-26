@@ -21,13 +21,13 @@ const Auth = () => {
       style={{ height: window.innerHeight - 54 }}
     >
       <Card style={{ width: 600 }} className="p-5">
-        <h2 className="m-auto"> {isLogin ? " Login " : " Registration"} </h2>
+        <h2 className="m-auto"> {isLogin ? "Авторизація " : " Реєстрація"} </h2>
         <Form className="d-flex flex-column">
           {isLogin ? (
             <div className="">
               <Form.Control
                 className="mt-2"
-                placeholder="enter email"
+                placeholder="Пошта"
                 value={email}
                 type="email"
                 onChange={(e) => {
@@ -36,7 +36,7 @@ const Auth = () => {
               />
               <Form.Control
                 className="mt-2"
-                placeholder="enter password "
+                placeholder="Пароль "
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -47,7 +47,7 @@ const Auth = () => {
             <div>
               <Form.Control
                 className="mt-2"
-                placeholder="enter first name"
+                placeholder="Ім'я"
                 value={first_name}
                 onChange={(e) => {
                   setFirst_name(e.target.value);
@@ -55,7 +55,7 @@ const Auth = () => {
               />
               <Form.Control
                 className="mt-2"
-                placeholder="enter middle name"
+                placeholder="По-батькові"
                 value={middle_name}
                 onChange={(e) => {
                   setMiddle_name(e.target.value);
@@ -63,7 +63,7 @@ const Auth = () => {
               />
               <Form.Control
                 className="mt-2"
-                placeholder="enter last name"
+                placeholder="Прізвище"
                 value={last_name}
                 onChange={(e) => {
                   setLast_name(e.target.value);
@@ -71,7 +71,7 @@ const Auth = () => {
               />
               <Form.Control
                 className="mt-2"
-                placeholder="enter email"
+                placeholder="Пошта"
                 value={email}
                 type="email"
                 onChange={(e) => {
@@ -80,7 +80,7 @@ const Auth = () => {
               />
               <Form.Control
                 className="mt-2"
-                placeholder="enter password "
+                placeholder="Пароль"
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -92,13 +92,17 @@ const Auth = () => {
           <Row className=" d-flex justify-content-between  mt-3 pl-3 pr-3 ">
             {isLogin ? (
               <div className="">
-                Don't have an account?
-                <NavLink to="/registration">Register!</NavLink>
+                Ще не зареєстровані?
+                <br />
+                <NavLink to="/registration">
+                  Перейти до створення акаунту!
+                </NavLink>
               </div>
             ) : (
               <div>
-                Have an account?
-                <NavLink to="/login">Log in!</NavLink>
+                Вже є акаунт?
+                <br />
+                <NavLink to="/login">Перейти до авторизації!</NavLink>
               </div>
             )}
             {isLogin ? (
@@ -107,7 +111,7 @@ const Auth = () => {
                   variant={"outline-dark"}
                   onClick={() => dispatch(login(email, password))}
                 >
-                  <NavLink to="/">Login</NavLink>
+                  <NavLink to="/">Увійти</NavLink>
                 </Button>
               </div>
             ) : (
@@ -124,7 +128,7 @@ const Auth = () => {
                 }
               >
                 <Button variant={"outline-dark"}>
-                  <NavLink to="/login">Register</NavLink>
+                  <NavLink to="/login">Зареєструватися</NavLink>
                 </Button>
               </div>
             )}
