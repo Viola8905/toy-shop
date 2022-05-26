@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BackBtn from "../../../components/backBtn/BackBtn";
 import "./shoppingCart.css";
 const ShoppingCart = () => {
   const [callback, setCallback] = useState(false);
@@ -92,24 +93,22 @@ const ShoppingCart = () => {
 
   const removeProduct = async (id) => {
     console.log(id);
-    
-      try {
-				
-        const response = await axios.delete(
-          `${process.env.REACT_APP_BASE_URL}shopping-cart`,
-          // { product_id: id },
-          {
-						data:{ product_id: id },
-            headers: { sanctum: `${localStorage.getItem("token")}` },
-          }
-        );
-        setCallback(!callback);
-        console.log(`${localStorage.getItem("token")}`);
-      } catch (e) {
-        console.log("error");
-        alert(e.response.data.message);
-      }
-    
+
+    try {
+      const response = await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}shopping-cart`,
+        // { product_id: id },
+        {
+          data: { product_id: id },
+          headers: { sanctum: `${localStorage.getItem("token")}` },
+        }
+      );
+      setCallback(!callback);
+      console.log(`${localStorage.getItem("token")}`);
+    } catch (e) {
+      console.log("error");
+      alert(e.response.data.message);
+    }
   };
   // ${localStorage.getItem("token")}
   // console.log(cart);
@@ -119,6 +118,7 @@ const ShoppingCart = () => {
     );
   return (
     <div>
+			<BackBtn/>
       {cart.map((product) => (
         <div className="detail cart" key={product.product.id}>
           <img

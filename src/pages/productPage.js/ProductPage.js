@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Card, Form, Modal, Overlay, Tooltip } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import BackBtn from "../../components/backBtn/BackBtn";
 import poshta from "../../img/nova-poshta.png";
 import Edit from "../../img/edit.png";
@@ -30,18 +30,17 @@ const ProductPage = () => {
   const [productReviews, setProductReviews] = useState([]);
   const [show, setShow] = useState(false);
   const target = useRef(null);
-
   const [edit, setEdit] = useState(false);
   const [reviewEditing, setReviewEditing] = useState(null);
   const [editingText, setEditingText] = useState("");
   const [editingRating, setEditingRating] = useState(1);
-
   const [callback, setCallback] = useState(false);
+  const [cart, setCart] = useState([]);
+  const [isInCart, setIsInCart] = useState(false);
 
-  
+  const navigate = useNavigate();
 
   useEffect(() => {
-    let isApiSubscribed = true;
     const Posts = async () => {
       try {
         const response = await axios.get(
@@ -57,13 +56,8 @@ const ProductPage = () => {
     };
 
     Posts();
+  }, [query]);
 
-    return function cleanup() {
-      isApiSubscribed = false;
-    };
-  }, [query, callback]);
-
-  
   const deleteReview = async (id) => {
     try {
       const res = await axios.delete(
@@ -78,7 +72,6 @@ const ProductPage = () => {
       alert(err.response.data.msg);
     }
   };
- 
 
   function submitEdits(reviewId) {
     let rating = editingRating;
@@ -104,6 +97,46 @@ const ProductPage = () => {
 
     setReviewEditing(null);
   }
+
+  useEffect(() => {
+    const getCart = async () => {
+      try {
+        const { data: response } = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}shopping-cart`,
+          {
+            headers: { sanctum: `${localStorage.getItem("token")}` },
+          }
+        );
+        setCart(response.data);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    getCart();
+  }, [callback]);
+  const addToCart = async (product_id) => {
+    try {
+      const response = await axios.put(
+        `${process.env.REACT_APP_BASE_URL}shopping-cart`,
+        { product_id },
+        {
+          headers: { sanctum: `${localStorage.getItem("token")}` },
+        }
+      );
+      setCallback(!callback);
+      console.log(`${localStorage.getItem("token")}`);
+      navigate("/shopping-cart");
+    } catch (e) {
+      console.log("error");
+      alert(e.response.data.message);
+    }
+  };
+  console.log(cart);
+  // const Find = () => {
+  //   cart.map((item) => setIsInCart(item.id === product.id ? true : false));
+  // };
+  // useEffect(() => Find(), []);
 
   return (
     <div>
@@ -153,9 +186,17 @@ const ProductPage = () => {
                       borderRadius: "15px",
                       fontSize: "20px",
                     }}
+                    onClick={() => addToCart(product.id)}
                   >
                     Купити
                   </button>
+                  <>
+                    {/* {cart.map((item) => (
+										<>
+											{item.id.includes( product.id ) ? "in cart molok" : "nooooooooo"}
+										</>
+									))} */}
+                  </>
                 </div>
                 <hr />
                 <div className="product-samovyvis">Безкоштовний самовивіз</div>

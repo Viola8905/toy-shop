@@ -39,30 +39,30 @@ const Gallery = () => {
 
 
 //-------- pagination
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [postsPerPage] = useState(9);
-  // const lastPostIndex = currentPage * postsPerPage;
-  // const firstPostIndex = lastPostIndex - postsPerPage;
-  // const currentPost = products.slice(firstPostIndex, lastPostIndex);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(9);
+  const lastPostIndex = currentPage * postsPerPage;
+  const firstPostIndex = lastPostIndex - postsPerPage;
+  const currentPost = products.slice(firstPostIndex, lastPostIndex);
 
-  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 //--------------------
   return (
     <>
       <div className="gallery-wrapper">
       
-        {/* {currentPost.map((product) => (
+        {currentPost.map((product) => (
           <div key={product.id}>
             <ProductItem toy={product} />
           </div>
-        ))} */}
+        ))}
       </div>
       <div className="" style={{ marginTop: "10px" }}>
-        {/* <Pagination
+        <Pagination
           postsPerPage={postsPerPage}
           totalPosts={products.length}
           paginate={paginate}
-        /> */}
+        />
       </div>
     </>
   );
