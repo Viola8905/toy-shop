@@ -93,7 +93,7 @@ const AdminBrands = () => {
 
       <div className="categories">
         <form onSubmit={createBrand}>
-          <label htmlFor="category">Brand</label>
+          <label htmlFor="category">Бренд</label>
           <input
             type="text"
             name="category"
@@ -129,10 +129,10 @@ const AdminBrands = () => {
                     <button
                       onClick={() => editBrand(currBrand.id, currBrand.name)}
                     >
-                      Edit
+                      Редагувати
                     </button>
                     <button onClick={() => deleteBrand(currBrand.id)}>
-                      Delete
+                      Видалити
                     </button>
                   </div>
                 </div>

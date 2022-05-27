@@ -278,11 +278,11 @@ const AdminProduct = () => {
     <div>
       <BackBtn />
 
-      <button onClick={() => handleSubmit()}>Add product</button>
+      <button onClick={() => handleSubmit()}>Додати продукт</button>
       <div className="create_product">
         <form action="" onSubmit={handleSubmit}>
           <div className="row">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Назва:</label>
             <input
               type="text"
               name="name"
@@ -293,7 +293,7 @@ const AdminProduct = () => {
             />
           </div>
           <div className="row">
-            <label htmlFor="description">description</label>
+            <label htmlFor="description">Опис:</label>
             <textarea
               type="text"
               name="description"
@@ -302,11 +302,11 @@ const AdminProduct = () => {
               value={product.description}
               rows="5"
               onChange={handleChangeInput}
-              placeholder="Please provide description"
+              placeholder="Будь-ласка введіть опис "
             />
           </div>
           <div className="row">
-            <label htmlFor="price">price</label>
+            <label htmlFor="price">Ціна:</label>
             <input
               type="number"
               name="price"
@@ -317,7 +317,7 @@ const AdminProduct = () => {
             />
           </div>
           <div className="row">
-            <label htmlFor="amount">amount</label>
+            <label htmlFor="amount">Кількість:</label>
             <input
               type="number"
               name="amount"
@@ -343,7 +343,7 @@ const AdminProduct = () => {
           
           </div>
           <div className="row">
-            <label htmlFor="brand_id">brands:</label>
+            <label htmlFor="brand_id">Бренди:</label>
             <select
               name="brand_id"
               value={product.brand_id}
@@ -358,13 +358,13 @@ const AdminProduct = () => {
             </select>
           </div>
           <div className="row">
-            <label htmlFor="age_category_id">Оберіть вікову категорію:</label>
+            <label htmlFor="age_category_id">Вікова категоря:</label>
             <select
               name="age_category_id"
               value={product.age_category_id}
               onChange={handleChangeInput}
             >
-              <option value="">Please select an age category</option>
+              <option value=""> оберіть вікову категорію</option>
               {ages.map((age) => (
                 <option value={age.id} key={age.id}>
                   {age.name}
@@ -402,7 +402,7 @@ const AdminProduct = () => {
           {/* -------------------- */}
 
           <button type="submit" style={{ marginTop: "20px" }}>
-            Create
+            Додати продукт
           </button>
         </form>
       </div>

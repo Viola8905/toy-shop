@@ -95,7 +95,7 @@ const AdminCategories = () => {
 
       <div className="categories">
         <form onSubmit={createCategory}>
-          <label htmlFor="category">Category</label>
+          <label htmlFor="category">Категорія</label>
           <input
             type="text"
             name="category"
@@ -133,10 +133,10 @@ const AdminCategories = () => {
                         editCategory(currCategory.id, currCategory.name)
                       }
                     >
-                      Edit
+                      Редагувати
                     </button>
                     <button onClick={() => deleteCategory(currCategory.id)}>
-                      Delete
+                      Видалити
                     </button>
                   </div>
                 </div>

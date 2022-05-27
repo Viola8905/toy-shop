@@ -1,0 +1,16 @@
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-properties {
+  flex: 0 1 20%;
+  margin-left: 20px;
+}
+.gallery-wrapper {
+  flex: 1 1 auto;
+  /* margin:0 auto; */
+  flex-wrap: wrap;
+  display: flex;
+  /* justify-content: flex-end; */
+  padding: 0;
+}

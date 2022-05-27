@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Button, Card, Form, Modal, Overlay, Tooltip } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -107,7 +107,10 @@ const ProductPage = () => {
             headers: { sanctum: `${localStorage.getItem("token")}` },
           }
         );
-        setCart(response.data);
+        const find = response.data.find(
+          (item) => item.product.id === product.id
+        );
+       setIsInCart(find ? "yes" : "no");
       } catch (error) {
         console.error(error.message);
       }
@@ -132,11 +135,12 @@ const ProductPage = () => {
       alert(e.response.data.message);
     }
   };
-  console.log(cart);
+
   // const Find = () => {
-  //   cart.map((item) => setIsInCart(item.id === product.id ? true : false));
+  //   const find = cart.find((item) => item.product.id === product.id);
+  //   setIsInCart(find ? "yes" : "no");
   // };
-  // useEffect(() => Find(), []);
+  // useEffect(() => Find(), [Find]);
 
   return (
     <div>
@@ -178,18 +182,27 @@ const ProductPage = () => {
                   className="product-button"
                   style={{ display: "flex", justifyContent: "center" }}
                 >
-                  <button
-                    style={{
-                      backgroundColor: "rgb(121, 176, 238)",
-                      padding: "1% 15%",
-                      color: "white",
-                      borderRadius: "15px",
-                      fontSize: "20px",
-                    }}
-                    onClick={() => addToCart(product.id)}
-                  >
-                    Купити
-                  </button>
+                  {isInCart === "yes" ? (
+                    <div onClick={() => navigate("/shopping-cart")} style={{color:"red"}}>
+                     В корзині
+                    </div>
+                  ) : isInCart === "no" ? (
+                    <button
+                      style={{
+                        backgroundColor: "rgb(121, 176, 238)",
+                        padding: "1% 15%",
+                        color: "white",
+                        borderRadius: "15px",
+                        fontSize: "20px",
+                      }}
+                      onClick={() => addToCart(product.id)}
+                    >
+                      Купити
+                    </button>
+                  ) : (
+                    <></>
+                  )}
+
                   <>
                     {/* {cart.map((item) => (
 										<>

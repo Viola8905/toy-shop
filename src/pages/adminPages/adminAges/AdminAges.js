@@ -100,7 +100,7 @@ const AdminAges = () => {
         <form onSubmit={createAge}>
           {/* ------------------------ */}
           <label htmlFor="age" style={{ marginTop: "0" }}>
-            Age CAtegories Name
+            Назва вікової категорії
           </label>
           <input
             type="text"
@@ -111,7 +111,7 @@ const AdminAges = () => {
           />
 
           {/* ------------------------ */}
-          <label htmlFor="age">months From</label>
+          <label htmlFor="age">від:</label>
           <input
             type="text"
             name="age"
@@ -121,7 +121,7 @@ const AdminAges = () => {
           />
 
           {/* ---------------------------- */}
-          <label htmlFor="age">months To</label>
+          <label htmlFor="age">до:</label>
           <input
             type="text"
             name="age"
@@ -167,10 +167,10 @@ const AdminAges = () => {
                         )
                       }
                     >
-                      Edit
+                      Редагувати
                     </button>
                     <button onClick={() => deleteAge(currAge.id)}>
-                      Delete
+                      Видалити
                     </button>
                   </div>
                 </div>

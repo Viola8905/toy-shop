@@ -23,7 +23,8 @@ const Header = () => {
   const dispatch = useDispatch();
   const [toggleMenu, setToggleMenu] = useState(false);
   const role = useSelector((state) => state.user.currentUser.role_id);
-
+	const [searchQuery, setSearchQuery] = useState('')
+ const navigate = useNavigate();
   return (
     <>
       <Navbar variant="dark" style={{ backgroundColor: "rgb(121, 176, 238)" }}>
@@ -164,11 +165,13 @@ const Header = () => {
                       <Form.Control
                         placeholder="Щось шукаєте?"
                         style={{ borderRadius: "22px" }}
+												onChange={(e)=>setSearchQuery(e.target.value)}
                       />
                       <img
                         src={search}
                         alt=""
                         style={{ maxWidth: "40px", marginLeft: "2%" }}
+												onClick={()=>navigate(`/search/?text=${searchQuery}`,{state:searchQuery})}
                       />
                     </Form>
                   </div>

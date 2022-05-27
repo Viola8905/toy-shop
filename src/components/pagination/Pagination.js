@@ -21,9 +21,9 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
               cursor: "pointer",
             }}
           >
-            <a href="#" className="page-link" onClick={() => paginate(number)}>
+            <div  className="page-link" onClick={() => paginate(number)}>
               {number}
-            </a>
+            </div>
           </li>
         ))}
       </ul>
