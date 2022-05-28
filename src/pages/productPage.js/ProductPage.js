@@ -110,7 +110,7 @@ const ProductPage = () => {
         const find = response.data.find(
           (item) => item.product.id === product.id
         );
-       setIsInCart(find ? "yes" : "no");
+        setIsInCart(find ? "yes" : "no");
       } catch (error) {
         console.error(error.message);
       }
@@ -183,8 +183,11 @@ const ProductPage = () => {
                   style={{ display: "flex", justifyContent: "center" }}
                 >
                   {isInCart === "yes" ? (
-                    <div onClick={() => navigate("/shopping-cart")} style={{color:"red"}}>
-                     В корзині
+                    <div
+                      onClick={() => navigate("/shopping-cart")}
+                      style={{ color: "red" }}
+                    >
+                      В корзині
                     </div>
                   ) : isInCart === "no" ? (
                     <button
@@ -199,8 +202,23 @@ const ProductPage = () => {
                     >
                       Купити
                     </button>
-                  ) : (
+                  ) : isAuth ? (
                     <></>
+                  ) : (
+                    <>
+                      <button
+                        style={{
+                          backgroundColor: "rgb(121, 176, 238)",
+                          padding: "1% 15%",
+                          color: "white",
+                          borderRadius: "15px",
+                          fontSize: "20px",
+                        }}
+                        onClick={() => navigate("/login")}
+                      >
+                        Купити
+                      </button>
+                    </>
                   )}
 
                   <>

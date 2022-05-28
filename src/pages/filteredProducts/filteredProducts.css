@@ -1,16 +1,15 @@
 .row {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 .filter-properties {
-  flex: 0 1 20%;
-  margin-left: 20px;
+  flex: 0 0 20%;
 }
 .gallery-wrapper {
-  flex: 1 1 auto;
+  flex: 0 1 70%;
   /* margin:0 auto; */
-  flex-wrap: wrap;
-  display: flex;
-  /* justify-content: flex-end; */
+  /* flex-wrap: wrap; */
+  /* display: flex;
+  justify-content: flex-end; */
   padding: 0;
 }
