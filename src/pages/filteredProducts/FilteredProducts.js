@@ -7,6 +7,7 @@ import ProductItem from "../../components/productItem/ProductItem";
 import "./filteredProducts.css";
 
 // --------------------
+import { Button } from "@mui/material";
 import ListSubheader from "@mui/material/ListSubheader";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -43,7 +44,6 @@ const FilteredProducts = () => {
   }, [callback, location.state]);
   // console.log(products);
 
-
   //  ----------get all categories
   const [categories, setCategories] = useState([]);
   const [catCallback, setCatCallback] = useState(false);
@@ -64,8 +64,8 @@ const FilteredProducts = () => {
 
   // -----------------------
 
-	// -------get all brands---
-	const [brands, setBrands] = useState([]);
+  // -------get all brands---
+  const [brands, setBrands] = useState([]);
   const [brandCallback, setBrandCallback] = useState(false);
   useEffect(() => {
     const getBrands = async () => {
@@ -81,12 +81,12 @@ const FilteredProducts = () => {
 
     getBrands();
   }, [brandCallback]);
-	// -----------------
+  // -----------------
 
-console.log(products)
-	// ------get All age categories
+  // ------get All age categories
   const [ages, setAges] = useState([]);
-	useEffect(() => {
+  const [agesCallback, setAgesCallBack] = useState(false);
+  useEffect(() => {
     const getAges = async () => {
       try {
         const { data: response } = await axios.get(
@@ -99,27 +99,27 @@ console.log(products)
     };
 
     getAges();
-  }, []);
+  }, [agesCallback]);
 
-	// ----------------------
+  // ----------------------
 
   // ----------------material ui------
   const [open1, setOpen1] = React.useState(false);
-	const [open2, setOpen2] = React.useState(false);
-	const [open3, setOpen3] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
+  const [open3, setOpen3] = React.useState(false);
 
   const handleClick1 = () => {
     setOpen1(!open1);
   };
-const handleClick2 = () => {
-  setOpen2(!open2);
-};
-const handleClick3 = () => {
-  setOpen3(!open3);
-};
+  const handleClick2 = () => {
+    setOpen2(!open2);
+  };
+  const handleClick3 = () => {
+    setOpen3(!open3);
+  };
   const [checkedCategories, setCheckedCategories] = React.useState([]);
-	const [checkedBrands, setCheckedBrands] = React.useState([]);
-	const [checkedAges, setCheckedAges] = React.useState([]);
+  const [checkedBrands, setCheckedBrands] = React.useState([]);
+  const [checkedAges, setCheckedAges] = React.useState([]);
 
   const handleToggleCategories = (value) => () => {
     const currentIndex = checkedCategories.indexOf(value);
@@ -133,7 +133,7 @@ const handleClick3 = () => {
 
     setCheckedCategories(newChecked);
   };
-	const handleToggleBrands = (value) => () => {
+  const handleToggleBrands = (value) => () => {
     const currentIndex = checkedBrands.indexOf(value);
     const newChecked = [...checkedBrands];
 
@@ -146,52 +146,85 @@ const handleClick3 = () => {
     setCheckedBrands(newChecked);
   };
 
+  const handleToggleAges = (value) => () => {
+    const currentIndex = checkedAges.indexOf(value);
+    const newChecked = [...checkedAges];
 
-		const handleToggleAges = (value) => () => {
-      const currentIndex = checkedAges.indexOf(value);
-      const newChecked = [...checkedAges];
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
 
-      if (currentIndex === -1) {
-        newChecked.push(value);
-      } else {
-        newChecked.splice(currentIndex, 1);
-      }
-
-      setCheckedAges(newChecked);
-    };
- 
-	
-
-
-  // function getFilteredList() {
-  //   if (!checked) {
-  //     return products;
-  //   }
-  // 	let v
-  //   for (let i = 0; i < checked.length; i++) {
-  //      v = products.filter((item) =>
-  //       item.categories.map((category) => category.id === checked[i])
-  //     );
-  //   }
-  // 	return v
-  // }
-  // let filteredList = useMemo(getFilteredList, [checked, products]);
-  // console.log(filteredList)
+    setCheckedAges(newChecked);
+  };
 
   // --------------------------
 
-
-	
-
   //-------- pagination
-	
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-	const [currentPage, setCurrentPage] = useState(1);
-	const [postsPerPage] = useState(6);
-	const lastPostIndex = currentPage * postsPerPage;
-	const firstPostIndex = lastPostIndex - postsPerPage;
-	const currentPost = products.slice(firstPostIndex, lastPostIndex);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(6);
+  const lastPostIndex = currentPage * postsPerPage;
+  const firstPostIndex = lastPostIndex - postsPerPage;
+  const currentPost = products.slice(firstPostIndex, lastPostIndex);
   // console.log(categories)
+  // console.log(checkedCategories + " - Categories");
+  // console.log(checkedBrands + " - Brands");
+  // console.log(checkedAges + " - Ages");
+  // console.log(products);
+  // const applyFilters = () => {
+  //   setProducts(
+  //     products.filter((product) => {
+  //       // const productCategoriesIds = product.categories.map((c) => c.id);
+  //       // productCategoriesIds.filter((x) => checkedCategories.includes(x)) > 0 ||
+  //       if (
+  //         checkedBrands.includes(product.brand_id) ||
+  //         checkedAges.includes(product.age_category_id)
+  //       ) {
+  //         console.log("Product added: ");
+  //         console.log(product);
+  //         return true;
+  //       } else {
+  //         console.log("Product was not added");
+  //         console.log(product);
+  //         return false;
+  //       }
+  //     })
+  //   );
+  // };
+  function Filter() {
+    // let b = products.map((product) =>
+    //   product.categories.map((c) => checkedCategories.includes(c.id))
+    // );
+    // let c = b.filter(arr => arr.includes(true))
+    // console.log(c);
+    let c = [];
+    let b = products.map((product) => {
+      return product.categories.filter((el) =>
+        checkedCategories.includes(el.id)
+      );
+    });
+
+    for (let i = 0; i < b.length; i++) {
+      if (b[i].length !== 0) {
+        c.push(products[i]);
+      } else if (
+        checkedBrands.includes(products[i].brand_id) ||
+        checkedAges.includes(products[i].age_category_id)
+      ) {
+        c.push(products[i]);
+      } else {
+      }
+    }
+    console.log(c);
+		if(c.length === 0){
+			setProducts(products)
+		}else{
+			setProducts(c)
+		}
+  }
   //--------------------
   return (
     <div>
@@ -205,7 +238,9 @@ const handleClick3 = () => {
             aria-labelledby="nested-list-subheader"
             subheader={
               <ListSubheader component="div" id="nested-list-subheader">
-                Фільтер
+                <Button variant="contained" onClick={() => Filter()}>
+                  <strong>Filter</strong>
+                </Button>
               </ListSubheader>
             }
           >
