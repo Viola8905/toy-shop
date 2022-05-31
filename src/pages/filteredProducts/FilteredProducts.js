@@ -19,6 +19,7 @@ import Checkbox from "@mui/material/Checkbox";
 // -------------------------
 const FilteredProducts = () => {
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [callback, setCallback] = useState(false);
 
   const location = useLocation();
@@ -168,38 +169,10 @@ const FilteredProducts = () => {
   const [postsPerPage] = useState(6);
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
-  const currentPost = products.slice(firstPostIndex, lastPostIndex);
-  // console.log(categories)
-  // console.log(checkedCategories + " - Categories");
-  // console.log(checkedBrands + " - Brands");
-  // console.log(checkedAges + " - Ages");
-  // console.log(products);
-  // const applyFilters = () => {
-  //   setProducts(
-  //     products.filter((product) => {
-  //       // const productCategoriesIds = product.categories.map((c) => c.id);
-  //       // productCategoriesIds.filter((x) => checkedCategories.includes(x)) > 0 ||
-  //       if (
-  //         checkedBrands.includes(product.brand_id) ||
-  //         checkedAges.includes(product.age_category_id)
-  //       ) {
-  //         console.log("Product added: ");
-  //         console.log(product);
-  //         return true;
-  //       } else {
-  //         console.log("Product was not added");
-  //         console.log(product);
-  //         return false;
-  //       }
-  //     })
-  //   );
-  // };
+  // const [currentPost,setCurrentPost] = useState(products.slice(firstPostIndex, lastPostIndex))
+  // let currentPost = products.slice(firstPostIndex, lastPostIndex);
+
   function Filter() {
-    // let b = products.map((product) =>
-    //   product.categories.map((c) => checkedCategories.includes(c.id))
-    // );
-    // let c = b.filter(arr => arr.includes(true))
-    // console.log(c);
     let c = [];
     let b = products.map((product) => {
       return product.categories.filter((el) =>
@@ -208,23 +181,22 @@ const FilteredProducts = () => {
     });
 
     for (let i = 0; i < b.length; i++) {
-      if (b[i].length !== 0) {
-        c.push(products[i]);
-      } else if (
+      if (
+        b[i].length !== 0 ||
         checkedBrands.includes(products[i].brand_id) ||
         checkedAges.includes(products[i].age_category_id)
       ) {
         c.push(products[i]);
-      } else {
       }
     }
-    console.log(c);
-		if(c.length === 0){
-			setProducts(products)
-		}else{
-			setProducts(c)
-		}
+
+    if (c.length > 0) {
+      setFilteredProducts(c);
+    } else {
+      setFilteredProducts([]);
+    }
   }
+
   //--------------------
   return (
     <div>
@@ -328,19 +300,30 @@ const FilteredProducts = () => {
           {/* material ui */}
         </div>
         <div className="gallery-wrapper">
-          {currentPost.map((product) => (
+          {/* {filteredProducts.map((product) => (
             <div key={product.id}>
               <ProductItem toy={product} />
             </div>
-          ))}
+          ))} */}
+          {filteredProducts.length > 0
+            ? filteredProducts.map((product) => (
+                <div key={product.id}>
+                  <ProductItem toy={product} />
+                </div>
+              ))
+            : products.map((product) => (
+                <div key={product.id}>
+                  <ProductItem toy={product} />
+                </div>
+              ))}
         </div>
-        <div className="" style={{ marginTop: "10px" }}>
+        {/* <div className="" style={{ marginTop: "10px" }}>
           <Pagination
             postsPerPage={postsPerPage}
             totalPosts={products.length}
             paginate={paginate}
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );
