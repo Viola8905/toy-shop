@@ -6,7 +6,7 @@ import BackBtn from "../../components/backBtn/BackBtn";
 import poshta from "../../img/nova-poshta.png";
 import Edit from "../../img/edit.png";
 import Checked from "../../img/checked.png";
-import "./productPage.css"
+import "./productPage.css";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
 import {
@@ -136,12 +136,6 @@ const ProductPage = () => {
     }
   };
 
-  // const Find = () => {
-  //   const find = cart.find((item) => item.product.id === product.id);
-  //   setIsInCart(find ? "yes" : "no");
-  // };
-  // useEffect(() => Find(), [Find]);
-
   return (
     <div>
       <div key={product.id}>
@@ -170,13 +164,42 @@ const ProductPage = () => {
                     justifyContent: "space-between",
                   }}
                 >
-                  <div className="product-raiting">
-                    {product.average_rating}
+                  <div
+                    className="product-raiting"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <img
+                      src="https://cdn0.iconfinder.com/data/icons/new-year-holidays-set/200/NewYearIcon7-01-512.png"
+                      alt=""
+                      style={{ maxWidth: "25px" }}
+                    />
+                    <div style={{ marginLeft: "5px", fontWeight: "500" }}>
+                      {product.average_rating}
+                    </div>
                   </div>
                   <div className="product-id">#Ref:{product.id}</div>
                 </div>
-                <div className="product-name">{product.name}</div>
-                <div className="product-price">${product.price}</div>
+                <div
+                  className="product-name"
+                  style={{
+                    fontSize: "20px",
+                    color: "rgb(17, 119, 235)",
+                    fontWeight: "700",
+                    letterSpacing: "1px",
+                    padding: "10px 0",
+                  }}
+                >
+                  {product.name}
+                </div>
+                <div
+                  className="product-price"
+                  style={{ fontSize: "20px", fontWeight: "500" }}
+                >
+                  ${product.price}
+                </div>
 
                 <div
                   className="product-button"
@@ -185,9 +208,23 @@ const ProductPage = () => {
                   {isInCart === "yes" ? (
                     <div
                       onClick={() => navigate("/shopping-cart")}
-                      style={{ color: "red" }}
+                      style={{
+                        color: "#02b857",
+                        fontWeight: "600",
+                        fontSize: "18px",
+                        backgroundColor: "#02b857",
+                        padding: "1% 15%",
+                        color: "white",
+                        borderRadius: "15px",
+                        marginTop: "10px ",
+                      }}
                     >
                       В корзині
+                      <img
+                        src="https://cdn4.iconfinder.com/data/icons/aami-web-internet/64/aami6-31-512.png"
+                        alt=""
+                        style={{ maxWidth: "40px", marginLeft: "5px" }}
+                      />
                     </div>
                   ) : isInCart === "no" ? (
                     <button
@@ -220,14 +257,6 @@ const ProductPage = () => {
                       </button>
                     </>
                   )}
-
-                  <>
-                    {/* {cart.map((item) => (
-										<>
-											{item.id.includes( product.id ) ? "in cart molok" : "nooooooooo"}
-										</>
-									))} */}
-                  </>
                 </div>
                 <hr />
                 <div className="product-samovyvis">Безкоштовний самовивіз</div>
@@ -248,6 +277,7 @@ const ProductPage = () => {
                       flex: "1 1 100%",
                       textAlign: "end",
                       alignSelf: "center",
+                      fontWeight: "500",
                     }}
                   >
                     50грн без комісії за накладений платіж
@@ -270,18 +300,30 @@ const ProductPage = () => {
                       flex: "1 1 100%",
                       textAlign: "end",
                       alignSelf: "center",
+                      fontWeight: "500",
                     }}
                   >
                     Доставка 50грн
                   </div>
                 </div>
                 <hr />
-                <div className="detali-dostavky">
+                <div
+                  className="detali-dostavky"
+                  style={{ textAlign: "center" }}
+                >
                   Деталі на сторінці :
-                  <span style={{ color: "blue", cursor: "pointer" }}>
+                  <span
+                    style={{
+                      color: "blue",
+                      cursor: "pointer",
+                      fontWeight: "500",
+                      marginLeft: "5px",
+                    }}
+                  >
                     Правила доставки
                   </span>
                 </div>
+                <br />
               </div>
             </div>
           </div>
@@ -300,7 +342,10 @@ const ProductPage = () => {
 
         <Card style={{ margin: "20px 15px 50px 15px" }}>
           <div className="reviews-wrapper" style={{ padding: "15px" }}>
-            <div className="reviews-title">
+            <div
+              className="reviews-title"
+              style={{ fontSize: "20px", fontWeight: 700 }}
+            >
               Відгуки({productReviews.length})
             </div>
             {isAuth ? (

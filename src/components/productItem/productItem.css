@@ -12,3 +12,24 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.body{
+	position: relative;
+}
+.amount{
+	position: absolute;
+	right: 0;
+	top:0;
+	text-align: end;
+	padding: 3px  10px;
+	border-bottom-left-radius: 10px;
+	font-weight: 500;
+}
+.is{
+	background-color: rgba(99, 252, 10, 0.505);
+}
+.ends{
+  background-color:rgb(216, 237, 76);
+}
+.isnt{
+	background-color: rgba(222, 57, 57, 0.813);
+}
