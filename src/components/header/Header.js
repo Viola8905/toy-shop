@@ -23,8 +23,8 @@ const Header = () => {
   const dispatch = useDispatch();
   const [toggleMenu, setToggleMenu] = useState(false);
   const role = useSelector((state) => state.user.currentUser.role_id);
-	const [searchQuery, setSearchQuery] = useState('')
- const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
   return (
     <>
       <Navbar variant="dark" style={{ backgroundColor: "rgb(121, 176, 238)" }}>
@@ -44,52 +44,38 @@ const Header = () => {
 
           {isAuth ? (
             <Nav className="ml-auto" style={{ color: "white" }}>
-              <Button
-                variant={"outline-light"}
-                className="ml-2"
-                onClick={() => dispatch(logout())}
+              <div
+                onClick={() => {
+                  dispatch(logout());
+                  navigate("/");
+                }}
+                style={{
+                  fontSize: "18px",
+                  border: "1px solid white",
+                  padding: "3px 10px",
+                  borderRadius: "30px",
+                  backgroundColor: "rgb(17, 119, 235)",
+                }}
               >
-                <NavLink
-                  to="/"
-                  style={{ color: "white", textDecoration: "none" }}
-                >
-                  Вийти
-                </NavLink>
-              </Button>
-              {role === 200 ? (
-                <>
-                  <Button variant={"outline-light"} className="ml-2">
-                    <NavLink
-                      to="/"
-                      style={{ color: "white", textDecoration: "none" }}
-                    >
-                      Адмін
-                    </NavLink>
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button variant={"outline-light"} className="ml-2">
-                    <NavLink
-                      to="/"
-                      style={{ color: "white", textDecoration: "none" }}
-                    >
-                      Користувач
-                    </NavLink>
-                  </Button>
-                </>
-              )}
+                Вийти
+              </div>
             </Nav>
           ) : (
             <Nav className="ml-auto" style={{ color: "white" }}>
-              <Button variant={"outline-light"}>
-                <NavLink
-                  to="/login"
-                  style={{ color: "white", textDecoration: "none" }}
-                >
-                  Ввійти
-                </NavLink>
-              </Button>
+              <div
+                onClick={() => {
+                  navigate("/login");
+                }}
+                style={{
+                  fontSize: "18px",
+                  border: "1px solid white",
+                  padding: "3px 10px",
+                  borderRadius: "30px",
+                  backgroundColor: "rgb(17, 119, 235)",
+                }}
+              >
+                Ввійти
+              </div>
             </Nav>
           )}
         </Container>
@@ -152,7 +138,8 @@ const Header = () => {
                   <img
                     src={logo}
                     alt=""
-                    style={{ maxWidth: "150px", marginLeft: "2.5%" }}
+                    style={{ marginLeft: "2.5%" }}
+                    className="shop-logo"
                   />
                   <div
                     style={{
@@ -165,13 +152,18 @@ const Header = () => {
                       <Form.Control
                         placeholder="Щось шукаєте?"
                         style={{ borderRadius: "22px" }}
-												onChange={(e)=>setSearchQuery(e.target.value)}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                       />
                       <img
                         src={search}
                         alt=""
-                        style={{ maxWidth: "40px", marginLeft: "2%" }}
-												onClick={()=>navigate(`/search/?text=${searchQuery}`,{state:searchQuery})}
+                        className="search-icon"
+                        style={{ marginLeft: "2%" }}
+                        onClick={() =>
+                          navigate(`/search/?text=${searchQuery}`, {
+                            state: searchQuery,
+                          })
+                        }
                       />
                     </Form>
                   </div>

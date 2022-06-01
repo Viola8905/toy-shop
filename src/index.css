@@ -23,6 +23,12 @@ code {
   
 	height:100vh;
 }
+@media screen and (max-width:1050px){
+	.App{
+		max-width: 100%;
+		 padding: 0 0px;
+	}
+}
 .main{
 	flex: 1 1 auto;
 	

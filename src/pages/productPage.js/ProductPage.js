@@ -6,7 +6,7 @@ import BackBtn from "../../components/backBtn/BackBtn";
 import poshta from "../../img/nova-poshta.png";
 import Edit from "../../img/edit.png";
 import Checked from "../../img/checked.png";
-
+import "./productPage.css"
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
 import {

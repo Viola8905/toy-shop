@@ -1,0 +1,7 @@
+.product-page-column {
+}
+@media screen and (max-width: 1025px) {
+  .product-page-column {
+    flex-direction: column;
+  }
+}

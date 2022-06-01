@@ -1,11 +1,34 @@
-.second-row-li{
-	
-	font-weight: 700;
-	color:white;
-	letter-spacing: 1px;
-	margin:0 0 5px 0;
+.second-row-li {
+  font-weight: 700;
+  color: white;
+  letter-spacing: 1px;
+  margin: 0 0 5px 0;
 }
-.admin-navbar{
-	margin-left: 50px;
-	color:black;
+.admin-navbar {
+  margin-left: 50px;
+  color: black;
+}
+.shop-logo {
+  max-width: 150px;
+}
+.search-icon {
+  max-width: 40px;
+}
+@media screen and (max-width: 1000px) {
+  .header-container {
+    padding: 0;
+  }
+  .shop-logo {
+    max-width: 100px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .shop-logo {
+    max-width: 70px;
+  }
+  .search-icon {
+    max-width: 35px;
+    max-height: 35px;
+    align-self: center;
+  }
 }
