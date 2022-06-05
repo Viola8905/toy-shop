@@ -1,15 +1,14 @@
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
-import BackBtn from "../../../components/backBtn/BackBtn";
-import "./adminProduct.css";
+import React, { useEffect, useState } from "react";
 
 // -------------------start---------------------------------------------------------
 import PropTypes from "prop-types";
 import { useAutocomplete } from "@mui/base/AutocompleteUnstyled";
 import CheckIcon from "@mui/icons-material/Check";
-import CloseIcon from "@mui/icons-material/Close";
 import { styled } from "@mui/material/styles";
 import { useSelector } from "react-redux";
+import BackBtn from "../../../../components/backBtn/BackBtn";
+import { useLocation } from "react-router-dom";
 const Root = styled("div")(
   ({ theme }) => `
   color: ${
@@ -69,7 +68,6 @@ function Tag(props) {
   return (
     <div {...other}>
       <span>{label}</span>
-      {/* <CloseIcon onClick={onDelete} fontSize='large' /> */}
       <img
         src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_exit-256.png"
         alt=""
@@ -170,27 +168,32 @@ const Listbox = styled("ul")(
 
 // -------------------------end------------------------------------------------------------
 
-const initialState = {
-  name: "",
-  description: "",
-  price: 0,
-  amount: 0,
-  is_best_deal: false,
-  age_category_id: 0,
-  brand_id: 0,
-  // image_path: "",
-  "category_ids[]": [],
-};
-const AdminProduct = () => {
-  const [product, setProduct] = useState(initialState);
-  const [categories, setCategories] = useState([]);
+const AdminEditProduct = () => {
+  const [product, setProduct] = useState({});
   const [brands, setBrands] = useState([]);
   const [ages, setAges] = useState([]);
   const [callback, setCallback] = useState(false);
 
+  const location = useLocation();
+  let query = location.state;
+
   const categories1 = useSelector((state) => state.categories.Categories);
 
-  let arr = [];
+  useEffect(() => {
+    const Posts = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}products/${query}`
+        );
+
+        setProduct(response.data.data);
+      } catch (e) {
+        console.log(`Error from useEffect: ${e}`);
+      }
+    };
+
+    Posts();
+  }, [callback]);
 
   useEffect(() => {
     const getBrands = async () => {
@@ -214,7 +217,6 @@ const AdminProduct = () => {
       }
     };
     getAges();
-    // getCategories();
     getBrands();
   }, [callback]);
 
@@ -222,15 +224,17 @@ const AdminProduct = () => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };
-  // const handleChangeInput1 = (e) => {
-  //   const { name, files } = e.target;
-  //   setProduct({ ...product, [name]: files[0] });
-  // };
+  console.log(product);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const data = new FormData();
-      data.append("image_path", document.getElementById("image_path").files[0]);
+      if (document.getElementById("image_path").files[0]) {
+        data.append(
+          "image_path",
+          document.getElementById("image_path").files[0]
+        );
+      }
       data.append("name", product.name);
       data.append("description", product.description);
       data.append("price", product.price);
@@ -240,22 +244,22 @@ const AdminProduct = () => {
       data.append("brand_id", product.brand_id);
       data.append("category_ids[]", product["category_ids[]"]);
 
-      // console.log(document.getElementById("image_path").files[0]);
-			fetch(`https://api.toy-store.dev-1.folkem.xyz/api/v1/admin/products`, {
-        method: "POST",
-        headers: {
-          sanctum: `${localStorage.getItem("token")}`,
-        },
-        body: data,
-      });
-
+      fetch(
+        `https://api.toy-store.dev-1.folkem.xyz/api/v1/admin/products/${query}`,
+        {
+          method: "POST",
+          headers: {
+            sanctum: `${localStorage.getItem("token")}`,
+          },
+          body: data,
+        }
+      );
     } catch (err) {
       alert(err.response.data.msg);
     }
   };
 
   // ----------start-----------
-  // let value1 = value
 
   const {
     getRootProps,
@@ -280,46 +284,19 @@ const AdminProduct = () => {
     setProduct({ ...product, "category_ids[]": value.map((el) => el.id) });
   }, [value]);
 
-  console.log(product);
   return (
     <div>
       <BackBtn />
 
-      <button onClick={() => handleSubmit()}>Додати продукт</button>
       <div className="create_product">
         <form action="" onSubmit={handleSubmit}>
           <div className="row">
             {/* --------- */}
             <div className="upload">
-              <input
-                type="file"
-                name="image_path"
-                id="image_path"
-                // value={product.image_path}
-                // required
-                // onChange={(e) =>
-                //   setProduct({ ...product, image_path: e.target.value })
-                // }
-              />
-              {/* <textarea
-                type="text"
-                name="image_path"
-                id="image_path"
-                value={product.image_path}
-                required
-                onChange={handleChangeInput}
-              /> */}
-              {/* {loading ? (
-                <div id="file_img">
-                  <Loading />
-                </div>
-              ) : (
-                <div id="file_img" style={styleUpload}>
-                  <img src={images ? images.url : ""} alt="" />
-                  <span onClick={handleDestroy}>X</span>
-                </div>
-              )} */}
+              <input type="file" name="image_path" id="image_path" />
+              <img src={product.image_path} alt="" />
             </div>
+
             {/* --------- */}
             <label htmlFor="name">Назва:</label>
             <input
@@ -374,6 +351,7 @@ const AdminProduct = () => {
               id="is_best_deal"
               name="is_best_deal"
               value={product.is_best_deal}
+              checked={product.is_best_deal}
               style={{ width: "20px" }}
               onChange={() =>
                 setProduct({ ...product, is_best_deal: !product.is_best_deal })
@@ -440,7 +418,7 @@ const AdminProduct = () => {
           {/* -------------------- */}
 
           <button type="submit" style={{ marginTop: "20px" }}>
-            Додати продукт
+            Редагувати
           </button>
         </form>
       </div>
@@ -448,4 +426,4 @@ const AdminProduct = () => {
   );
 };
 
-export default AdminProduct;
+export default AdminEditProduct;

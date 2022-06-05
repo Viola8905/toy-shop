@@ -59,13 +59,6 @@ const ShoppingCart = () => {
   }
 
   const increment = (id, count) => {
-    // cart.forEach((item) => {
-    //   if (item.product.id === id) {
-    //     item.count += 1;
-    //   }
-    // });
-
-    // setCart([...cart]);
     addToCart(id, count + 1);
   };
 
@@ -76,20 +69,6 @@ const ShoppingCart = () => {
       }
     });
   };
-
-  // const removeProduct = async (product_id) => {
-  // 	console.log(product_id);
-  //   if (window.confirm("Do you want to delete this product?")) {
-  //     await axios.delete(
-  //       `${process.env.REACT_APP_BASE_URL}shopping-cart`,
-  //       { product_id },
-  //       {
-  //         headers: { sanctum: `${localStorage.getItem("token")}` },
-  //       }
-  //     );
-  //     setCallback(!callback);
-  //   }
-  // };
 
   const removeProduct = async (id) => {
     console.log(id);
@@ -110,15 +89,14 @@ const ShoppingCart = () => {
       alert(e.response.data.message);
     }
   };
-  // ${localStorage.getItem("token")}
-  // console.log(cart);
+
   if (cart.length === 0)
     return (
       <h2 style={{ textAlign: "center", fontSize: "5rem" }}>Корзина пуста</h2>
     );
   return (
     <div>
-			<BackBtn/>
+      <BackBtn />
       {cart.map((product) => (
         <div className="detail cart" key={product.product.id}>
           <img
@@ -130,7 +108,7 @@ const ShoppingCart = () => {
           <div className="box-detail">
             <h6>#id:{product.product.id}</h6>
 
-            <h3>${product.product.price * product.count}</h3>
+            <h3>${(product.product.price * product.count).toFixed(2)}</h3>
             <a
               style={{ fontWeight: "600", cursor: "pointer" }}
               onClick={() => Details(product.product.name, product.product.id)}
@@ -163,7 +141,7 @@ const ShoppingCart = () => {
         </div>
       ))}
       <div className="total">
-        <h3>Загальна сума: ${total}</h3>
+        <h3>Загальна сума: ${total.toFixed(2)}</h3>
       </div>
     </div>
   );

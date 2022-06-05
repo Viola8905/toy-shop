@@ -9,14 +9,11 @@ import Checked from "../../img/checked.png";
 import "./productPage.css";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
-import {
-  getProductById,
-  postReview,
-  removeReview,
-} from "../../api/productRequests";
+import { postReview, removeReview } from "../../api/productRequests";
 import Delete from "../../img/delete.png";
 import { setProduct } from "../../reducers/productsReducer";
 import axios from "axios";
+import ProductItem from "../../components/productItem/ProductItem";
 
 const ProductPage = () => {
   const Products = useSelector((state) => state.products.Products);
@@ -37,6 +34,7 @@ const ProductPage = () => {
   const [callback, setCallback] = useState(false);
   const [cart, setCart] = useState([]);
   const [isInCart, setIsInCart] = useState(false);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   const navigate = useNavigate();
 
@@ -49,14 +47,32 @@ const ProductPage = () => {
 
         dispatch(setProduct(response.data.data));
         setProductReviews(response.data.data.reviews);
-        setCallback(!callback);
+       
       } catch (e) {
         console.log(`Error from useEffect: ${e}`);
       }
     };
 
     Posts();
-  }, [query]);
+  }, [callback]);
+
+  useEffect(() => {
+    const Products = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}products`
+        );
+
+        setFilteredProducts(
+          response.data.data.filter((product) => product.is_best_deal === true)
+        );
+      } catch (e) {
+        console.log(`Error from useEffect: ${e}`);
+      }
+    };
+
+    Products();
+  }, []);
 
   const deleteReview = async (id) => {
     try {
@@ -135,7 +151,9 @@ const ProductPage = () => {
       alert(e.response.data.message);
     }
   };
-
+  // console.log(product);
+  // console.log(filteredProducts);
+  console.log(product);
   return (
     <div>
       <div key={product.id}>
@@ -146,17 +164,17 @@ const ProductPage = () => {
             style={{ display: "flex", justifyContent: "center" }}
           >
             <div className="product-page-column" style={{ display: "flex" }}>
-              <div className="product-image" style={{ maxWidth: "500px" }}>
+              <div className="product-image">
                 <img
-                  src="https://images.pexels.com/photos/12211/pexels-photo-12211.jpeg?cs=srgb&dl=pexels-tetyana-kovyrina-12211.jpg&fm=jpg"
+                  src={
+                    product.image_path
+                      ? product.image_path
+                      : "https://images.pexels.com/photos/12211/pexels-photo-12211.jpeg?cs=srgb&dl=pexels-tetyana-kovyrina-12211.jpg&fm=jpg"
+                  }
                   alt=""
-                  style={{ maxWidth: "100%" }}
                 />
               </div>
-              <div
-                className="product-block"
-                style={{ padding: "10px 10px 0 10px" }}
-              >
+              <div className="product-block" style={{}}>
                 <div
                   className="product-row"
                   style={{
@@ -171,14 +189,24 @@ const ProductPage = () => {
                       alignItems: "center",
                     }}
                   >
-                    <img
-                      src="https://cdn0.iconfinder.com/data/icons/new-year-holidays-set/200/NewYearIcon7-01-512.png"
-                      alt=""
-                      style={{ maxWidth: "25px" }}
-                    />
-                    <div style={{ marginLeft: "5px", fontWeight: "500" }}>
-                      {product.average_rating}
-                    </div>
+                    {product.average_rating ? (
+                      <>
+                        <img
+                          src="https://cdn0.iconfinder.com/data/icons/new-year-holidays-set/200/NewYearIcon7-01-512.png"
+                          alt=""
+                          style={{ maxWidth: "25px" }}
+                        />
+                        <div style={{ marginLeft: "5px", fontWeight: "500" }}>
+                          {product.average_rating.toFixed(1)}
+                        </div>
+                      </>
+                    ) : (
+                      <img
+                        src="https://cdn3.iconfinder.com/data/icons/flat-pro-basic-set-4/32/star-grayed-512.png"
+                        alt=""
+                        style={{ maxWidth: "25px" }}
+                      />
+                    )}
                   </div>
                   <div className="product-id">#Ref:{product.id}</div>
                 </div>
@@ -340,6 +368,41 @@ const ProductPage = () => {
           </div>
         </Card>
 
+        <Card style={{ margin: "20px 15px 20px 15px" }}>
+          <div className="" style={{ padding: "15px" }}>
+            <div
+              className="title"
+              style={{ fontSize: "20px", fontWeight: 700 }}
+            >
+              Накращі пропозиції по схожим товарам
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "space-between",
+              }}
+            >
+              {/* {filteredProducts
+                .filter((item2) => item2.categories[0])
+                .filter(
+                  (item3) =>
+                    item3.categories[0].name === product.categories[0].name
+                )
+                .slice(0, 3)
+                .map((item) =>
+                  filteredProducts.length > 0 ? (
+                    <div className="" key={item.id}>
+                      <ProductItem toy={item} />
+                    </div>
+                  ) : (
+                    <></>
+                  )
+                )} */}
+            </div>
+          </div>
+        </Card>
+
         <Card style={{ margin: "20px 15px 50px 15px" }}>
           <div className="reviews-wrapper" style={{ padding: "15px" }}>
             <div
@@ -405,7 +468,7 @@ const ProductPage = () => {
                           {new Date(review.user.created_at).toUTCString()}
                         </div>
 
-                        {currentUser.role_id == 200 ? (
+                        {currentUser.role_id === 200 ? (
                           <>
                             <div
                               className="delete-bin"

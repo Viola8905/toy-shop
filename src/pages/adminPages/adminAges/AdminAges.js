@@ -132,7 +132,7 @@ const AdminAges = () => {
           {/* ------------------------ */}
           <br />
           <button type="submit" style={{ margin: "30px auto" }}>
-            {onEdit ? "Update" : "Create"}
+            {onEdit ? "Редагувати" : "Створити"}
           </button>
         </form>
 

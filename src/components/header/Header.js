@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,15 +9,8 @@ import search from "../../img/search.png";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
-import {
-  ButtonGroup,
-  Dropdown,
-  Form,
-  NavDropdown,
-  OverlayTrigger,
-  Tooltip,
-} from "react-bootstrap";
+import { Form } from "react-bootstrap";
+import axios from "axios";
 const Header = () => {
   const isAuth = useSelector((state) => state.user.isAuth);
   const dispatch = useDispatch();
@@ -25,6 +18,24 @@ const Header = () => {
   const role = useSelector((state) => state.user.currentUser.role_id);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+  const [cart, setCart] = useState([]);
+  useEffect(() => {
+    const getCart = async () => {
+      try {
+        const { data: response } = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}shopping-cart`,
+          {
+            headers: { sanctum: `${localStorage.getItem("token")}` },
+          }
+        );
+        setCart(response.data);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    getCart();
+  }, []);
   return (
     <>
       <Navbar variant="dark" style={{ backgroundColor: "rgb(121, 176, 238)" }}>
@@ -59,6 +70,36 @@ const Header = () => {
               >
                 Вийти
               </div>
+							{role === 100 ? ( <div className="" style={{ textAlign: "center" }}>
+                <NavLink
+                  to="/shopping-cart"
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  <img
+                    src="https://cdn2.iconfinder.com/data/icons/4web-3/139/cart-256.png"
+                    alt=""
+                    style={{
+                      maxWidth: "40px",
+                      marginLeft: "5px",
+                      // position: "relative",
+                    }}
+                  />
+                  <div
+                    style={{
+                      backgroundColor: "#db5e5e",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      padding: "0 5px",
+                      color: "white",
+                      top: "4px",
+                      right: "5px",
+                    }}
+                  >
+                    {cart.length}
+                  </div>
+                </NavLink>
+              </div>): (<></>)}
+             
             </Nav>
           ) : (
             <Nav className="ml-auto" style={{ color: "white" }}>
@@ -179,14 +220,6 @@ const Header = () => {
                 ></div>
               </div>
             </Container>
-          </div>
-          <div className="" style={{ textAlign: "center" }}>
-            <NavLink
-              to="/shopping-cart"
-              style={{ textDecoration: "none", color: "black" }}
-            >
-              Корзина
-            </NavLink>{" "}
           </div>
         </>
       )}

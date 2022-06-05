@@ -11,6 +11,7 @@ import AdminAges from "../pages/adminPages/adminAges/AdminAges";
 import AdminProduct from "../pages/adminPages/adminProduct/AdminProduct";
 import ShoppingCart from "../pages/registeredPages/shoppingCart/ShoppingCart";
 import FilteredProducts from "../pages/filteredProducts/FilteredProducts";
+import AdminEditProduct from "../pages/adminPages/adminAges/adminEditProduct/AdminEditProduct";
 const Pages = () => {
 	 const isAuth = useSelector((state) => state.user.isAuth);
 	 const role = useSelector((state) => state.user.currentUser.role_id)
@@ -55,6 +56,11 @@ const Pages = () => {
              exact
              path="/admin-create-product"
              element={<AdminProduct />}
+           />
+           <Route
+             exact
+             path="/admin-edit-product"
+             element={<AdminEditProduct />}
            />
          </Route>
        );

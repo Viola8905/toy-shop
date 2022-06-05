@@ -22,10 +22,11 @@
 	text-align: end;
 	padding: 3px  10px;
 	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
 	font-weight: 500;
 }
 .is{
-	background-color: rgba(99, 252, 10, 0.505);
+	background-color: rgba(99, 252, 10);
 }
 .ends{
   background-color:rgb(216, 237, 76);
