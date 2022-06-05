@@ -12,6 +12,7 @@ import AdminProduct from "../pages/adminPages/adminProduct/AdminProduct";
 import ShoppingCart from "../pages/registeredPages/shoppingCart/ShoppingCart";
 import FilteredProducts from "../pages/filteredProducts/FilteredProducts";
 import AdminEditProduct from "../pages/adminPages/adminAges/adminEditProduct/AdminEditProduct";
+import OrderProduct from "../pages/registeredPages/orderProduct/OrderProduct";
 const Pages = () => {
 	 const isAuth = useSelector((state) => state.user.isAuth);
 	 const role = useSelector((state) => state.user.currentUser.role_id)
@@ -75,6 +76,7 @@ const Pages = () => {
            <Route exact path="/shopping-cart" element={<ShoppingCart />} />
            <Route index element={<Gallery />} />
            <Route path="/search" element={<FilteredProducts />} />
+           <Route path="/order-product" element={<OrderProduct />} />
          </Route>
        );
      }

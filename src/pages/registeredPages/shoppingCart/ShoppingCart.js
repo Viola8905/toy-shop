@@ -2,12 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BackBtn from "../../../components/backBtn/BackBtn";
+import {  Button } from "react-bootstrap";
 import "./shoppingCart.css";
 const ShoppingCart = () => {
   const [callback, setCallback] = useState(false);
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
 
+	
   useEffect(() => {
     const getCart = async () => {
       try {
@@ -142,6 +144,13 @@ const ShoppingCart = () => {
       ))}
       <div className="total">
         <h3>Загальна сума: ${total.toFixed(2)}</h3>
+        <Button
+          variant="primary"
+          onClick={() => navigate("/order-product")}
+          style={{ marginTop: "0px" }}
+        >
+          Оформити замовлення
+        </Button>
       </div>
     </div>
   );

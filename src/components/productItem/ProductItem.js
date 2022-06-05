@@ -1,12 +1,12 @@
 import axios from "axios";
 import React from "react";
-import { Card, Col, Image, Button } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import "./productItem.css";
 
-const ProductItem = ({ toy,callback,setCallback }) => {
+const ProductItem = ({ toy, callback, setCallback }) => {
   const role = useSelector((state) => state.user.currentUser.role_id);
   const navigate = useNavigate();
   const Details = () => {
@@ -19,7 +19,7 @@ const ProductItem = ({ toy,callback,setCallback }) => {
   const editProduct = () => {
     navigate(`/admin-edit-product`, { state: toy.id });
   };
-	const deleteProduct = async (id) => {
+  const deleteProduct = async (id) => {
     try {
       const res = await axios.delete(
         `${process.env.REACT_APP_BASE_URL}admin/products/${id}`,
@@ -27,7 +27,6 @@ const ProductItem = ({ toy,callback,setCallback }) => {
           headers: { sanctum: `${localStorage.getItem("token")}` },
         }
       );
-      // alert(res.data.msg);
       setCallback(!callback);
     } catch (err) {
       alert(err.response.data.msg);

@@ -295,30 +295,9 @@ const AdminProduct = () => {
                 type="file"
                 name="image_path"
                 id="image_path"
-                // value={product.image_path}
-                // required
-                // onChange={(e) =>
-                //   setProduct({ ...product, image_path: e.target.value })
-                // }
+              
               />
-              {/* <textarea
-                type="text"
-                name="image_path"
-                id="image_path"
-                value={product.image_path}
-                required
-                onChange={handleChangeInput}
-              /> */}
-              {/* {loading ? (
-                <div id="file_img">
-                  <Loading />
-                </div>
-              ) : (
-                <div id="file_img" style={styleUpload}>
-                  <img src={images ? images.url : ""} alt="" />
-                  <span onClick={handleDestroy}>X</span>
-                </div>
-              )} */}
+             
             </div>
             {/* --------- */}
             <label htmlFor="name">Назва:</label>

@@ -211,7 +211,7 @@ const FilteredProducts = () => {
             subheader={
               <ListSubheader component="div" id="nested-list-subheader">
                 <Button variant="contained" onClick={() => Filter()}>
-                  <strong>Filter</strong>
+                  <strong>Знайти</strong>
                 </Button>
               </ListSubheader>
             }
