@@ -64,11 +64,8 @@ const Pages = () => {
              path="/admin-edit-product"
              element={<AdminEditProduct />}
            />
-           <Route
-             exact
-             path="/admin-orders"
-             element={<AdminOrders/>}
-           />
+           <Route exact path="/admin-orders" element={<AdminOrders />} />
+           <Route path="/search" element={<FilteredProducts />} />
          </Route>
        );
      } else if (isAuth && role === 100) {

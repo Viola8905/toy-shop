@@ -93,16 +93,15 @@ const Auth = () => {
             {isLogin ? (
               <div className="">
                 Ще не зареєстровані?
-                <br />
                 <NavLink to="/registration">
-                  Перейти до створення акаунту!
+                   Перейти до створення акаунту!
                 </NavLink>
+                
               </div>
             ) : (
               <div>
                 Вже є акаунт?
-                <br />
-                <NavLink to="/login">Перейти до авторизації!</NavLink>
+                <NavLink to="/login"> Перейти до авторизації!</NavLink>
               </div>
             )}
             {isLogin ? (
