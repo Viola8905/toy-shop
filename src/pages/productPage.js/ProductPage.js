@@ -369,7 +369,7 @@ const ProductPage = () => {
         </Card>
 
         <Card style={{ margin: "20px 15px 20px 15px" }}>
-          <div className="" style={{ padding: "15px" }}>
+          <div className="" style={{ padding: "15px" }} hidden={ product.categories.length == 0 }>
             <div
               className="title"
               style={{ fontSize: "20px", fontWeight: 700 }}
@@ -383,22 +383,26 @@ const ProductPage = () => {
                 justifyContent: "space-between",
               }}
             >
-              {/* {filteredProducts
-                .filter((item2) => item2.categories[0])
-                .filter(
-                  (item3) =>
-                    item3.categories[0].name === product.categories[0].name
-                )
-                .slice(0, 3)
-                .map((item) =>
-                  filteredProducts.length > 0 ? (
-                    <div className="" key={item.id}>
-                      <ProductItem toy={item} />
-                    </div>
-                  ) : (
-                    <></>
+              {
+                product.categories.length > 0 ? 
+                  filteredProducts
+                  .filter((item2) => item2.categories[0])
+                  .filter(
+                    (item3) =>
+                      item3.categories[0].name === product.categories[0].name
                   )
-                )} */}
+                  .slice(0, 3)
+                  .map((item) =>
+                    filteredProducts.length > 0 ? (
+                      <div className="" key={item.id}>
+                        <ProductItem toy={item} />
+                      </div>
+                    ) : (
+                      <></>
+                    )
+                  )
+                : <></>
+              }
             </div>
           </div>
         </Card>
