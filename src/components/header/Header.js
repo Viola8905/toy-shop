@@ -40,7 +40,7 @@ const Header = () => {
     <>
       <Navbar variant="dark" style={{ backgroundColor: "rgb(121, 176, 238)" }}>
         <Container>
-          <div onClick={() => dispatch(logout())}>
+          <div>
             <NavLink
               style={{
                 color: "black",
@@ -220,7 +220,15 @@ const Header = () => {
               </NavLink>
             </div>
           </div>
-          <div onClick={()=>navigate("/admin-orders")} style={{ textAlign: "center", backgroundColor: "#e07977",padding:"10px 0",cursor:"pointer" }}>
+          <div
+            onClick={() => navigate("/admin-orders")}
+            style={{
+              textAlign: "center",
+              backgroundColor: "#e07977",
+              padding: "10px 0",
+              cursor: "pointer",
+            }}
+          >
             Замовлення
           </div>
         </>
