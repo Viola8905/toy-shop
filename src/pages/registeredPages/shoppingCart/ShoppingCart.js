@@ -91,7 +91,7 @@ const ShoppingCart = () => {
       alert(e.response.data.message);
     }
   };
-
+	console.log(cart)
   if (cart.length === 0)
     return (
       <h2 style={{ textAlign: "center", fontSize: "5rem" }}>Корзина пуста</h2>
@@ -101,12 +101,7 @@ const ShoppingCart = () => {
       <BackBtn />
       {cart.map((product) => (
         <div className="detail cart" key={product.product.id}>
-          <img
-            src={
-              "https://media.istockphoto.com/photos/brown-teddy-bear-isolated-in-front-of-a-white-background-picture-id909772478?k=20&m=909772478&s=612x612&w=0&h=mzLuJ7ywrSDHmpchf9spOeNF2Ovr2aQBw1z57Szx17g="
-            }
-            style={{ width: "400px" }}
-          />
+          <img src={product.product.image_path} style={{ width: "300px" }} />
           <div className="box-detail">
             <h6>#id:{product.product.id}</h6>
 
@@ -132,12 +127,14 @@ const ShoppingCart = () => {
                 +
               </button>
             </div>
-
+						
+						<br/>
             <button
               // className="delete"
               onClick={() => removeProduct(product.product.id)}
+							style={{color:"red", marginTop:'20px'}}
             >
-              Закрити
+              Видалити з корзини
             </button>
           </div>
         </div>
