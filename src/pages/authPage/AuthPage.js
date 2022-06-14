@@ -3,6 +3,7 @@ import { Button, Card, Container, Form, Row } from "react-bootstrap";
 import { NavLink, useLocation } from "react-router-dom";
 import { login, registration } from "../../api/userRequests";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 const Auth = () => {
   const location = useLocation();
@@ -15,6 +16,22 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
+  const forgotPassword = async (email) => {
+    try {
+      if (email) {
+        alert("якщо ваша пошта є в нашій базі то ми надішлемо вам лист");
+        const response = await axios.post(
+          `${process.env.REACT_APP_BASE_URL}forgot-password`,
+          { email }
+        );
+        console.log(response);
+      } else {
+        alert("Вкажіть пошту");
+      }
+    } catch (err) {
+      alert(err.response.data.message);
+    }
+  };
   return (
     <Container
       className="d-flex justify-content-center align-items-center "
@@ -88,51 +105,88 @@ const Auth = () => {
               />
             </div>
           )}
+        </Form>
 
-          <Row className=" d-flex justify-content-between  mt-3 pl-3 pr-3 ">
-            {isLogin ? (
+        <Row className=" d-flex justify-content-between  mt-3 pl-3 pr-3 ">
+          {isLogin ? (
+            <>
               <div className="">
                 Ще не зареєстровані?
                 <NavLink to="/registration">
-                   Перейти до створення акаунту!
+                  Перейти до створення акаунту!
                 </NavLink>
-                
               </div>
-            ) : (
-              <div>
-                Вже є акаунт?
-                <NavLink to="/login"> Перейти до авторизації!</NavLink>
-              </div>
-            )}
-            {isLogin ? (
-              <div style={{ width: "100%" }}>
-                <Button
-                  variant={"outline-dark"}
-                  onClick={() => dispatch(login(email, password))}
-                >
-                  <NavLink to="/">Увійти</NavLink>
-                </Button>
-              </div>
-            ) : (
-              <div
-                style={{ width: "100%" }}
-                onClick={() =>
-                  registration(
-                    first_name,
-                    middle_name,
-                    last_name,
-                    email,
-                    password
-                  )
-                }
+              <button
+                onClick={() => forgotPassword(email)}
+                style={{
+                  backgroundColor: "#8ebfed",
+                  color: "white",
+                  marginTop: "20px",
+                }}
               >
-                <Button variant={"outline-dark"}>
-                  <NavLink to="/login">Зареєструватися</NavLink>
-                </Button>
-              </div>
-            )}
-          </Row>
-        </Form>
+                Забули пароль?
+              </button>
+            </>
+          ) : (
+            <div>
+              Вже є акаунт?
+              <NavLink to="/login"> Перейти до авторизації!</NavLink>
+            </div>
+          )}
+
+          {isLogin ? (
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                variant="primary"
+                onClick={() => dispatch(login(email, password))}
+                style={{ marginTop: "20px" }}
+              >
+                <NavLink
+                  to="/"
+                  style={{ color: "white", textDecoration: "none" }}
+                >
+                  Увійти
+                </NavLink>
+              </Button>
+            </div>
+          ) : (
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "20px",
+              }}
+              onClick={() =>
+                registration(
+                  first_name,
+                  middle_name,
+                  last_name,
+                  email,
+                  password
+                )
+              }
+            >
+              <Button variant={"primary"}>
+                <NavLink
+                  to="/login"
+                  style={{
+                    color: "white",
+                    textDecoration: "none",
+                  }}
+                >
+                  Зареєструватися
+                </NavLink>
+              </Button>
+            </div>
+          )}
+        </Row>
       </Card>
     </Container>
   );

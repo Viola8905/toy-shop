@@ -32,13 +32,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-
-
 // material ui
 // modal window
 
 function MyVerticallyCenteredModal1(props) {
-  console.log(props.data);
   return (
     <Modal
       {...props}
@@ -53,6 +50,8 @@ function MyVerticallyCenteredModal1(props) {
       </Modal.Header>
       <Modal.Body>
         <p>
+          <h3 className="">Загальна сума {props.order.total_price}$</h3>
+          <hr />
           {props.order.items.map((item) => (
             <>
               <div className="">#id товару : {item.product.id}</div>
@@ -93,6 +92,35 @@ function MyVerticallyCenteredModal2(props) {
   );
 }
 
+function MyVerticallyCenteredModal3(props) {
+  //дані отримувача
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Замовлення #id{props.order.id}
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <p>
+          <div>
+            <span style={{ fontWeight: "700" }}>Спосіб оплати: </span>
+            {props.order.pay_type === "online" ? "Онлайн" : "Офлайн"}
+          </div>
+          <div>
+            <span style={{ fontWeight: "700" }}>Статус оплати: </span>
+            {props.order.pay_status === "paid" ? "Оплачено" : "Не оплачено"}
+          </div>
+        </p>
+      </Modal.Body>
+    </Modal>
+  );
+}
 // modal window
 
 const AdminOrders = () => {
@@ -115,8 +143,14 @@ const AdminOrders = () => {
     id: 0,
     receiver: { name: "", phone: "", address: "", email: "" },
   });
+  const [order3, setOrder3] = useState({
+    id: 0,
+    pay_type: "",
+    pay_status: "",
+  });
   const [modalShow, setModalShow] = React.useState(false);
   const [modalShow2, setModalShow2] = React.useState(false);
+  const [modalShow3, setModalShow3] = React.useState(false);
 
   useEffect(() => {
     const Posts = async () => {
@@ -137,24 +171,22 @@ const AdminOrders = () => {
     Posts();
   }, [callback]);
 
-  console.log(orders);
   return (
     <div>
       <BackBtn />
-     
-      <TableContainer component={Paper} style={{margin:"100px 0 100px 0"}}>
+
+      <TableContainer component={Paper} style={{ margin: "100px 0 100px 0" }}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell style={{ width: "20px" }}>#id</StyledTableCell>
               <StyledTableCell align="center">Отримувач</StyledTableCell>
-              <StyledTableCell align="center">Сума</StyledTableCell>
-              <StyledTableCell align="center">Спосіб оплати</StyledTableCell>
-              <StyledTableCell align="center">Статус оплати</StyledTableCell>
+              <StyledTableCell align="center">Дані про оплату</StyledTableCell>
               <StyledTableCell align="center">Дані отримувача</StyledTableCell>
               <StyledTableCell align="center">Товари</StyledTableCell>
               <StyledTableCell align="center">Дата замовлення</StyledTableCell>
               <StyledTableCell align="center">Дата отримання</StyledTableCell>
+              <StyledTableCell align="center">Статус</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -166,21 +198,20 @@ const AdminOrders = () => {
                 <StyledTableCell align="center">
                   {order.receiver.name}
                 </StyledTableCell>
-                <StyledTableCell align="center">
-                  {order.total_price}$
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {order.pay_type === "online" ? "Онлайн" : "Офлайн"}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {order.pay_status === "paid" ? "Оплачено" : "Не оплачено"}
+                <StyledTableCell
+                  align="center"
+                  onClick={() => {
+                    setOrder3(order);
+                    setModalShow3(true);
+                  }}
+                >
+                  Оплата
                 </StyledTableCell>
                 <StyledTableCell
                   align="center"
                   onClick={() => {
                     setOrder2(order);
                     setModalShow2(true);
-                    console.log(order.receiver);
                   }}
                 >
                   Дані отримувача
@@ -203,6 +234,15 @@ const AdminOrders = () => {
                     ? new Date(order.arrived_at).toLocaleDateString()
                     : "немає"}
                 </StyledTableCell>
+                <StyledTableCell align="center">
+                  {order.status === "needs_confirmation"
+                    ? "Очікує підтвердження"
+                    : order.status === "processing"
+                    ? "Обробляється"
+                    : order.status === "arriving"
+                    ? "В дорозі"
+                    : "Виконано"}
+                </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
@@ -217,6 +257,11 @@ const AdminOrders = () => {
         order={order2}
         show={modalShow2}
         onHide={() => setModalShow2(!modalShow2)}
+      />
+      <MyVerticallyCenteredModal3
+        order={order3}
+        show={modalShow3}
+        onHide={() => setModalShow3(!modalShow3)}
       />
     </div>
   );

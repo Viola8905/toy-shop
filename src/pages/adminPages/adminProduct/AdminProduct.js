@@ -190,8 +190,6 @@ const AdminProduct = () => {
 
   const categories1 = useSelector((state) => state.categories.Categories);
 
-  let arr = [];
-
   useEffect(() => {
     const getBrands = async () => {
       try {
@@ -200,7 +198,7 @@ const AdminProduct = () => {
         );
         setBrands(response.data);
       } catch (error) {
-        console.error(error.message);
+        alert(error.response.data.message);
       }
     };
     const getAges = async () => {
@@ -222,10 +220,7 @@ const AdminProduct = () => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };
-  // const handleChangeInput1 = (e) => {
-  //   const { name, files } = e.target;
-  //   setProduct({ ...product, [name]: files[0] });
-  // };
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -241,16 +236,15 @@ const AdminProduct = () => {
       data.append("category_ids[]", product["category_ids[]"]);
 
       // console.log(document.getElementById("image_path").files[0]);
-			fetch(`https://api.toy-store.dev-1.folkem.xyz/api/v1/admin/products`, {
+      fetch(`https://api.toy-store.dev-1.folkem.xyz/api/v1/admin/products`, {
         method: "POST",
         headers: {
           sanctum: `${localStorage.getItem("token")}`,
         },
         body: data,
-      });
-
+      })
     } catch (err) {
-      alert(err.response.data.msg);
+      console.error("Ошибка:", err);
     }
   };
 
@@ -280,24 +274,16 @@ const AdminProduct = () => {
     setProduct({ ...product, "category_ids[]": value.map((el) => el.id) });
   }, [value]);
 
-  console.log(product);
   return (
     <div>
       <BackBtn />
 
-      <button onClick={() => handleSubmit()}>Додати продукт</button>
       <div className="create_product">
         <form action="" onSubmit={handleSubmit}>
           <div className="row">
             {/* --------- */}
-            <div className="upload">
-              <input
-                type="file"
-                name="image_path"
-                id="image_path"
-              
-              />
-             
+            <div className="">
+              <input type="file" name="image_path" id="image_path" />
             </div>
             {/* --------- */}
             <label htmlFor="name">Назва:</label>

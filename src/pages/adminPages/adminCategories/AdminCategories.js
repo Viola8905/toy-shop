@@ -104,7 +104,7 @@ const AdminCategories = () => {
             onChange={(e) => setCategory(e.target.value)}
           />
 
-          <button type="submit">{onEdit ? "Update" : "Create"}</button>
+          <button type="submit" style={{marginTop:"20px"}}>{onEdit ? "Редагувати" : "Створити"}</button>
         </form>
 
         <div className="col">
@@ -132,6 +132,7 @@ const AdminCategories = () => {
                       onClick={() =>
                         editCategory(currCategory.id, currCategory.name)
                       }
+											style={{width:"auto"}}
                     >
                       Редагувати
                     </button>

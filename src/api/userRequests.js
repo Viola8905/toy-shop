@@ -21,9 +21,8 @@ export const registration = async (
     );
 
     alert("User is registered");
-  } catch (e) {
-    //localStorage.removeItem("token");
-    alert(e.response.data.message);
+  } catch (err) {
+    alert(err.response.data.message);
   }
 };
 
@@ -37,16 +36,15 @@ export const login = (email, password) => {
           password,
         }
       );
-			
-			
+
       localStorage.setItem("token", response.data.token);
-		
+
       if (response.data.user.role.name == "user") {
         dispatch(setUser(response.data.user));
       } else {
         dispatch(setAdmin(response.data.user));
       }
-			console.log(response.data.token);
+      console.log(response.data.token);
     } catch (e) {
       localStorage.removeItem("token");
       alert(e.response.data.message);

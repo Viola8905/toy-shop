@@ -102,7 +102,9 @@ const AdminBrands = () => {
             onChange={(e) => setBrand(e.target.value)}
           />
 
-          <button type="submit">{onEdit ? "Update" : "Create"}</button>
+          <button type="submit" style={{ marginTop: "20px" }}>
+            {onEdit ? "Update" : "Create"}
+          </button>
         </form>
 
         <div className="col">
@@ -128,6 +130,7 @@ const AdminBrands = () => {
                   <div>
                     <button
                       onClick={() => editBrand(currBrand.id, currBrand.name)}
+                      style={{ width: "auto" }}
                     >
                       Редагувати
                     </button>

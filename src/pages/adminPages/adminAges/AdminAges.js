@@ -166,6 +166,7 @@ const AdminAges = () => {
                           currAge.to
                         )
                       }
+                      style={{ width: "auto" }}
                     >
                       Редагувати
                     </button>

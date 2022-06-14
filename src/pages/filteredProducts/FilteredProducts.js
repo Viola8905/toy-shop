@@ -5,6 +5,7 @@ import BackBtn from "../../components/backBtn/BackBtn";
 import Pagination from "../../components/pagination/Pagination";
 import ProductItem from "../../components/productItem/ProductItem";
 import "./filteredProducts.css";
+import { CircularProgress } from "@material-ui/core";
 
 // --------------------
 import { Button } from "@mui/material";
@@ -21,6 +22,7 @@ const FilteredProducts = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [callback, setCallback] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const location = useLocation();
   useEffect(() => {
@@ -36,6 +38,7 @@ const FilteredProducts = () => {
             product.name.toLowerCase().includes(location.state.toLowerCase())
           )
         );
+        setLoading(false);
       } catch (e) {
         console.log(`Error from useEffect: ${e}`);
       }
@@ -300,22 +303,38 @@ const FilteredProducts = () => {
           {/* material ui */}
         </div>
         <div className="gallery-wrapper">
-          {/* {filteredProducts.map((product) => (
+          {loading ? (
+            <div
+              style={{
+                // width: "100wh",
+                // height: "100vh",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <CircularProgress />
+            </div>
+          ) : (
+            <div className="gallery-wrapper">
+              {/* {filteredProducts.map((product) => (
             <div key={product.id}>
               <ProductItem toy={product} />
             </div>
           ))} */}
-          {filteredProducts.length > 0
-            ? filteredProducts.map((product) => (
-                <div key={product.id}>
-                  <ProductItem toy={product} />
-                </div>
-              ))
-            : products.map((product) => (
-                <div key={product.id}>
-                  <ProductItem toy={product} />
-                </div>
-              ))}
+              {filteredProducts.length > 0
+                ? filteredProducts.map((product) => (
+                    <div key={product.id}>
+                      <ProductItem toy={product} />
+                    </div>
+                  ))
+                : products.map((product) => (
+                    <div key={product.id}>
+                      <ProductItem toy={product} />
+                    </div>
+                  ))}
+            </div>
+          )}
         </div>
         {/* <div className="" style={{ marginTop: "10px" }}>
           <Pagination

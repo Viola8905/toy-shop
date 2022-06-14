@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500;600;800;900&display=swap');
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -22,6 +23,7 @@ code {
   padding: 0 20px;
   
 	height:100vh;
+	font-family:"Inter"
 }
 @media screen and (max-width:1050px){
 	.App{

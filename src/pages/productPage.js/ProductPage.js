@@ -368,7 +368,7 @@ const ProductPage = () => {
           </div>
         </Card>
 
-        <Card style={{ margin: "20px 15px 20px 15px" }}>
+        {/* <Card style={{ margin: "20px 15px 20px 15px" }}>
           <div className="" style={{ padding: "15px" }} hidden={ product.categories.length == 0 }>
             <div
               className="title"
@@ -405,7 +405,7 @@ const ProductPage = () => {
               }
             </div>
           </div>
-        </Card>
+        </Card> */}
 
         <Card style={{ margin: "20px 15px 50px 15px" }}>
           <div className="reviews-wrapper" style={{ padding: "15px" }}>

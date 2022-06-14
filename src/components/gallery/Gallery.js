@@ -7,12 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import ProductItem from "../productItem/ProductItem";
 import Pagination from "../pagination/Pagination";
 import { setProduct, setProducts } from "../../reducers/productsReducer";
+import { CircularProgress } from "@material-ui/core";
 
 // import { useDispatch, useSelector } from "react-redux";
 
 const Gallery = () => {
   const [products, setProducts1] = useState([]);
   const [callback, setCallback] = useState(false);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,6 +25,7 @@ const Gallery = () => {
         );
         // dispatch(setProducts(response.data.data));
         setProducts1(response.data.data);
+        setLoading(false);
       } catch (e) {
         console.log(`Error from useEffect: ${e}`);
       }
@@ -43,20 +46,41 @@ const Gallery = () => {
   //--------------------
   return (
     <>
-      <div className="gallery-wrapper">
-        {currentPost.map((product) => (
-          <div key={product.id}>
-            <ProductItem toy={product} callback={callback} setCallback={setCallback}/>
-          </div> 
-        ))}
-      </div>
-      <div className="" style={{ marginTop: "10px" }}>
-        <Pagination
-          postsPerPage={postsPerPage}
-          totalPosts={products.length}
-          paginate={paginate}
-        />
-      </div>
+		
+      {loading ? (
+        <div
+          style={{
+            width: "100wh",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress />
+        </div>
+      ) : (
+        <>
+          <div className="gallery-wrapper">
+            {currentPost.map((product) => (
+              <div key={product.id}>
+                <ProductItem
+                  toy={product}
+                  callback={callback}
+                  setCallback={setCallback}
+                />
+              </div>
+            ))}
+          </div>
+          <div className="" style={{ marginTop: "10px" }}>
+            <Pagination
+              postsPerPage={postsPerPage}
+              totalPosts={products.length}
+              paginate={paginate}
+            />
+          </div>
+        </>
+      )}
     </>
   );
 };

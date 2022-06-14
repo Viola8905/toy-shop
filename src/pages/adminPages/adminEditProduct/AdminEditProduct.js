@@ -7,7 +7,7 @@ import { useAutocomplete } from "@mui/base/AutocompleteUnstyled";
 import CheckIcon from "@mui/icons-material/Check";
 import { styled } from "@mui/material/styles";
 import { useSelector } from "react-redux";
-import BackBtn from "../../../../components/backBtn/BackBtn";
+import BackBtn from "../../../components/backBtn/BackBtn";
 import { useLocation } from "react-router-dom";
 const Root = styled("div")(
   ({ theme }) => `
@@ -187,8 +187,8 @@ const AdminEditProduct = () => {
         );
 
         setProduct(response.data.data);
-      } catch (e) {
-        console.log(`Error from useEffect: ${e}`);
+      } catch (err) {
+        alert(err.response.data.message);;
       }
     };
 
@@ -255,7 +255,7 @@ const AdminEditProduct = () => {
         }
       );
     } catch (err) {
-      alert(err.response.data.msg);
+     alert(err.response.data.message);
     }
   };
 
