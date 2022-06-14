@@ -10,7 +10,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -148,6 +148,11 @@ const AdminOrders = () => {
     pay_type: "",
     pay_status: "",
   });
+  const [orderStatus, setOrderStatus] = useState({
+    status: "",
+    pay_status: "",
+    id: "",
+  });
   const [modalShow, setModalShow] = React.useState(false);
   const [modalShow2, setModalShow2] = React.useState(false);
   const [modalShow3, setModalShow3] = React.useState(false);
@@ -170,10 +175,71 @@ const AdminOrders = () => {
 
     Posts();
   }, [callback]);
+  // console.log(orders);
+  const handleChangeSelect1 = (e) => {
+    setOrderStatus({ ...orderStatus, status: e.target.value });
+  };
+  const handleChangeSelect2 = (e) => {
+    setOrderStatus({ ...orderStatus, pay_status: e.target.value });
+  };
 
+  // console.log(orderStatus);
+  function setEdited(order) {
+    setOrderStatus({
+      pay_status: order.pay_status,
+      status: order.status,
+      id: order.id,
+    });
+  }
+
+  const submitEdits = async (orderStatus) => {
+    try {
+      const responce = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}admin/orders/${orderStatus.id}`,
+        { status: orderStatus.status, pay_status: orderStatus.pay_status },
+        {
+          headers: { sanctum: `${localStorage.getItem("token")}` },
+        }
+      );
+      setCallback(!callback);
+    } catch (err) {
+      alert(err.response.data.message);
+    }
+  };
   return (
     <div>
       <BackBtn />
+      <div className="" style={{width:"50%",margin:"0 auto"}}>
+        <div>
+          <h2>
+            #id:
+            {orderStatus.id}
+          </h2>
+        </div>
+        <Form.Select
+          aria-label="Default select example"
+          value={orderStatus.status}
+          onChange={handleChangeSelect1}
+        >
+          <option value="">Оберіть спосіб оплати</option>
+          <option value="needs_confirmation">Очікує підтвердження</option>
+          <option value="processing">Обробляється</option>
+          <option value="arriving">В дорозі</option>
+          <option value="done">Виконано</option>
+        </Form.Select>
+				<br />
+        <Form.Select
+          aria-label="Default select example"
+          value={orderStatus.pay_status}
+          onChange={handleChangeSelect2}
+        >
+          <option value="">Оберіть статус оплати</option>
+          <option value="paid">Оплачено</option>
+          <option value="not_paid">Не оплачено</option>
+        </Form.Select>
+				<br/>
+        <Button onClick={()=> submitEdits(orderStatus)}>Редаувати</Button>
+      </div>
 
       <TableContainer component={Paper} style={{ margin: "100px 0 100px 0" }}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -198,14 +264,25 @@ const AdminOrders = () => {
                 <StyledTableCell align="center">
                   {order.receiver.name}
                 </StyledTableCell>
-                <StyledTableCell
-                  align="center"
-                  onClick={() => {
-                    setOrder3(order);
-                    setModalShow3(true);
-                  }}
-                >
-                  Оплата
+                <StyledTableCell align="center" style={{ display: "flex" }}>
+                  <div
+                    onClick={() => {
+                      setOrder3(order);
+                      setModalShow3(true);
+                    }}
+                  >
+                    Оплата
+                  </div>
+                  <img
+                    src="https://cdn0.iconfinder.com/data/icons/aami-web-internet/64/simple-59-256.png"
+                    style={{
+                      width: "30px",
+                      marginLeft: "10px",
+                      cursor: "pointer",
+                    }}
+                    alt=""
+                    onClick={() => setEdited(order)}
+                  />
                 </StyledTableCell>
                 <StyledTableCell
                   align="center"
@@ -234,14 +311,26 @@ const AdminOrders = () => {
                     ? new Date(order.arrived_at).toLocaleDateString()
                     : "немає"}
                 </StyledTableCell>
-                <StyledTableCell align="center">
-                  {order.status === "needs_confirmation"
-                    ? "Очікує підтвердження"
-                    : order.status === "processing"
-                    ? "Обробляється"
-                    : order.status === "arriving"
-                    ? "В дорозі"
-                    : "Виконано"}
+                <StyledTableCell align="center" style={{ display: "flex" }}>
+                  <div>
+                    {order.status === "needs_confirmation"
+                      ? "Очікує підтвердження"
+                      : order.status === "processing"
+                      ? "Обробляється"
+                      : order.status === "arriving"
+                      ? "В дорозі"
+                      : "Виконано"}
+                  </div>
+                  <img
+                    src="https://cdn0.iconfinder.com/data/icons/aami-web-internet/64/simple-59-256.png"
+                    style={{
+                      width: "30px",
+                      marginLeft: "10px",
+                      cursor: "pointer",
+                    }}
+                    alt=""
+                    onClick={() => setEdited(order)}
+                  />
                 </StyledTableCell>
               </StyledTableRow>
             ))}
