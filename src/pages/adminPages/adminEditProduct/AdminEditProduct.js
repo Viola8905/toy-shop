@@ -294,7 +294,7 @@ const AdminEditProduct = () => {
             {/* --------- */}
             <div className="upload">
               <input type="file" name="image_path" id="image_path" />
-              <img src={product.image_path} alt="" />
+              <img src={product.image_path} alt="" style={{width:"400px"}}/>
             </div>
 
             {/* --------- */}

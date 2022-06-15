@@ -220,7 +220,7 @@ const AdminProduct = () => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };
- 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -242,7 +242,7 @@ const AdminProduct = () => {
           sanctum: `${localStorage.getItem("token")}`,
         },
         body: data,
-      })
+      });
     } catch (err) {
       console.error("Ошибка:", err);
     }
@@ -271,7 +271,9 @@ const AdminProduct = () => {
   });
 
   useEffect(() => {
-    setProduct({ ...product, "category_ids[]": value.map((el) => el.id) });
+    if (value) {
+      setProduct({ ...product, "category_ids[]": value.map((el) => el.id) });
+    }
   }, [value]);
 
   return (
@@ -383,9 +385,16 @@ const AdminProduct = () => {
                 ref={setAnchorEl}
                 className={focused ? "focused" : ""}
               >
-                {value?.map((option, index) => (
-                  <StyledTag label={option?.name} {...getTagProps({ index })} />
-                ))}
+                {value ? (
+                  value?.map((option, index) => (
+                    <StyledTag
+                      label={option?.name}
+                      {...getTagProps({ index })}
+                    />
+                  ))
+                ) : (
+                  <></>
+                )}
 
                 <input {...getInputProps()} />
               </InputWrapper>
