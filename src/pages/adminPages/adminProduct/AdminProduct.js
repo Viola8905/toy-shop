@@ -388,7 +388,7 @@ const AdminProduct = () => {
                 {value ? (
                   value?.map((option, index) => (
                     <StyledTag
-                      label={option?.name}
+                      label={option ? option.name : ""}
                       {...getTagProps({ index })}
                     />
                   ))
