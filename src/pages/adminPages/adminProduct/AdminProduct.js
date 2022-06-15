@@ -272,7 +272,7 @@ const AdminProduct = () => {
 
   useEffect(() => {
     if (value) {
-      setProduct({ ...product, "category_ids[]": value.map((el) => el.id) });
+      setProduct({ ...product, "category_ids[]": value.map((el) => el?.id) });
     }
   }, [value]);
 
