@@ -383,8 +383,8 @@ const AdminProduct = () => {
                 ref={setAnchorEl}
                 className={focused ? "focused" : ""}
               >
-                {value.map((option, index) => (
-                  <StyledTag label={option.name} {...getTagProps({ index })} />
+                {value?.map((option, index) => (
+                  <StyledTag label={option?.name} {...getTagProps({ index })} />
                 ))}
 
                 <input {...getInputProps()} />
