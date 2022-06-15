@@ -174,7 +174,7 @@ const ProductPage = () => {
                   alt=""
                 />
               </div>
-              <div className="product-block" style={{}}>
+              <div className="product-block" style={{width: '50%'}}>
                 <div
                   className="product-row"
                   style={{
@@ -226,7 +226,7 @@ const ProductPage = () => {
                   className="product-price"
                   style={{ fontSize: "20px", fontWeight: "500" }}
                 >
-                  ${product.price}
+                  ₴{product.price}
                 </div>
 
                 <div
@@ -287,69 +287,31 @@ const ProductPage = () => {
                   )}
                 </div>
                 <hr />
-                <div className="product-samovyvis">Безкоштовний самовивіз</div>
-                <hr />
-                <div className="product-novaPoshta" style={{ display: "flex" }}>
-                  <img
-                    src={poshta}
-                    alt=""
-                    style={{ width: "30px", height: "30px" }}
-                  />
-                  <div style={{ alignSelf: "center", marginLeft: "5px" }}>
-                    Відділення Нова Пошта
-                  </div>
-
+                <div className="product-brand" style={{ padding: "15px" }}>
                   <div
-                    className=""
-                    style={{
-                      flex: "1 1 100%",
-                      textAlign: "end",
-                      alignSelf: "center",
-                      fontWeight: "500",
-                    }}
+                    className="title"  
+                    style={{ fontSize: "20px" }}
                   >
-                    50грн без комісії за накладений платіж
+                    <b>Бренд</b>: { product.brand.name }
                   </div>
                 </div>
-                <hr />
-                <div className="product-curier" style={{ display: "flex" }}>
-                  <img
-                    src={poshta}
-                    alt=""
-                    style={{ width: "30px", height: "30px" }}
-                  />
-                  <div style={{ alignSelf: "center", marginLeft: "5px" }}>
-                    Кур'єр
-                  </div>
-
+                <div className="product-age-category" style={{ padding: "15px" }}>
                   <div
-                    className=""
-                    style={{
-                      flex: "1 1 100%",
-                      textAlign: "end",
-                      alignSelf: "center",
-                      fontWeight: "500",
-                    }}
+                    className="title"  
+                    style={{ fontSize: "20px" }}
                   >
-                    Доставка 50грн
+                    <b>Вікова категорія</b>: { product.age_category.name }
                   </div>
                 </div>
-                <hr />
-                <div
-                  className="detali-dostavky"
-                  style={{ textAlign: "center" }}
+                <div className="product-categories" style={{ padding: "15px" }}
+                  hidden={ product.categories.length == 0 }  
                 >
-                  Деталі на сторінці :
-                  <span
-                    style={{
-                      color: "blue",
-                      cursor: "pointer",
-                      fontWeight: "500",
-                      marginLeft: "5px",
-                    }}
+                  <div
+                    className="title"  
+                    style={{ fontSize: "20px" }}
                   >
-                    Правила доставки
-                  </span>
+                    <b>Категорії</b>: { product.categories.map((category) => category.name).join(', ') }
+                  </div>
                 </div>
                 <br />
               </div>
