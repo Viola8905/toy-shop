@@ -369,7 +369,7 @@ const ProductPage = () => {
         </Card>
 
         <Card style={{ margin: "20px 15px 20px 15px" }}>
-          <div className="" style={{ padding: "15px" }} hidden={ product.categories.length == 0 }>
+          <div className="" style={{ padding: "15px" }} hidden={ product && product.categories && product.categories.length == 0 }>
             <div
               className="title"
               style={{ fontSize: "20px", fontWeight: 700 }}
@@ -384,7 +384,7 @@ const ProductPage = () => {
               }}
             >
               {
-                product.categories.length > 0 ? 
+                product && product.categories && product.categories.length > 0 ? 
                   filteredProducts
                   .filter((item2) => item2.categories[0])
                   .filter(
