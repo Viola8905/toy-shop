@@ -173,11 +173,27 @@ const AdminEditProduct = () => {
   const [brands, setBrands] = useState([]);
   const [ages, setAges] = useState([]);
   const [callback, setCallback] = useState(false);
+  const [categories1, setCategories1] = useState([]);
+  const [defaultCategories, setDefaultCategories] = useState([]);
 
   const location = useLocation();
   let query = location.state;
 
-  const categories1 = useSelector((state) => state.categories.Categories);
+  // const categories1 = useSelector((state) => state.categories.Categories);
+
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const { data: response } = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}categories`
+        );
+        setCategories1(response.data);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    getCategories();
+  }, []);
 
   useEffect(() => {
     const Posts = async () => {
@@ -188,7 +204,7 @@ const AdminEditProduct = () => {
 
         setProduct(response.data.data);
       } catch (err) {
-        alert(err.response.data.message);;
+        alert(err.response.data.message);
       }
     };
 
@@ -224,7 +240,7 @@ const AdminEditProduct = () => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };
-  console.log(product);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -255,10 +271,14 @@ const AdminEditProduct = () => {
         }
       );
     } catch (err) {
-     alert(err.response.data.message);
+      alert(err.response.data.message);
     }
   };
-
+  useEffect(() => {
+    setDefaultCategories(
+      product.categories?.length ? product.categories?.map((el) => el.name) : []
+    );
+  }, [product.categories]);
   // ----------start-----------
 
   const {
@@ -274,11 +294,13 @@ const AdminEditProduct = () => {
     setAnchorEl,
   } = useAutocomplete({
     id: "customized-hook-demo",
-    defaultValue: [categories1[0]],
+    defaultValue: defaultCategories,
     multiple: true,
     options: categories1,
     getOptionLabel: (option) => option?.name,
   });
+
+  console.log(defaultCategories);
 
   useEffect(() => {
     setProduct({ ...product, "category_ids[]": value.map((el) => el?.id) });
@@ -294,7 +316,7 @@ const AdminEditProduct = () => {
             {/* --------- */}
             <div className="upload">
               <input type="file" name="image_path" id="image_path" />
-              <img src={product.image_path} alt="" style={{width:"400px"}}/>
+              <img src={product.image_path} alt="" style={{ width: "400px" }} />
             </div>
 
             {/* --------- */}
