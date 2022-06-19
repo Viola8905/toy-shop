@@ -397,7 +397,7 @@ const AdminEditProduct = () => {
                 className={focused ? "focused" : ""}
               >
                 {value.map((option, index) => (
-                  <StyledTag label={option.name} {...getTagProps({ index })} />
+                  <StyledTag label={option?.name} {...getTagProps({ index })} />
                 ))}
 
                 <input {...getInputProps()} />
@@ -407,7 +407,7 @@ const AdminEditProduct = () => {
               <Listbox {...getListboxProps()}>
                 {groupedOptions.map((option, index) => (
                   <li {...getOptionProps({ option, index })}>
-                    <span>{option.name}</span>
+                    <span>{option?.name}</span>
                     <CheckIcon fontSize="large" />
                   </li>
                 ))}
