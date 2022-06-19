@@ -183,12 +183,25 @@ const initialState = {
 };
 const AdminProduct = () => {
   const [product, setProduct] = useState(initialState);
-  const [categories, setCategories] = useState([]);
+  const [categories1, setCategories1] = useState([]);
   const [brands, setBrands] = useState([]);
   const [ages, setAges] = useState([]);
   const [callback, setCallback] = useState(false);
 
-  const categories1 = useSelector((state) => state.categories.Categories);
+  // const categories1 = useSelector((state) => state.categories.Categories);
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const { data: response } = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}categories`
+        );
+        setCategories1(response.data);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    getCategories();
+  }, []);
 
   useEffect(() => {
     const getBrands = async () => {
@@ -264,7 +277,7 @@ const AdminProduct = () => {
     setAnchorEl,
   } = useAutocomplete({
     id: "customized-hook-demo",
-    defaultValue: [categories1[0]],
+    defaultValue: [],
     multiple: true,
     options: categories1,
     getOptionLabel: (option) => option.name,
