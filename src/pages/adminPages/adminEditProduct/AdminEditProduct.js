@@ -277,11 +277,11 @@ const AdminEditProduct = () => {
     defaultValue: [categories1[0]],
     multiple: true,
     options: categories1,
-    getOptionLabel: (option) => option.name,
+    getOptionLabel: (option) => option?.name,
   });
 
   useEffect(() => {
-    setProduct({ ...product, "category_ids[]": value.map((el) => el.id) });
+    setProduct({ ...product, "category_ids[]": value.map((el) => el?.id) });
   }, [value]);
 
   return (
