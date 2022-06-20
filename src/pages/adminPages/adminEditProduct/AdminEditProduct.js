@@ -175,11 +175,10 @@ const AdminEditProduct = () => {
   const [callback, setCallback] = useState(false);
   const [categories1, setCategories1] = useState([]);
   const [defaultCategories, setDefaultCategories] = useState([]);
+  const [status, setStatus] = useState("");
 
   const location = useLocation();
   let query = location.state;
-
-  // const categories1 = useSelector((state) => state.categories.Categories);
 
   useEffect(() => {
     const getCategories = async () => {
@@ -259,7 +258,6 @@ const AdminEditProduct = () => {
       data.append("is_best_deal", product.is_best_deal ? 1 : 0);
       data.append("brand_id", product.brand_id);
       data.append("category_ids[]", product["category_ids[]"]);
-
       fetch(
         `https://api.toy-store.dev-1.folkem.xyz/api/v1/admin/products/${query}`,
         {
@@ -269,7 +267,7 @@ const AdminEditProduct = () => {
           },
           body: data,
         }
-      );
+      ).then((data) => setStatus(data.status === 200 ? true : false));
     } catch (err) {
       alert(err.response.data.message);
     }
@@ -299,8 +297,6 @@ const AdminEditProduct = () => {
     options: categories1,
     getOptionLabel: (option) => option?.name,
   });
-
-  console.log(defaultCategories);
 
   useEffect(() => {
     setProduct({ ...product, "category_ids[]": value.map((el) => el?.id) });
@@ -442,6 +438,37 @@ const AdminEditProduct = () => {
           <button type="submit" style={{ marginTop: "20px" }}>
             Редагувати
           </button>
+          <div>
+            {status === true ? (
+              <div
+                style={{
+                  backgroundColor: "#8bf092",
+                  fontWeight: "700",
+                  textAlign: "center",
+                  color: "green",
+                  margin: "20px 0",
+                  padding: "20px 0",
+                }}
+              >
+                Товар успішно відредаговано
+              </div>
+            ) : status === false ? (
+              <div
+                style={{
+                  backgroundColor: "#f7a094",
+                  fontWeight: "700",
+                  textAlign: "center",
+                  color: "red",
+                  margin: "20px 0",
+                  padding: "20px 0",
+                }}
+              >
+                Не вдалося редагувати,перевірте корректність данних
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
         </form>
       </div>
     </div>

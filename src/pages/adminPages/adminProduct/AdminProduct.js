@@ -69,7 +69,6 @@ function Tag(props) {
   return (
     <div {...other}>
       <span>{label}</span>
-      {/* <CloseIcon onClick={onDelete} fontSize='large' /> */}
       <img
         src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_exit-256.png"
         alt=""
@@ -187,8 +186,8 @@ const AdminProduct = () => {
   const [brands, setBrands] = useState([]);
   const [ages, setAges] = useState([]);
   const [callback, setCallback] = useState(false);
+  const [status, setStatus] = useState("");
 
-  // const categories1 = useSelector((state) => state.categories.Categories);
   useEffect(() => {
     const getCategories = async () => {
       try {
@@ -225,7 +224,6 @@ const AdminProduct = () => {
       }
     };
     getAges();
-    // getCategories();
     getBrands();
   }, [callback]);
 
@@ -255,14 +253,13 @@ const AdminProduct = () => {
           sanctum: `${localStorage.getItem("token")}`,
         },
         body: data,
-      });
+      }).then((data) => setStatus(data.status === 200 ? true : false));
     } catch (err) {
       console.error("Ошибка:", err);
     }
   };
 
   // ----------start-----------
-  // let value1 = value
 
   const {
     getRootProps,
@@ -429,6 +426,37 @@ const AdminProduct = () => {
           <button type="submit" style={{ marginTop: "20px" }}>
             Додати продукт
           </button>
+          <div>
+            {status === true ? (
+              <div
+                style={{
+                  backgroundColor: "#8bf092",
+                  fontWeight: "700",
+                  textAlign: "center",
+                  color: "green",
+                  margin: "20px 0",
+                  padding: "20px 0",
+                }}
+              >
+                Товар успішно додано
+              </div>
+            ) : status === false ? (
+              <div
+                style={{
+                  backgroundColor: "#f7a094",
+                  fontWeight: "700",
+                  textAlign: "center",
+                  color: "red",
+                  margin: "20px 0",
+                  padding: "20px 0",
+                }}
+              >
+                Не вдалося додати,перевірте корректність данних
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
         </form>
       </div>
     </div>

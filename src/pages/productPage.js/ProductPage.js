@@ -3,20 +3,18 @@ import { Button, Card, Form, Modal, Overlay, Tooltip } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import BackBtn from "../../components/backBtn/BackBtn";
-import poshta from "../../img/nova-poshta.png";
 import Edit from "../../img/edit.png";
 import Checked from "../../img/checked.png";
 import "./productPage.css";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
-import { postReview, removeReview } from "../../api/productRequests";
+import { postReview } from "../../api/productRequests";
 import Delete from "../../img/delete.png";
 import { setProduct } from "../../reducers/productsReducer";
 import axios from "axios";
 import ProductItem from "../../components/productItem/ProductItem";
 
-const ProductPage = () => {
-  const Products = useSelector((state) => state.products.Products);
+const ProductPage = () => { 
   const currentUser = useSelector((state) => state.user.currentUser);
   const isAuth = useSelector((state) => state.user.isAuth);
   const location = useLocation();
@@ -27,12 +25,10 @@ const ProductPage = () => {
   const [productReviews, setProductReviews] = useState([]);
   const [show, setShow] = useState(false);
   const target = useRef(null);
-  const [edit, setEdit] = useState(false);
   const [reviewEditing, setReviewEditing] = useState(null);
   const [editingText, setEditingText] = useState("");
   const [editingRating, setEditingRating] = useState(1);
   const [callback, setCallback] = useState(false);
-  const [cart, setCart] = useState([]);
   const [isInCart, setIsInCart] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
@@ -133,7 +129,7 @@ const ProductPage = () => {
     };
 
     getCart();
-  }, [callback]);
+  }, [callback, product.id]);
   const addToCart = async (product_id) => {
     try {
       const response = await axios.put(
@@ -151,8 +147,7 @@ const ProductPage = () => {
       alert(e.response.data.message);
     }
   };
-  // console.log(product);
-  // console.log(filteredProducts);
+  
   console.log(product);
   return (
     <div>
@@ -174,7 +169,7 @@ const ProductPage = () => {
                   alt=""
                 />
               </div>
-              <div className="product-block" style={{width: '50%'}}>
+              <div className="product-block" >
                 <div
                   className="product-row"
                   style={{
@@ -304,7 +299,7 @@ const ProductPage = () => {
                   </div>
                 </div>
                 <div className="product-categories" style={{ padding: "15px" }}
-                  hidden={ product.categories?.length == 0 }  
+                  hidden={ product.categories?.length === 0 }  
                 >
                   <div
                     className="title"  

@@ -216,7 +216,7 @@ const Header = () => {
                 to="/admin-create-product"
                 style={{ textDecoration: "none", color: "black" }}
               >
-                Створити продукт
+               Додати товар
               </NavLink>
             </div>
           </div>

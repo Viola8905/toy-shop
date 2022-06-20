@@ -211,6 +211,7 @@ const AdminOrders = () => {
       <BackBtn />
       <div className="" style={{width:"50%",margin:"0 auto"}}>
         <div>
+					Редагування статусу замовлення,оберіть позицію:
           <h2>
             #id:
             {orderStatus.id}
@@ -238,7 +239,7 @@ const AdminOrders = () => {
           <option value="not_paid">Не оплачено</option>
         </Form.Select>
 				<br/>
-        <Button onClick={()=> submitEdits(orderStatus)}>Редаувати</Button>
+        <Button onClick={()=> submitEdits(orderStatus)}>Редагувати</Button>
       </div>
 
       <TableContainer component={Paper} style={{ margin: "100px 0 100px 0" }}>

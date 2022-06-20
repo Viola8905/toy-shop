@@ -1,80 +1,77 @@
-.footer_1{
-	background-color: rgb(121, 176, 238);
+.footer_1 {
+  background-color: rgb(121, 176, 238);
 }
-.footer_1-wrapper{
-	display: flex;
-	justify-content: space-around;
-}
-
-.footer1-customerInfo{
-	flex: 0 0 40%;
-	flex-wrap: wrap;
+.footer_1-wrapper {
+  display: flex;
+  justify-content: space-around;
 }
 
-.customerInfo-links{
-	display: flex;
-	flex-wrap: wrap;
-	
-	margin: 0 0 50px 0;
-	line-height: 30px;
-	
+.footer1-customerInfo {
+  flex: 0 0 40%;
+  flex-wrap: wrap;
 }
 
-.customerInfo-link{
-	margin-right: 50px;
-	cursor: pointer;
-}
-.footer_1-findUs{
-	flex: 0 0 40%;
-}
-.p_txt{
-	color: aliceblue;
-	font-weight: 700;
-	font-size: 20px;
-	letter-spacing: 0.05rem;
-	margin: 20px 0 20px 0;
+.customerInfo-links {
+  display: flex;
+  flex-wrap: wrap;
+
+  margin: 0 0 50px 0;
+  line-height: 30px;
 }
 
-.footer_1-sm{
-	display: flex;
-	justify-content: center;
-	margin-right: 20px;
-	list-style: none;
+.customerInfo-link {
+  margin-right: 50px;
+  cursor: pointer;
 }
-.footer_1-li{
-	margin-left: 20px;
-	cursor: pointer;
+.footer_1-findUs {
+  flex: 0 0 40%;
 }
-
-.footer_2{
-	background-color:rgb(17, 119, 235) ;
-}
-
-
-.footer_2-wrapper{
-	display: flex;
-	flex-direction: column;
+.p_txt {
+  color: aliceblue;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.05rem;
+  margin: 20px 0 20px 0;
 }
 
-.footer_2-payment{
-	display: flex;
-	justify-content: center;
-	margin-right: 20px;
-	list-style: none;
+.footer_1-sm {
+  display: flex;
+  justify-content: center;
+  list-style: none;
 }
-.footer_2-li{
-	margin-left: 20px;
-	filter: invert(1);
-}
-
-.p_title{
-	color: aliceblue;
-	font-weight: 700;
-	font-size: 18px;
-	letter-spacing: 0.05rem;
-	margin: 20px 0 20px 0;
+.footer_1-li {
+  margin-left: 20px;
+  cursor: pointer;
 }
 
-.p_copyrights{
-	margin: 20px 0 20px 0 ;
+.footer_2 {
+  background-color: rgb(17, 119, 235);
+}
+
+.footer_2-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer_2-payment {
+  display: flex;
+  justify-content: center;
+  margin-right: 20px;
+  list-style: none;
+}
+.footer_2-li {
+  margin-left: 20px;
+  filter: invert(1);
+}
+
+.p_title {
+  color: aliceblue;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.05rem;
+  margin: 20px 0 20px 0;
+}
+
+.p_copyrights {
+  margin: 20px 0 20px 0;
 }

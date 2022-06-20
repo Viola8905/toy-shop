@@ -1,26 +1,29 @@
 .product-page-column {
-  flex: 1 1 100%;
+  flex: 1 1 auto;
   justify-content: center;
 }
 .product-block {
   padding: 10px 10px 0 40px;
+	width: 50%;
 }
 .product-image img {
   width: 400px;
   height: 400px;
 }
+
 @media screen and (max-width: 1025px) {
   .product-page-column {
     flex-direction: column;
-    /* flex: 0 0 auto; */
   }
   .product-block {
     padding: 0;
+		width:100%;
   }
   .product-image {
     align-self: center;
   }
 }
+
 @media screen and (max-width: 410px) {
   .product-image img {
     width: 300px;
