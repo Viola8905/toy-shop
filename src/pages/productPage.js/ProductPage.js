@@ -292,7 +292,7 @@ const ProductPage = () => {
                     className="title"  
                     style={{ fontSize: "20px" }}
                   >
-                    <b>Бренд</b>: { product.brand.name }
+                    <b>Бренд</b>: { product.brand?.name }
                   </div>
                 </div>
                 <div className="product-age-category" style={{ padding: "15px" }}>
@@ -300,7 +300,7 @@ const ProductPage = () => {
                     className="title"  
                     style={{ fontSize: "20px" }}
                   >
-                    <b>Вікова категорія</b>: { product.age_category.name }
+                    <b>Вікова категорія</b>: { product.age_category?.name }
                   </div>
                 </div>
                 <div className="product-categories" style={{ padding: "15px" }}
@@ -310,7 +310,7 @@ const ProductPage = () => {
                     className="title"  
                     style={{ fontSize: "20px" }}
                   >
-                    <b>Категорії</b>: { product.categories.map((category) => category.name).join(', ') }
+                    <b>Категорії</b>: { product.categories.map((category) => category?.name).join(', ') }
                   </div>
                 </div>
                 <br />
