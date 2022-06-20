@@ -304,13 +304,13 @@ const ProductPage = () => {
                   </div>
                 </div>
                 <div className="product-categories" style={{ padding: "15px" }}
-                  hidden={ product.categories.length == 0 }  
+                  hidden={ product.categories?.length == 0 }  
                 >
                   <div
                     className="title"  
                     style={{ fontSize: "20px" }}
                   >
-                    <b>Категорії</b>: { product.categories.map((category) => category?.name).join(', ') }
+                    <b>Категорії</b>: { product.categories?.map((category) => category?.name).join(', ') }
                   </div>
                 </div>
                 <br />
