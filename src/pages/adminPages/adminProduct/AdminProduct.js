@@ -175,7 +175,7 @@ const initialState = {
   price: 0,
   amount: 0,
   is_best_deal: false,
-  age_category_id: 0,
+  age_category_id: 8,
   brand_id: 0,
   // image_path: "",
   "category_ids[]": [],
@@ -372,7 +372,7 @@ const AdminProduct = () => {
               ))}
             </select>
           </div>
-          <div className="row">
+          {/* <div className="row">
             <label htmlFor="age_category_id">Вікова категоря:</label>
             <select
               name="age_category_id"
@@ -386,7 +386,7 @@ const AdminProduct = () => {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
           {/* -------------------- */}
           <Root>
             <div {...getRootProps()}>

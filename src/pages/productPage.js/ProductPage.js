@@ -14,7 +14,7 @@ import { setProduct } from "../../reducers/productsReducer";
 import axios from "axios";
 import ProductItem from "../../components/productItem/ProductItem";
 
-const ProductPage = () => { 
+const ProductPage = () => {
   const currentUser = useSelector((state) => state.user.currentUser);
   const isAuth = useSelector((state) => state.user.isAuth);
   const location = useLocation();
@@ -43,7 +43,6 @@ const ProductPage = () => {
 
         dispatch(setProduct(response.data.data));
         setProductReviews(response.data.data.reviews);
-       
       } catch (e) {
         console.log(`Error from useEffect: ${e}`);
       }
@@ -147,7 +146,7 @@ const ProductPage = () => {
       alert(e.response.data.message);
     }
   };
-  
+
   console.log(product);
   return (
     <div>
@@ -169,7 +168,7 @@ const ProductPage = () => {
                   alt=""
                 />
               </div>
-              <div className="product-block" >
+              <div className="product-block">
                 <div
                   className="product-row"
                   style={{
@@ -258,7 +257,7 @@ const ProductPage = () => {
                         borderRadius: "15px",
                         fontSize: "20px",
                       }}
-                      disabled={ product.amount == 0 }
+                      disabled={product.amount == 0}
                       onClick={() => addToCart(product.id)}
                     >
                       Купити
@@ -284,29 +283,28 @@ const ProductPage = () => {
                 </div>
                 <hr />
                 <div className="product-brand" style={{ padding: "15px" }}>
-                  <div
-                    className="title"  
-                    style={{ fontSize: "20px" }}
-                  >
-                    <b>Бренд</b>: { product.brand?.name }
+                  <div className="title" style={{ fontSize: "20px" }}>
+                    <b>Бренд</b>: {product.brand?.name}
                   </div>
                 </div>
-                <div className="product-age-category" style={{ padding: "15px" }}>
+                {/* <div className="product-age-category" style={{ padding: "15px" }}>
                   <div
                     className="title"  
                     style={{ fontSize: "20px" }}
                   >
                     <b>Вікова категорія</b>: { product.age_category?.name }
                   </div>
-                </div>
-                <div className="product-categories" style={{ padding: "15px" }}
-                  hidden={ product.categories?.length === 0 }  
+                </div> */}
+                <div
+                  className="product-categories"
+                  style={{ padding: "15px" }}
+                  hidden={product.categories?.length === 0}
                 >
-                  <div
-                    className="title"  
-                    style={{ fontSize: "20px" }}
-                  >
-                    <b>Категорії</b>: { product.categories?.map((category) => category?.name).join(', ') }
+                  <div className="title" style={{ fontSize: "20px" }}>
+                    <b>Категорії</b>:{" "}
+                    {product.categories
+                      ?.map((category) => category?.name)
+                      .join(", ")}
                   </div>
                 </div>
                 <br />
@@ -327,7 +325,13 @@ const ProductPage = () => {
         </Card>
 
         <Card style={{ margin: "20px 15px 20px 15px" }}>
-          <div className="" style={{ padding: "15px" }} hidden={ product && product.categories && product.categories.length == 0 }>
+          <div
+            className=""
+            style={{ padding: "15px" }}
+            hidden={
+              product && product.categories && product.categories.length == 0
+            }
+          >
             <div
               className="title"
               style={{ fontSize: "20px", fontWeight: 700 }}
@@ -341,9 +345,10 @@ const ProductPage = () => {
                 justifyContent: "space-between",
               }}
             >
-              {
-                product && product.categories && product.categories.length > 0 ? 
-                  filteredProducts
+              {product &&
+              product.categories &&
+              product.categories.length > 0 ? (
+                filteredProducts
                   .filter((item2) => item2.categories[0])
                   .filter(
                     (item3) =>
@@ -359,8 +364,9 @@ const ProductPage = () => {
                       <></>
                     )
                   )
-                : <></>
-              }
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </Card>

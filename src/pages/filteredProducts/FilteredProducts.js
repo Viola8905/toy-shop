@@ -274,10 +274,10 @@ const FilteredProducts = () => {
               </List>
             </Collapse>
             {/* ages */}
-            <ListItemButton onClick={handleClick3}>
+            {/* <ListItemButton onClick={handleClick3}>
               <ListItemText primary="Вікові категорії" />
               {open3 ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
+            </ListItemButton> */}
             <Collapse in={open3} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 {ages.map((item) => (
