@@ -258,6 +258,7 @@ const ProductPage = () => {
                         borderRadius: "15px",
                         fontSize: "20px",
                       }}
+                      disabled={ product.amount == 0 }
                       onClick={() => addToCart(product.id)}
                     >
                       Купити
