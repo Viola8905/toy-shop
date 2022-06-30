@@ -1,5 +1,5 @@
 .footer_1 {
-  background-color: rgb(121, 176, 238);
+  background-color: black;
 }
 .footer_1-wrapper {
   display: flex;
@@ -45,7 +45,7 @@
 }
 
 .footer_2 {
-  background-color: rgb(17, 119, 235);
+  background-color: black;
 }
 
 .footer_2-wrapper {

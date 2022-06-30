@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../reducers/userReducer";
-import logo from "../../img/logo.svg";
+import logo from "../../img/CC_Logo_nocaption.jpg";
 import search from "../../img/search.png";
 
 import Navbar from "react-bootstrap/Navbar";
@@ -38,18 +38,18 @@ const Header = () => {
   }, []);
   return (
     <>
-      <Navbar variant="dark" style={{ backgroundColor: "rgb(121, 176, 238)" }}>
+      <Navbar variant="dark" style={{ backgroundColor: "black" }}>
         <Container>
           <div>
             <NavLink
               style={{
-                color: "black",
+                color: "gold",
                 textDecoration: "none",
                 fontWeight: "700",
               }}
               to="/"
             >
-              Магазин Іграшок
+              Цуравоє Цурья
             </NavLink>
           </div>
 
@@ -124,7 +124,7 @@ const Header = () => {
           )}
         </Container>
       </Navbar>
-      <div className="header" style={{ backgroundColor: "rgb(17, 119, 235)" }}>
+      <div className="header" style={{ backgroundColor: "#202020" }}>
         <Container>
           <div className="first-row">
             <div
@@ -154,7 +154,7 @@ const Header = () => {
                     src={search}
                     alt=""
                     className="search-icon"
-                    style={{ marginLeft: "2%" }}
+                    style={{ marginLeft: "2%", filter: "invert(100%)" }}
                     onClick={() =>
                       navigate(`/search/?text=${searchQuery}`, {
                         state: searchQuery,
@@ -203,20 +203,20 @@ const Header = () => {
                 Бренди
               </NavLink>
             </div>
-            <div className="admin-navbar">
+            {/* <div className="admin-navbar">
               <NavLink
                 to="/admin-create-age-categ"
                 style={{ textDecoration: "none", color: "black" }}
               >
                 Вікові категорії
               </NavLink>
-            </div>
+            </div> */}
             <div className="admin-navbar">
               <NavLink
                 to="/admin-create-product"
                 style={{ textDecoration: "none", color: "black" }}
               >
-               Додати товар
+                Додати товар
               </NavLink>
             </div>
           </div>

@@ -13,18 +13,14 @@ const Footer = () => {
             </p>
             <ul className="footer_1-sm">
               <li className="footer_1-li">
-                <img src={FB} alt="" />
-              </li>
-              <li className="footer_1-li">
-                <img src={Twitter} alt="" />
-              </li>
-              <li className="footer_1-li">
-                <img src={Pinterest} alt="" />
+                <a target="blank" href="https://instagram.com/cur.curia">
+                  <img src={FB} alt="instalogo" width={70} />
+                </a>
               </li>
             </ul>
           </div>
         </div>
-        <center className="">2022</center>
+        <center style={{ color: "gold" }}>2022</center>
       </div>
     </footer>
   );
